@@ -1,6 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { supabase } from '@/lib/supabase';
-import bcrypt from 'bcryptjs';
+import { registerUser } from '@/lib/supabase';
 import { Resend } from 'resend';
 
 export async function POST(req: NextRequest) {
@@ -11,17 +10,10 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: 'Valid email and a 6+ char password required' }, { status: 400 });
     }
 
-    // Hash the password
-    const hashedPassword = await bcrypt.hash(password, 10);
+    const result = await registerUser(email, password);
 
-    // Register user with Supabase
-    const { data, error } = await supabase.auth.signUp({
-      email,
-      password: hashedPassword,
-    });
-
-    if (error) {
-      return NextResponse.json({ error: error.message }, { status: 400 });
+    if (result.error) {
+      return NextResponse.json({ error: result.error }, { status: 400 });
     }
 
     // Send Email to Admin
@@ -35,8 +27,8 @@ export async function POST(req: NextRequest) {
       }).catch(console.error);
     }
 
-    return NextResponse.json({ message: 'User created' }, { status: 201 });
+    return NextResponse.json({ user: result.user }, { status: 201 });
   } catch (err: any) {
-    return NextResponse.json({ error: err.message }, { status: 500 });
+    return NextResponse.json({ error: 'Internal server error' }, { status: 500 });
   }
 }
