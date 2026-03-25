@@ -1,5 +1,5 @@
 // Professional-grade Gemini API client with SDK + REST fallback
-// Bypasses SDK bugs/404s by forcing stable v1 endpoints when needed.
+// Bypasses SDK bugs/404s by forcing stable v1 endpoints and verified model names.
 
 const KEYS = [
   process.env.GEMINI_API_KEY_1,
@@ -7,15 +7,22 @@ const KEYS = [
   process.env.GEMINI_API_KEY_3,
 ].filter(Boolean) as string[];
 
+/**
+ * MODELS verified for this environment via API discovery:
+ * - gemini-2.5-flash (Primary)
+ * - gemini-2.0-flash
+ * - gemini-2.5-pro
+ * - gemini-2.0-flash-lite
+ */
 const MODELS = [
-  'gemini-1.5-flash',
-  'gemini-1.5-pro',
-  'gemini-pro'
+  'gemini-2.5-flash',
+  'gemini-2.0-flash',
+  'gemini-2.5-pro',
+  'gemini-2.0-flash-lite'
 ];
 
 /**
  * Direct REST call to the stable v1 API
- * This is the ultimate fallback if the SDK is bugged or version-locked
  */
 async function callGeminiRest(apiKey: string, prompt: string, model: string): Promise<string> {
   const url = `https://generativelanguage.googleapis.com/v1/models/${model}:generateContent?key=${apiKey}`;
@@ -51,7 +58,7 @@ export async function askGemini(prompt: string): Promise<string> {
     
     for (const modelName of MODELS) {
       try {
-        console.log(`[Gemini/REST] Trying key #${k + 1} with model ${modelName} on v1 endpoint...`);
+        console.log(`[Gemini/REST] Trying key #${k + 1} with model ${modelName}...`);
         return await callGeminiRest(apiKey, prompt, modelName);
       } catch (err: any) {
         lastError = err;
@@ -63,9 +70,9 @@ export async function askGemini(prompt: string): Promise<string> {
           break; // Move to next key
         }
 
-        // Handle model 404 (try next model)
+        // Handle model 404 (try next model in the verified list)
         if (msg.includes('404') || msg.includes('not found')) {
-          console.warn(`[Gemini] Model ${modelName} not found on v1 either. Trying next model...`);
+          console.warn(`[Gemini] Model ${modelName} not found on key #${k + 1}. Trying next model...`);
           continue;
         }
 
@@ -80,5 +87,5 @@ export async function askGemini(prompt: string): Promise<string> {
     }
   }
 
-  throw lastError || new Error('All keys and models failed.');
+  throw lastError || new Error('All keys and models failed. Please check if your API keys have the Generative Language API enabled.');
 }
