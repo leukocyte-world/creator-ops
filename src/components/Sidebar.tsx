@@ -5,28 +5,35 @@ import { usePathname } from 'next/navigation';
 import { useSession, signIn, signOut } from 'next-auth/react';
 import { useState, useEffect } from 'react';
 
+import { 
+  Menu, X, Microscope, Zap, RefreshCw, Anchor, List, 
+  CircleDollarSign, Video, TrendingUp, Bot, Wallet, 
+  Activity, Map, Target, Image as ImageIcon, Smartphone, 
+  Search, Calendar, FileText, UserCircle, LogOut 
+} from 'lucide-react';
+
 const X_TOOLS = [
-  { icon: '🔬', label: 'Viral Reverse Engineer', href: '/tools/x/reverse-engineer' },
-  { icon: '⚡', label: 'Viral One-Liner', href: '/tools/x/one-liner' },
-  { icon: '🔄', label: '4-Line Transformation', href: '/tools/x/transformation' },
-  { icon: '🎣', label: 'Hook Generator', href: '/tools/x/hook-generator' },
-  { icon: '📋', label: 'Listicle Post', href: '/tools/x/listicle' },
+  { icon: Microscope, label: 'Viral Reverse Engineer', href: '/tools/x/reverse-engineer' },
+  { icon: Zap, label: 'Viral One-Liner', href: '/tools/x/one-liner' },
+  { icon: RefreshCw, label: '4-Line Transformation', href: '/tools/x/transformation' },
+  { icon: Anchor, label: 'Hook Generator', href: '/tools/x/hook-generator' },
+  { icon: List, label: 'Listicle Post', href: '/tools/x/listicle' },
 ];
 
 const YT_TOOLS = [
-  { icon: '💰', label: 'Find Your Money Niche', href: '/tools/youtube/money-niche' },
-  { icon: '🎭', label: 'Faceless Video System', href: '/tools/youtube/faceless-video' },
-  { icon: '🚀', label: 'Viral Title Machine', href: '/tools/youtube/viral-titles' },
-  { icon: '🤖', label: 'AI Automation Workflow', href: '/tools/youtube/ai-workflow' },
-  { icon: '💸', label: 'Multiple Income Streams', href: '/tools/youtube/income-streams' },
-  { icon: '📊', label: 'Algorithm Hack System', href: '/tools/youtube/algorithm-hack' },
-  { icon: '🗺️', label: '90-Day Money Map', href: '/tools/youtube/90-day-map' },
-  { icon: '🎯', label: 'Retention Killer Script', href: '/tools/youtube/retention-script' },
-  { icon: '🖼️', label: 'Thumbnail Psychology', href: '/tools/youtube/thumbnail' },
-  { icon: '📱', label: 'Shorts Growth Engine', href: '/tools/youtube/shorts' },
-  { icon: '🕵️', label: 'Competitor Breakdown', href: '/tools/youtube/competitor' },
-  { icon: '🎬', label: 'First 10 Videos Blueprint', href: '/tools/youtube/first-10' },
-  { icon: '📅', label: 'Content Calendar', href: '/tools/youtube/calendar' },
+  { icon: CircleDollarSign, label: 'Find Your Money Niche', href: '/tools/youtube/money-niche' },
+  { icon: Video, label: 'Faceless Video System', href: '/tools/youtube/faceless-video' },
+  { icon: TrendingUp, label: 'Viral Title Machine', href: '/tools/youtube/viral-titles' },
+  { icon: Bot, label: 'AI Automation Workflow', href: '/tools/youtube/ai-workflow' },
+  { icon: Wallet, label: 'Multiple Income Streams', href: '/tools/youtube/income-streams' },
+  { icon: Activity, label: 'Algorithm Hack System', href: '/tools/youtube/algorithm-hack' },
+  { icon: Map, label: '90-Day Money Map', href: '/tools/youtube/90-day-map' },
+  { icon: Target, label: 'Retention Killer Script', href: '/tools/youtube/retention-script' },
+  { icon: ImageIcon, label: 'Thumbnail Psychology', href: '/tools/youtube/thumbnail' },
+  { icon: Smartphone, label: 'Shorts Growth Engine', href: '/tools/youtube/shorts' },
+  { icon: Search, label: 'Competitor Breakdown', href: '/tools/youtube/competitor' },
+  { icon: Video, label: 'First 10 Videos Blueprint', href: '/tools/youtube/first-10' },
+  { icon: Calendar, label: 'Content Calendar', href: '/tools/youtube/calendar' },
 ];
 
 export default function Sidebar() {
@@ -57,7 +64,9 @@ export default function Sidebar() {
           <div className="logo-icon">C</div>
           <span className="logo-text">CreatorOps</span>
         </Link>
-        <button className="mobile-toggle" onClick={() => setMobileOpen(true)}>☰</button>
+        <button className="mobile-toggle" onClick={() => setMobileOpen(!mobileOpen)}>
+          {mobileOpen ? <X size={20} /> : <Menu size={20} />}
+        </button>
       </div>
 
       {mobileOpen && <div className="mobile-overlay" onClick={() => setMobileOpen(false)} />}
@@ -106,7 +115,7 @@ export default function Sidebar() {
           rel="noopener noreferrer"
           className="nav-item special"
         >
-          <span className="nav-item-icon">📄</span>
+          <span className="nav-item-icon"><FileText size={18} strokeWidth={2.5} /></span>
           CV Builder
           <span style={{ marginLeft: 'auto', fontSize: '10px', opacity: 0.6 }}>↗</span>
         </a>
@@ -148,7 +157,7 @@ export default function Sidebar() {
             tabIndex={0}
             style={{ cursor: 'pointer' }}
           >
-            <span className="nav-item-icon">👤</span>
+            <span className="nav-item-icon"><LogOut size={18} /></span>
             <span style={{ fontSize: 13, flex: 1, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
               {session.user.name || session.user.email}
             </span>

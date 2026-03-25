@@ -1,3 +1,5 @@
+import { GoogleGenerativeAI } from '@google/generative-ai';
+
 // Gemini API client with key rotation across 3 keys on rate limit (429)
 
 const KEYS = [
@@ -7,29 +9,20 @@ const KEYS = [
 ].filter(Boolean) as string[];
 
 async function callGemini(apiKey: string, prompt: string): Promise<string> {
-  const res = await fetch(
-    `https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent?key=${apiKey}`,
-    {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        contents: [{ role: 'user', parts: [{ text: prompt }] }],
-        generationConfig: { temperature: 0.85, maxOutputTokens: 4096 },
-      }),
+  const genAI = new GoogleGenerativeAI(apiKey);
+  // Using the widely available 1.5 flash model via official SDK
+  const model = genAI.getGenerativeModel({ model: 'gemini-1.5-flash' });
+
+  try {
+    const result = await model.generateContent(prompt);
+    return result.response.text();
+  } catch (err: any) {
+    const errorMessage = err.message || String(err);
+    if (errorMessage.includes('429') || errorMessage.includes('quota')) {
+      throw new Error('RATE_LIMIT');
     }
-  );
-
-  if (res.status === 429 || res.status === 503) {
-    throw new Error('RATE_LIMIT');
+    throw new Error(`Gemini SDK error: ${errorMessage}`);
   }
-
-  if (!res.ok) {
-    const err = await res.text();
-    throw new Error(`Gemini error ${res.status}: ${err}`);
-  }
-
-  const data = await res.json();
-  return data.candidates?.[0]?.content?.parts?.[0]?.text ?? '';
 }
 
 export async function askGemini(prompt: string): Promise<string> {
@@ -45,5 +38,5 @@ export async function askGemini(prompt: string): Promise<string> {
     }
   }
 
-  throw lastError ?? new Error('All Gemini API keys exhausted');
+  throw lastError ?? new Error('All Gemini API keys exhausted or rate limited');
 }
