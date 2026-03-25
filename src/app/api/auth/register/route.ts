@@ -1,9 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { supabase } from '@/lib/supabase';
-import bcrypt from 'bcryptjs';
 import { Resend } from 'resend';
-
-const resend = new Resend(process.env.RESEND_API_KEY);
 
 export async function POST(req: NextRequest) {
   try {
@@ -28,6 +25,7 @@ export async function POST(req: NextRequest) {
 
     // Send Email to Admin
     if (process.env.RESEND_API_KEY && process.env.ADMIN_EMAIL) {
+      const resend = new Resend(process.env.RESEND_API_KEY);
       await resend.emails.send({
         from: 'CreatorOps <onboarding@resend.dev>',
         to: process.env.ADMIN_EMAIL,
