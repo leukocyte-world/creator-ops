@@ -1,0 +1,25 @@
+﻿git : To https://githu
+b.com/leukocyte-world/
+creator-ops.git
+At line:1 char:82
++ ... g Admin 
+Dashboard and API 
+routes" ; git push 
+origin main 2>&1 | 
+Out-F ...
++                     
+                    ~~
+~~~~~~~~~~~~~~~~~~~~~~
+~
+    + CategoryInfo    
+          : NotSpeci  
+  fied: (To https:/   
+ /gith...creator-o    
+ps.git:String) []    
+, RemoteException
+    + FullyQualifiedE 
+   rrorId : NativeCo  
+  mmandError
+ 
+   1c65e01..4801454  
+main -> main
