@@ -1,0 +1,24 @@
+﻿git : To https://githu
+b.com/leukocyte-world/
+creator-ops.git
+At line:1 char:66
++ ... at: Add missing 
+admin API routes" ; 
+git push origin main 
+2>&1 | Out-F ...
++                     
+                    ~~
+~~~~~~~~~~~~~~~~~~~~~~
+~
+    + CategoryInfo    
+          : NotSpeci  
+  fied: (To https:/   
+ /gith...creator-o    
+ps.git:String) []    
+, RemoteException
+    + FullyQualifiedE 
+   rrorId : NativeCo  
+  mmandError
+ 
+   a4ad351..a6a1e08  
+main -> main
