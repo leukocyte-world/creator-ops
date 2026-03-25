@@ -1,4 +1,5 @@
 import { createClient } from '@supabase/supabase-js';
+import bcrypt from 'bcryptjs';
 
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!;
 const supabaseServiceKey = process.env.SUPABASE_SERVICE_ROLE_KEY!;
@@ -11,6 +12,7 @@ export const supabase = createClient(supabaseUrl, supabaseServiceKey, {
 export interface UserRecord {
   id: string;
   email: string;
+  password_hash?: string;
   usage_count: number;
   is_pro: boolean;
   nowpayments_payment_id?: string;
@@ -18,28 +20,57 @@ export interface UserRecord {
   created_at: string;
 }
 
-export async function getOrCreateUser(email: string): Promise<UserRecord | null> {
-  // Try to get existing user
+export async function registerUser(email: string, password: string): Promise<{ user?: UserRecord; error?: string }> {
+  // Check if user exists
   const { data: existing } = await supabase
+    .from('users')
+    .select('id')
+    .eq('email', email)
+    .single();
+
+  if (existing) {
+    return { error: 'User already exists with this email' };
+  }
+
+  // Hash password
+  const salt = await bcrypt.genSalt(10);
+  const password_hash = await bcrypt.hash(password, salt);
+
+  // Create new user
+  const { data: created, error } = await supabase
+    .from('users')
+    .insert({ email, password_hash, usage_count: 0, is_pro: false })
+    .select()
+    .single();
+
+  if (error) {
+    return { error: 'Failed to create user account' };
+  }
+
+  return { user: created as UserRecord };
+}
+
+export async function authenticateUser(email: string, password: string): Promise<UserRecord | null> {
+  const { data: user } = await supabase
     .from('users')
     .select('*')
     .eq('email', email)
     .single();
 
+  if (!user || !user.password_hash) return null;
+
+  const isValid = await bcrypt.compare(password, user.password_hash);
+  if (!isValid) return null;
+
+  return user as UserRecord;
+}
+
+export async function getOrCreateUser(email: string): Promise<UserRecord | null> {
+  // Legacy method kept for fallback/safety
+  const { data: existing } = await supabase.from('users').select('*').eq('email', email).single();
   if (existing) return existing as UserRecord;
-
-  // Create new user
-  const { data: created, error } = await supabase
-    .from('users')
-    .insert({ email, usage_count: 0, is_pro: false })
-    .select()
-    .single();
-
-  if (error) {
-    console.error('Error creating user:', error);
-    return null;
-  }
-
+  const { data: created, error } = await supabase.from('users').insert({ email, usage_count: 0, is_pro: false }).select().single();
+  if (error) return null;
   return created as UserRecord;
 }
 
