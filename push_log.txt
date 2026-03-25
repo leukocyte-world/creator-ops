@@ -1,0 +1,136 @@
+﻿git : remote: error: 
+GH013: Repository 
+rule violations found 
+for refs/heads/feature
+/admin-dashboard-v2.  
+      
+At line:1 char:46
++ ... ashboard-v2 ; 
+git push origin featur
+e/admin-dashboard-v2 
+2>&1 | Out-F ...
++                   ~~
+~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~
+~
+    + CategoryInfo    
+          : NotSpeci  
+  fied: (remote: er   
+ ror: ...ard-v2.      
+      :String) []    
+, RemoteException
+    + FullyQualifiedE 
+   rrorId : NativeCo  
+  mmandError
+ 
+remote: 
+remote: - GITHUB PUSH 
+PROTECTION        
+remote:   ΓÇöΓÇöΓÇöΓÇö
+ΓÇöΓÇöΓÇöΓÇöΓÇöΓÇöΓÇöΓ
+ÇöΓÇöΓÇöΓÇöΓÇöΓÇöΓÇöΓÇ
+öΓÇöΓÇöΓÇöΓÇöΓÇöΓÇöΓÇö
+ΓÇöΓÇöΓÇöΓÇöΓÇöΓÇöΓÇöΓ
+ÇöΓÇöΓÇöΓÇöΓÇöΓÇöΓÇöΓÇ
+ö        
+remote:     Resolve 
+the following 
+violations before 
+pushing again        
+remote: 
+remote:     - Push 
+cannot contain 
+secrets        
+remote: 
+remote:             
+remote:      (?) 
+Learn how to resolve 
+a blocked push        
+remote:      https://d
+ocs.github.com/code-se
+curity/secret-scanning
+/working-with-secret-s
+canning-and-push-prote
+ction/working-with-pus
+h-protection-from-the-
+command-line#resolving
+-a-blocked-push       
+ 
+remote:             
+remote:             
+remote:       ΓÇöΓÇö 
+GitHub Personal 
+Access Token ΓÇöΓÇöΓÇö
+ΓÇöΓÇöΓÇöΓÇöΓÇöΓÇöΓÇöΓ
+ÇöΓÇöΓÇöΓÇöΓÇöΓÇöΓÇöΓÇ
+öΓÇöΓÇöΓÇöΓÇö        
+remote:        
+locations:        
+remote:          - 
+commit: 796b99584109fb
+02a1f9356640f55615c92c
+0fd0        
+remote:            
+path: .env:4        
+remote:             
+remote:        (?) To 
+push, remove secret 
+from commit(s) or 
+follow this URL to 
+allow the secret.     
+   
+remote:        https:/
+/github.com/leukocyte-
+world/creator-ops/secu
+rity/secret-scanning/u
+nblock-secret/3BQ77dEh
+IMt7pdpMTXUMBZoBvKv   
+     
+remote:             
+remote:             
+remote:       ΓÇöΓÇö 
+Supabase Secret Key ΓÇ
+öΓÇöΓÇöΓÇöΓÇöΓÇöΓÇöΓÇö
+ΓÇöΓÇöΓÇöΓÇöΓÇöΓÇöΓÇöΓ
+ÇöΓÇöΓÇöΓÇöΓÇöΓÇöΓÇöΓÇ
+öΓÇöΓÇöΓÇöΓÇöΓÇöΓÇöΓÇö
+ΓÇö        
+remote:        
+locations:        
+remote:          - 
+commit: 796b99584109fb
+02a1f9356640f55615c92c
+0fd0        
+remote:            
+path: .env:8        
+remote:             
+remote:        (?) To 
+push, remove secret 
+from commit(s) or 
+follow this URL to 
+allow the secret.     
+   
+remote:        https:/
+/github.com/leukocyte-
+world/creator-ops/secu
+rity/secret-scanning/u
+nblock-secret/3BSJOoou
+nZXMNRaYql6U8teaRL1   
+     
+remote:             
+remote: 
+remote: 
+To https://github.com/
+leukocyte-world/creato
+r-ops.git
+ ! [remote rejected] f
+eature/admin-dashboard
+-v2 -> feature/admin-d
+ashboard-v2 (push 
+declined due to 
+repository rule 
+violations)
+error: failed to push 
+some refs to 'https://
+github.com/leukocyte-w
+orld/creator-ops.git'
