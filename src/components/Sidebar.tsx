@@ -33,6 +33,12 @@ export default function Sidebar() {
   const pathname = usePathname();
   const { data: session } = useSession();
   const [usage, setUsage] = useState({ count: 0, isPro: false });
+  const [mobileOpen, setMobileOpen] = useState(false);
+
+  // Close sidebar on navigation
+  useEffect(() => {
+    setMobileOpen(false);
+  }, [pathname]);
 
   useEffect(() => {
     if (session?.user) {
@@ -45,7 +51,18 @@ export default function Sidebar() {
   const usagePct = Math.min((usage.count / 5) * 100, 100);
 
   return (
-    <aside className="sidebar">
+    <>
+      <div className="mobile-header">
+        <Link href="/" className="logo-mark">
+          <div className="logo-icon">C</div>
+          <span className="logo-text">CreatorOps</span>
+        </Link>
+        <button className="mobile-toggle" onClick={() => setMobileOpen(true)}>☰</button>
+      </div>
+
+      {mobileOpen && <div className="mobile-overlay" onClick={() => setMobileOpen(false)} />}
+
+      <aside className={`sidebar ${mobileOpen ? 'mobile-open' : ''}`}>
       {/* Logo */}
       <div className="sidebar-logo">
         <Link href="/" className="logo-mark">
@@ -138,11 +155,12 @@ export default function Sidebar() {
             <span style={{ fontSize: 11, opacity: 0.5 }}>Sign out</span>
           </div>
         ) : (
-          <button className="btn btn-secondary btn-full" onClick={() => signIn('google')}>
+          <button className="btn btn-secondary btn-full" onClick={() => signIn()}>
             Sign In
           </button>
         )}
       </div>
     </aside>
+    </>
   );
 }
