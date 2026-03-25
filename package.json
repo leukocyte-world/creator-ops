@@ -15,7 +15,6 @@
     "@google/generative-ai": "^0.15.0",
     "@supabase/supabase-js": "^2.45.0",
     "next-auth": "^4.24.7",
-    "nowpayments-api-js": "^1.0.3",
     "lucide-react": "^0.400.0"
   },
   "devDependencies": {
