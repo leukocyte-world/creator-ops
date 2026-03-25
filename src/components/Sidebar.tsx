@@ -36,7 +36,7 @@ const YT_TOOLS = [
   { icon: Calendar, label: 'Content Calendar', href: '/tools/youtube/calendar' },
 ];
 
-export default function Sidebar() {
+export default function Sidebar({ hiddenOnDesktop = false }: { hiddenOnDesktop?: boolean }) {
   const pathname = usePathname();
   const { data: session } = useSession();
   const [usage, setUsage] = useState({ count: 0, isPro: false });
@@ -71,7 +71,7 @@ export default function Sidebar() {
 
       {mobileOpen && <div className="mobile-overlay" onClick={() => setMobileOpen(false)} />}
 
-      <aside className={`sidebar ${mobileOpen ? 'mobile-open' : ''}`}>
+      <aside className={`sidebar ${mobileOpen ? 'mobile-open' : ''} ${hiddenOnDesktop ? 'hidden-on-desktop' : ''}`}>
       {/* Logo */}
       <div className="sidebar-logo">
         <Link href="/" className="logo-mark">

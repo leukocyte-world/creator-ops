@@ -108,8 +108,52 @@ a { color: inherit; text-decoration: none; }
   flex-direction: column;
 }
 
+@media (min-width: 1025px) {
+  .sidebar.hidden-on-desktop {
+    display: none;
+  }
+  .app-shell:has(.sidebar.hidden-on-desktop) .main-content {
+    margin-left: 0;
+  }
+}
+
 .mobile-header { display: none; }
 .mobile-overlay { display: none; }
+
+/* ─── Desktop Nav (Landing Only) ──────────── */
+.desktop-nav {
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 80px;
+  display: flex;
+  align-items: center;
+  z-index: 200;
+  padding: 0 40px;
+}
+
+.nav-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 32px;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--text-secondary);
+}
+
+.nav-links a:hover { color: var(--text-primary); }
+
+@media (max-width: 1024px) {
+  .desktop-nav { display: none; }
+}
 
 /* ─── Sidebar ─────────────────────────────── */
 .sidebar {

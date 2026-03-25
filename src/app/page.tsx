@@ -28,10 +28,25 @@ export default function LandingPage() {
 
   return (
     <div className="app-shell">
-      <Sidebar />
+      <nav className="desktop-nav">
+        <div className="nav-container">
+          <Link href="/" className="logo-mark">
+            <div className="logo-icon">C</div>
+            <span className="logo-text">CreatorOps</span>
+          </Link>
+          <div className="nav-links">
+            <Link href="/tools">AI Tools</Link>
+            <Link href="/#pricing">Pricing</Link>
+            <Link href="/auth/signin" className="btn btn-secondary btn-sm">Sign In</Link>
+            <Link href="/auth/signin" className="btn btn-primary btn-sm">Start Free</Link>
+          </div>
+        </div>
+      </nav>
+
+      <Sidebar hiddenOnDesktop />
       <main className="main-content landing">
         {/* Hero */}
-        <section className="hero">
+        <section className="hero" style={{ paddingTop: 120 }}>
           <div className="hero-glow" />
 
           <div className="hero-eyebrow animate-fade-up">
