@@ -3,7 +3,11 @@
 
 interface FxTweet {
   id: string;
-  text: string;
+  text?: string;
+  description?: string;
+  note_tweet?: {
+    text: string;
+  };
   author: {
     name: string;
     screen_name: string;
@@ -24,8 +28,8 @@ interface FxResponse {
 }
 
 export function extractTweetId(url: string): string | null {
-  // Matches: twitter.com/user/status/ID or x.com/user/status/ID
-  const match = url.match(/(?:twitter\.com|x\.com)\/\w+\/status\/(\d+)/);
+  // Matches: twitter.com/any/status/ID or x.com/any/status/ID
+  const match = url.match(/(?:twitter\.com|x\.com)\/.+?\/status\/(\d+)/);
   return match ? match[1] : null;
 }
 
@@ -51,16 +55,24 @@ export async function fetchThread(urls: string[]): Promise<string> {
     const id = extractTweetId(url.trim());
     if (!id) continue;
     const tweet = await fetchTweet(id);
-    if (tweet) tweets.push(tweet);
+    if (tweet) {
+      console.log(`[FxTwitter] Fetched tweet ${id}: author=@${tweet.author?.screen_name}, text_len=${tweet.text?.length || 0}`);
+      tweets.push(tweet);
+    }
   }
 
-  if (tweets.length === 0) return '[Could not fetch post content — please check the URLs]';
+  if (tweets.length === 0) return '[Could not fetch post content — please check the URLs or try again later]';
 
-  return tweets.map((t, i) => [
-    `--- Post ${i + 1} ---`,
-    `Author: @${t.author.screen_name} (${t.author.name})`,
-    `Text: ${t.text}`,
-    `Engagement: ${t.likes} likes · ${t.retweets} retweets · ${t.replies} replies`,
-    '',
-  ].join('\n')).join('\n');
+  return tweets.map((t, i) => {
+    // Robust text extraction: handles standard, long-form (note_tweet), and description fallbacks
+    const content = t.text || t.note_tweet?.text || t.description || '[No text content available]';
+    
+    return [
+      `--- Post ${i + 1} ---`,
+      `Author: @${t.author?.screen_name || 'unknown'} (${t.author?.name || 'Unknown User'})`,
+      `Text: ${content}`,
+      `Engagement: ${t.likes || 0} likes · ${t.retweets || 0} retweets · ${t.replies || 0} replies`,
+      '',
+    ].join('\n');
+  }).join('\n');
 }
