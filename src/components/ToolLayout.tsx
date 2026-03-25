@@ -3,6 +3,7 @@
 import { useState, useCallback } from 'react';
 import Link from 'next/link';
 import Sidebar from '@/components/Sidebar';
+import Footer from '@/components/Footer';
 
 interface ToolLayoutProps {
   title: string;
@@ -32,6 +33,7 @@ export default function ToolLayout({ title, description, badge, children }: Tool
           </div>
           {children}
         </div>
+        <Footer />
       </main>
     </div>
   );

@@ -1,5 +1,6 @@
 import Sidebar from '@/components/Sidebar';
 import Link from 'next/link';
+import Footer from '@/components/Footer';
 
 const X_TOOLS = [
   { icon: '🔬', label: 'Viral Reverse Engineer', desc: 'Analyze viral posts and rewrite yours with the same formula', href: '/tools/x/reverse-engineer' },
@@ -29,8 +30,8 @@ export default function ToolsDashboard() {
   return (
     <div className="app-shell">
       <Sidebar />
-      <main className="main-content" style={{ padding: '40px 32px' }}>
-        <div style={{ maxWidth: 940, margin: '0 auto' }}>
+      <main className="main-content" style={{ display: 'flex', flexDirection: 'column' }}>
+        <div style={{ maxWidth: 940, margin: '0 auto', padding: '40px 32px', flex: 1, width: '100%' }}>
           <div style={{ marginBottom: 40 }}>
             <h1 style={{ fontFamily: 'Syne, sans-serif', fontSize: 36, fontWeight: 800, marginBottom: 8 }}>
               Your Creator Arsenal
@@ -84,6 +85,7 @@ export default function ToolsDashboard() {
             </div>
           </div>
         </div>
+        <Footer />
       </main>
     </div>
   );

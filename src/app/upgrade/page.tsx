@@ -42,8 +42,8 @@ export default function UpgradePage() {
   };
 
   return (
-    <div style={{ minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: 32 }}>
-      <div style={{ width: '100%', maxWidth: 520 }}>
+    <div style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column', alignItems: 'center', padding: '32px 32px 0' }}>
+      <div style={{ width: '100%', maxWidth: 520, flex: 1, display: 'flex', flexDirection: 'column', justifyContent: 'center', marginBottom: 60 }}>
         <div style={{ textAlign: 'center', marginBottom: 40 }}>
           <Link href="/" className="logo-mark" style={{ justifyContent: 'center', marginBottom: 24, display: 'flex' }}>
             <div className="logo-icon">C</div>

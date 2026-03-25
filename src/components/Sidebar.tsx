@@ -81,37 +81,53 @@ export default function Sidebar() {
       </div>
 
       <nav className="sidebar-nav">
-        {/* X Section */}
-        <div className="nav-section-label">𝕏 Twitter Tools</div>
-        {X_TOOLS.map(tool => {
-          const Icon = tool.icon;
-          return (
-            <Link
-              key={tool.href}
-              href={tool.href}
-              className={`nav-item x-section ${pathname === tool.href ? 'active' : ''}`}
-            >
-              <span className="nav-item-icon"><Icon size={18} strokeWidth={2.5} /></span>
-              {tool.label}
+        {pathname === '/' ? (
+          <>
+            <div className="nav-section-label">Navigation</div>
+            <Link href="/tools" className="nav-item">
+              <span className="nav-item-icon"><TrendingUp size={18} /></span>
+              AI Tools Dashboard
             </Link>
-          );
-        })}
+            <Link href="/#pricing" className="nav-item">
+              <span className="nav-item-icon"><CircleDollarSign size={18} /></span>
+              Pricing
+            </Link>
+          </>
+        ) : (
+          <>
+            {/* X Section */}
+            <div className="nav-section-label">𝕏 Twitter Tools</div>
+            {X_TOOLS.map(tool => {
+              const Icon = tool.icon;
+              return (
+                <Link
+                  key={tool.href}
+                  href={tool.href}
+                  className={`nav-item x-section ${pathname === tool.href ? 'active' : ''}`}
+                >
+                  <span className="nav-item-icon"><Icon size={18} strokeWidth={2.5} /></span>
+                  {tool.label}
+                </Link>
+              );
+            })}
 
-        {/* YouTube Section */}
-        <div className="nav-section-label">YouTube Tools</div>
-        {YT_TOOLS.map(tool => {
-          const Icon = tool.icon;
-          return (
-            <Link
-              key={tool.href}
-              href={tool.href}
-              className={`nav-item yt-section ${pathname === tool.href ? 'active' : ''}`}
-            >
-              <span className="nav-item-icon"><Icon size={18} strokeWidth={2.5} /></span>
-              {tool.label}
-            </Link>
-          );
-        })}
+            {/* YouTube Section */}
+            <div className="nav-section-label">YouTube Tools</div>
+            {YT_TOOLS.map(tool => {
+              const Icon = tool.icon;
+              return (
+                <Link
+                  key={tool.href}
+                  href={tool.href}
+                  className={`nav-item yt-section ${pathname === tool.href ? 'active' : ''}`}
+                >
+                  <span className="nav-item-icon"><Icon size={18} strokeWidth={2.5} /></span>
+                  {tool.label}
+                </Link>
+              );
+            })}
+          </>
+        )}
 
         {/* CV Builder */}
         <div className="nav-section-label">Other Tools</div>
@@ -131,17 +147,25 @@ export default function Sidebar() {
       <div className="sidebar-footer">
         {session?.user && !usage.isPro && (
           <div className="usage-bar-wrap">
-            <div className="usage-bar-label">
-              <span>Free uses</span>
-              <span>{usage.count}/5</span>
-            </div>
-            <div className="usage-bar">
-              <div className="usage-bar-fill" style={{ width: `${usagePct}%` }} />
-            </div>
-            {usage.count >= 4 && (
-              <Link href="/upgrade" className="btn btn-primary btn-sm btn-full" style={{ marginTop: 10 }}>
-                Upgrade — $10/mo
-              </Link>
+            {session.user.email === process.env.NEXT_PUBLIC_ADMIN_EMAIL ? (
+              <div style={{ padding: '8px 12px', background: 'var(--bg-glass)', borderRadius: 8, fontSize: 12, color: 'var(--accent-orange)', fontWeight: 600, textAlign: 'center' }}>
+                Admin Account — Unlimited
+              </div>
+            ) : (
+              <>
+                <div className="usage-bar-label">
+                  <span>Free uses</span>
+                  <span>{usage.count}/5</span>
+                </div>
+                <div className="usage-bar">
+                  <div className="usage-bar-fill" style={{ width: `${usagePct}%` }} />
+                </div>
+                {usage.count >= 4 && (
+                  <Link href="/upgrade" className="btn btn-primary btn-sm btn-full" style={{ marginTop: 10 }}>
+                    Upgrade — $10/mo
+                  </Link>
+                )}
+              </>
             )}
           </div>
         )}
@@ -170,9 +194,14 @@ export default function Sidebar() {
             <span style={{ fontSize: 11, opacity: 0.5 }}>Sign out</span>
           </div>
         ) : (
-          <button className="btn btn-secondary btn-full" onClick={() => signIn()}>
-            Sign In
-          </button>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
+            <button className="btn btn-secondary btn-md btn-full" onClick={() => signIn()}>
+              Sign In
+            </button>
+            <Link href="/auth/signin" className="btn btn-primary btn-md btn-full">
+              Start Free
+            </Link>
+          </div>
         )}
       </div>
     </aside>
