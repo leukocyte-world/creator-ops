@@ -83,29 +83,35 @@ export default function Sidebar() {
       <nav className="sidebar-nav">
         {/* X Section */}
         <div className="nav-section-label">𝕏 Twitter Tools</div>
-        {X_TOOLS.map(tool => (
-          <Link
-            key={tool.href}
-            href={tool.href}
-            className={`nav-item x-section ${pathname === tool.href ? 'active' : ''}`}
-          >
-            <span className="nav-item-icon">{tool.icon}</span>
-            {tool.label}
-          </Link>
-        ))}
+        {X_TOOLS.map(tool => {
+          const Icon = tool.icon;
+          return (
+            <Link
+              key={tool.href}
+              href={tool.href}
+              className={`nav-item x-section ${pathname === tool.href ? 'active' : ''}`}
+            >
+              <span className="nav-item-icon"><Icon size={18} strokeWidth={2.5} /></span>
+              {tool.label}
+            </Link>
+          );
+        })}
 
         {/* YouTube Section */}
         <div className="nav-section-label">YouTube Tools</div>
-        {YT_TOOLS.map(tool => (
-          <Link
-            key={tool.href}
-            href={tool.href}
-            className={`nav-item yt-section ${pathname === tool.href ? 'active' : ''}`}
-          >
-            <span className="nav-item-icon">{tool.icon}</span>
-            {tool.label}
-          </Link>
-        ))}
+        {YT_TOOLS.map(tool => {
+          const Icon = tool.icon;
+          return (
+            <Link
+              key={tool.href}
+              href={tool.href}
+              className={`nav-item yt-section ${pathname === tool.href ? 'active' : ''}`}
+            >
+              <span className="nav-item-icon"><Icon size={18} strokeWidth={2.5} /></span>
+              {tool.label}
+            </Link>
+          );
+        })}
 
         {/* CV Builder */}
         <div className="nav-section-label">Other Tools</div>
