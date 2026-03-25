@@ -1,7 +1,7 @@
 // Special route for reverse-engineer: fetches X posts first, then calls Gemini
 import { NextRequest, NextResponse } from 'next/server';
 import { getServerSession } from 'next-auth';
-import { authOptions } from '@/app/api/auth/[...nextauth]/route';
+import { authOptions } from '@/lib/auth';
 import { askGemini } from '@/lib/gemini';
 import { fetchThread } from '@/lib/fxtwitter';
 import { incrementUsage } from '@/lib/supabase';
