@@ -10,7 +10,21 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
   }
 
-  const { currency = 'usdtbsc' } = await req.json();
+  const { currency = 'usdtbsc', discount_code } = await req.json();
+
+  let price = 10;
+  if (discount_code) {
+    const { data: discount } = await (require('@/lib/supabase').supabase)
+      .from('discount_codes')
+      .select('percent_off')
+      .eq('code', discount_code.toUpperCase())
+      .eq('is_active', true)
+      .single();
+    
+    if (discount) {
+      price = 10 * (1 - discount.percent_off / 100);
+    }
+  }
 
   try {
     const res = await fetch('https://api.nowpayments.io/v1/invoice', {
@@ -20,11 +34,11 @@ export async function POST(req: NextRequest) {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        price_amount: 10,
+        price_amount: price,
         price_currency: 'usd',
         pay_currency: currency,
         order_id: `creator-ops-${session.user.email}-${Date.now()}`,
-        order_description: 'CreatorOps Pro — 1 Month Subscription',
+        order_description: `CreatorOps Pro — ${discount_code ? `Discount Applied (${discount_code})` : '1 Month Subscription'}`,
         ipn_callback_url: `https://${(process.env.NEXTAUTH_URL || process.env.VERCEL_URL || 'localhost:3000').replace(/^https?:\/\//, '')}/api/payment/webhook`,
         success_url: `https://${(process.env.NEXTAUTH_URL || process.env.VERCEL_URL || 'localhost:3000').replace(/^https?:\/\//, '')}/upgrade/success`,
         cancel_url: `https://${(process.env.NEXTAUTH_URL || process.env.VERCEL_URL || 'localhost:3000').replace(/^https?:\/\//, '')}/upgrade`,

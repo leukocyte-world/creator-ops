@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import { useSession, signIn } from 'next-auth/react';
 import Link from 'next/link';
+import { Check } from 'lucide-react';
 
 const CURRENCIES = [
   { id: 'usdtbsc', label: 'USDT (BSC)', icon: '₮' },
@@ -18,6 +19,33 @@ export default function UpgradePage() {
   const [selected, setSelected] = useState('usdtbsc');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
+  const [discountCode, setDiscountCode] = useState('');
+  const [appliedDiscount, setAppliedDiscount] = useState<{ code: string, percent: number } | null>(null);
+  const [verifyingCode, setVerifyingCode] = useState(false);
+
+  const applyDiscount = async () => {
+    if (!discountCode) return;
+    setVerifyingCode(true);
+    setError('');
+    try {
+      const res = await fetch('/api/payment/verify-discount', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ code: discountCode }),
+      });
+      const data = await res.json();
+      if (data.percent_off) {
+        setAppliedDiscount({ code: data.code, percent: data.percent_off });
+      } else {
+        setError(data.error || 'Invalid code');
+        setAppliedDiscount(null);
+      }
+    } catch {
+      setError('Error verifying code');
+    } finally {
+      setVerifyingCode(false);
+    }
+  };
 
   const handleUpgrade = async () => {
     if (!session) { signIn(); return; }
@@ -26,7 +54,10 @@ export default function UpgradePage() {
       const res = await fetch('/api/payment/create', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ currency: selected }),
+        body: JSON.stringify({ 
+          currency: selected,
+          discount_code: appliedDiscount?.code
+        }),
       });
       const data = await res.json();
       if (data.invoice_url) {
@@ -95,6 +126,33 @@ export default function UpgradePage() {
           </div>
         </div>
 
+        <div className="card" style={{ padding: 28, marginBottom: 20 }}>
+          <h3 style={{ fontSize: 14, fontWeight: 600, color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '0.08em', marginBottom: 16 }}>
+            Discount Code
+          </h3>
+          <div style={{ display: 'flex', gap: 10 }}>
+            <input 
+              className="input" 
+              placeholder="Enter code" 
+              value={discountCode}
+              onChange={e => setDiscountCode(e.target.value)}
+              style={{ flex: 1 }}
+            />
+            <button 
+              className="btn btn-secondary" 
+              onClick={applyDiscount}
+              disabled={verifyingCode || !discountCode}
+            >
+              {verifyingCode ? <span className="spinner" /> : 'Apply'}
+            </button>
+          </div>
+          {appliedDiscount && (
+            <div style={{ marginTop: 12, color: 'var(--accent-gold)', fontSize: 13, fontWeight: 600, display: 'flex', alignItems: 'center', gap: 4 }}>
+              <Check size={14} /> Applied: {appliedDiscount.percent}% OFF ({appliedDiscount.code})
+            </div>
+          )}
+        </div>
+
         {error && (
           <div style={{ background: 'rgba(255,0,0,0.08)', border: '1px solid rgba(255,0,0,0.2)', borderRadius: 'var(--r-md)', padding: '12px 16px', color: '#ff7070', fontSize: 13, marginBottom: 16 }}>
             {error}
@@ -107,7 +165,9 @@ export default function UpgradePage() {
           disabled={loading}
           style={{ fontSize: 16 }}
         >
-          {loading ? <><span className="spinner" /> Processing...</> : `Pay $10 with ${CURRENCIES.find(c => c.id === selected)?.label}`}
+          {loading ? <><span className="spinner" /> Processing...</> : (
+            `Pay $${appliedDiscount ? (10 * (1 - appliedDiscount.percent/100)).toFixed(2) : '10'} with ${CURRENCIES.find(c => c.id === selected)?.label}`
+          )}
         </button>
 
         <p style={{ textAlign: 'center', color: 'var(--text-muted)', fontSize: 12, marginTop: 14 }}>

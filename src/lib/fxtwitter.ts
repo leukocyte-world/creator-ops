@@ -65,7 +65,22 @@ export async function fetchThread(urls: string[]): Promise<string> {
 
   return tweets.map((t, i) => {
     // Robust text extraction: handles standard, long-form (note_tweet), and description fallbacks
-    const content = t.text || t.note_tweet?.text || t.description || '[No text content available]';
+    let content = t.text || '';
+    
+    // Check for note_tweet (long-form content)
+    if (!content && t.note_tweet?.text) {
+      content = t.note_tweet.text;
+    }
+    
+    // Check for description (fallback)
+    if (!content && t.description) {
+      content = t.description;
+    }
+
+    // If still empty, it might be an image/video-only tweet, use URL or placeholder
+    if (!content) {
+      content = '[No text content available — this post might be an image or video only]';
+    }
     
     return [
       `--- Post ${i + 1} ---`,
