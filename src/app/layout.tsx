@@ -28,14 +28,14 @@ export const metadata: Metadata = {
     address: false,
     telephone: false,
   },
-  metadataBase: new URL('https://creator-ops.vercel.app'), // Placeholder, usually fixed on deployment
+  metadataBase: new URL('https://creatorops.site'),
   alternates: {
     canonical: '/',
   },
   openGraph: {
     title: "CreatorOps — AI Toolkit for X & YouTube",
     description: "The ultimate AI-powered system for modern creators. Scale your audience on X and YouTube with 17+ specialized tools.",
-    url: 'https://creator-ops.vercel.app',
+    url: 'https://creatorops.site',
     siteName: 'CreatorOps',
     locale: 'en_US',
     type: 'website',

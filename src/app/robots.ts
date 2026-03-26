@@ -7,6 +7,6 @@ export default function robots(): MetadataRoute.Robots {
       allow: '/',
       disallow: ['/admin/', '/api/', '/dashboard/'],
     },
-    sitemap: 'https://creator-ops.vercel.app/sitemap.xml',
+    sitemap: 'https://creatorops.site/sitemap.xml',
   };
 }

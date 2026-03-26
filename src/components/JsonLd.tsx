@@ -8,12 +8,12 @@ export default function JsonLd() {
     "brand": {
       "@type": "Brand",
       "name": "CreatorOps",
-      "logo": "https://creator-ops.vercel.app/icon.svg"
+      "logo": "https://creatorops.site/icon.svg"
     },
     "operatingSystem": "Web",
     "applicationCategory": "BusinessApplication, MultimediaApplication",
     "description": "The ultimate AI-powered system for modern creators. Scale your audience on X (Twitter) and YouTube with 17+ specialized viral growth tools.",
-    "url": "https://creator-ops.vercel.app",
+    "url": "https://creatorops.site",
     "offers": {
       "@type": "Offer",
       "price": "0.00",
@@ -28,7 +28,7 @@ export default function JsonLd() {
     "author": {
       "@type": "Organization",
       "name": "CreatorOps",
-      "url": "https://creator-ops.vercel.app"
+      "url": "https://creatorops.site"
     }
   };
 
@@ -40,13 +40,13 @@ export default function JsonLd() {
         "@type": "ListItem",
         "position": 1,
         "name": "Home",
-        "item": "https://creator-ops.vercel.app"
+        "item": "https://creatorops.site"
       },
       {
         "@type": "ListItem",
         "position": 2,
         "name": "AI Tools",
-        "item": "https://creator-ops.vercel.app/tools"
+        "item": "https://creatorops.site/tools"
       }
     ]
   };

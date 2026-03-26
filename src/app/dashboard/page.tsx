@@ -151,10 +151,10 @@ export default function DashboardPage() {
                 <h3 style={{ fontSize: 18, marginBottom: 16 }}>All Tools</h3>
                 <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 16 }}>
                   {[
-                    { name: 'Viral Reverse Engineer', path: '/tools/reverse-engineer' },
-                    { name: 'X Content Strategy', path: '/tools/content-strategy' },
-                    { name: 'Twitter Growth Bot', path: '/tools/growth-bot' },
-                    { name: 'LinkedIn Hook Gen', path: '/tools/linkedin-hooks' }
+                    { name: 'Viral Reverse Engineer', path: '/tools/x/reverse-engineer' },
+                    { name: 'X Content Strategy', path: '/tools/x/transformation' },
+                    { name: 'Twitter Growth Bot', path: '/tools/x/one-liner' },
+                    { name: 'LinkedIn Hook Gen', path: '/tools/x/hook-generator' }
                   ].map(tool => (
                     <Link key={tool.path} href={tool.path} className="card" style={{ padding: 16, textDecoration: 'none', display: 'flex', alignItems: 'center', justifyContent: 'space-between', transition: 'all 0.2s' }}>
                       <span style={{ fontSize: 14, fontWeight: 500 }}>{tool.name}</span>
