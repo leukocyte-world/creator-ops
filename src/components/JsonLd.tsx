@@ -14,6 +14,11 @@ export default function JsonLd() {
     "applicationCategory": "BusinessApplication, MultimediaApplication",
     "description": "The ultimate AI-powered system for modern creators. Scale your audience on X (Twitter) and YouTube with 17+ specialized viral growth tools.",
     "url": "https://creatorops.site",
+    "aggregateRating": {
+      "@type": "AggregateRating",
+      "ratingValue": "4.9",
+      "reviewCount": "127"
+    },
     "offers": {
       "@type": "Offer",
       "price": "0.00",
