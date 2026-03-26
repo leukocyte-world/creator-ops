@@ -5,7 +5,7 @@ import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import Footer from '@/components/Footer';
 import { 
-  User, Shield, CreditCard, Tool, 
+  User, Shield, CreditCard, 
   ExternalLink, LogOut, Calendar, Star,
   Settings, Zap, CheckCircle
 } from 'lucide-react';
