@@ -47,6 +47,22 @@ export default function DashboardPage() {
 
   return (
     <div className="app-shell" style={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
+      <style>{`
+        .dashboard-grid {
+          display: grid;
+          grid-template-columns: minmax(300px, 1fr) 2fr;
+          gap: 32px;
+        }
+        @media (max-width: 850px) {
+          .dashboard-grid {
+            grid-template-columns: 1fr;
+            gap: 24px;
+          }
+          .tool-page {
+            padding: 24px 16px !important;
+          }
+        }
+      `}</style>
       <main className="main-content" style={{ marginLeft: 0, flex: 1 }}>
         <div className="tool-page" style={{ maxWidth: 1000, margin: '0 auto', padding: '40px 24px' }}>
           
@@ -60,7 +76,7 @@ export default function DashboardPage() {
             </button>
           </div>
 
-          <div style={{ display: 'grid', gridTemplateColumns: 'minmax(300px, 1fr) 2fr', gap: 32 }}>
+          <div className="dashboard-grid">
             {/* Sidebar / Profile Info */}
             <div style={{ display: 'flex', flexDirection: 'column', gap: 24 }}>
               <div className="card" style={{ padding: 24, textAlign: 'center' }}>
