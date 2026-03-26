@@ -156,7 +156,7 @@ export default function DashboardPage() {
                 <div className="card" style={{ padding: 24 }}>
                    <div className="input-wrap" style={{ marginBottom: 20 }}>
                      <label className="input-label">Display Name</label>
-                     <input className="input" defaultValue={session.user.name || ''} placeholder="Your Name" />
+                     <input className="input" defaultValue={session.user?.name || ''} placeholder="Your Name" />
                    </div>
                    <button className="btn btn-primary" style={{ width: 'fit-content' }}>Save Changes</button>
                 </div>
