@@ -26,6 +26,20 @@ export async function POST(req: NextRequest) {
     }
   }
 
+  // Handle 100% discount (zero price)
+  if (price <= 0) {
+    const { error: updateError } = await (require('@/lib/supabase').supabase)
+      .from('users')
+      .update({ is_pro: true })
+      .eq('email', session.user.email);
+
+    if (updateError) {
+      return NextResponse.json({ error: 'Failed to apply 100% discount' }, { status: 500 });
+    }
+
+    return NextResponse.json({ success: true, message: 'Free upgrade applied successfully!' });
+  }
+
   try {
     const res = await fetch('https://api.nowpayments.io/v1/invoice', {
       method: 'POST',

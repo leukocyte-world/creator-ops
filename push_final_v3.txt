@@ -1,0 +1,24 @@
+﻿git : To https://githu
+b.com/leukocyte-world/
+creator-ops.git
+At line:1 char:105
++ ...  add discount 
+support to Upgrade" ; 
+git push origin main 
+2>&1 | Out-F ...
++                     
+                    ~~
+~~~~~~~~~~~~~~~~~~~~~~
+~
+    + CategoryInfo    
+          : NotSpeci  
+  fied: (To https:/   
+ /gith...creator-o    
+ps.git:String) []    
+, RemoteException
+    + FullyQualifiedE 
+   rrorId : NativeCo  
+  mmandError
+ 
+   616c927..0549e2d  
+main -> main

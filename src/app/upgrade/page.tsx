@@ -62,6 +62,8 @@ export default function UpgradePage() {
       const data = await res.json();
       if (data.invoice_url) {
         window.location.href = data.invoice_url;
+      } else if (data.success) {
+        window.location.href = '/upgrade/success';
       } else {
         setError(data.error ?? 'Failed to create payment. Try again.');
       }
