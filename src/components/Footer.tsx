@@ -22,7 +22,7 @@ export default function Footer() {
     }}>
       <div className="logo-mark" style={{ opacity: 0.8 }}>
         <div className="logo-icon" style={{ width: 28, height: 28, fontSize: 14 }}>C</div>
-        <span className="logo-text" style={{ fontSize: 14 }}>CreatorOps</span>
+        <span className="logo-text" style={{ fontSize: 14 }}>CreatorOps <span style={{ color: 'var(--accent-orange)', fontSize: 10, verticalAlign: 'super' }}>AI</span></span>
       </div>
       
       <div style={{ maxWidth: 600 }}>

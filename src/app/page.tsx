@@ -55,13 +55,13 @@ export default function LandingPage() {
           </div>
 
           <h1 className="hero-title animate-fade-up animate-delay-1">
-            Stop Guessing.
-            <span className="hero-title-gradient">Start Going Viral.</span>
+            Stop Guessing. <br />
+            <span className="hero-title-gradient">Master Viral AI Creator Tools.</span>
           </h1>
 
           <p className="hero-sub animate-fade-up animate-delay-2">
-            Reverse-engineer viral posts, generate hooks that demand attention, build faceless YouTube channels,
-            and map your path to creator income — all with AI.
+            The ultimate AI toolkit for X and YouTube growth. Reverse-engineer viral posts, generate scroll-stopping hooks, 
+            build faceless YouTube channels, and scale your creator business.
           </p>
 
           <div className="hero-ctas animate-fade-up animate-delay-3">
@@ -80,6 +80,33 @@ export default function LandingPage() {
           </div>
         </section>
 
+        {/* Why Us / Differentiation Section */}
+        <section className="differentiation-section" style={{ padding: '80px 20px', textAlign: 'center' }}>
+          <div className="section-tag"><span>The AI-First Advantage</span></div>
+          <h2 className="section-title">Built for the New Era of Attention.</h2>
+          <p className="section-sub" style={{ maxWidth: 800, margin: '0 auto 40px' }}>
+            Most "Creator Ops" tools are just project management apps. <br />
+            <strong>CreatorOps AI</strong> is a viral growth engine fueled by Gemini 1.5 Flash.
+          </p>
+          <div className="value-props" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))', gap: 30, maxWidth: 1200, margin: '0 auto' }}>
+            <div className="value-card">
+              <div style={{ fontSize: 32, marginBottom: 16 }}>🧠</div>
+              <h3>Reverse Engineering</h3>
+              <p>Don't just copy. Understand <em>why</em> a post went viral and replicate the chemistry.</p>
+            </div>
+            <div className="value-card">
+              <div style={{ fontSize: 32, marginBottom: 16 }}>🎭</div>
+              <h3>Faceless Systems</h3>
+              <p>Full YouTube automation paths designed for creators who value privacy and scale.</p>
+            </div>
+            <div className="value-card">
+              <div style={{ fontSize: 32, marginBottom: 16 }}>⚡</div>
+              <h3>0% Fluff</h3>
+              <p>No complex dashboards. Paste your idea, get your viral output in 3 seconds.</p>
+            </div>
+          </div>
+        </section>
+
         {/* Feature grid */}
         <section className="features-section" id="features">
           <div className="section-tag">
@@ -94,12 +121,12 @@ export default function LandingPage() {
             {/* X column */}
             <div>
               <div className="platform-column-header x-col">
-                <span>𝕏</span> Twitter / X Tools
+                <span role="img" aria-label="X (Twitter)">𝕏</span> Viral Twitter / X Tools
               </div>
               <div className="tool-list">
                 {X_TOOLS.map(t => (
                   <Link key={t.href} href="/auth/signin" className="tool-list-item">
-                    <div className="tool-list-item-icon x-icon-bg">{t.icon}</div>
+                    <div className="tool-list-item-icon x-icon-bg" role="img" aria-label={t.label}>{t.icon}</div>
                     {t.label}
                     <span style={{ marginLeft: 'auto', opacity: 0.4, fontSize: 12 }}>→</span>
                   </Link>
@@ -110,12 +137,12 @@ export default function LandingPage() {
             {/* YouTube column */}
             <div>
               <div className="platform-column-header yt-col">
-                ▶ YouTube Tools
+                <span role="img" aria-label="YouTube">▶</span> AI YouTube Automation
               </div>
               <div className="tool-list">
                 {YT_TOOLS.map(t => (
                   <Link key={t.href} href="/auth/signin" className="tool-list-item">
-                    <div className="tool-list-item-icon yt-icon-bg">{t.icon}</div>
+                    <div className="tool-list-item-icon yt-icon-bg" role="img" aria-label={t.label}>{t.icon}</div>
                     {t.label}
                     <span style={{ marginLeft: 'auto', opacity: 0.4, fontSize: 12 }}>→</span>
                   </Link>

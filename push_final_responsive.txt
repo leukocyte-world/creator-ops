@@ -1,0 +1,24 @@
+﻿git : To https://githu
+b.com/leukocyte-world/
+creator-ops.git
+At line:1 char:84
++ ...  responsive for 
+all screen sizes" ; 
+git push origin main 
+2>&1 | Out-F ...
++                     
+                    ~~
+~~~~~~~~~~~~~~~~~~~~~~
+~
+    + CategoryInfo    
+          : NotSpeci  
+  fied: (To https:/   
+ /gith...creator-o    
+ps.git:String) []    
+, RemoteException
+    + FullyQualifiedE 
+   rrorId : NativeCo  
+  mmandError
+ 
+   cd8b555..e715157  
+main -> main

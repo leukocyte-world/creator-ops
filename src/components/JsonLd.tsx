@@ -1,0 +1,66 @@
+import React from 'react';
+
+export default function JsonLd() {
+  const softwareSchema = {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    "name": "CreatorOps AI",
+    "brand": {
+      "@type": "Brand",
+      "name": "CreatorOps",
+      "logo": "https://creator-ops.vercel.app/icon.svg"
+    },
+    "operatingSystem": "Web",
+    "applicationCategory": "BusinessApplication, MultimediaApplication",
+    "description": "The ultimate AI-powered system for modern creators. Scale your audience on X (Twitter) and YouTube with 17+ specialized viral growth tools.",
+    "url": "https://creator-ops.vercel.app",
+    "offers": {
+      "@type": "Offer",
+      "price": "0.00",
+      "priceCurrency": "USD"
+    },
+    "featureList": [
+      "Viral Reverse Engineer",
+      "Twitter Hook Generator",
+      "Faceless YouTube Automation",
+      "90-Day Creator Money Map"
+    ],
+    "author": {
+      "@type": "Organization",
+      "name": "CreatorOps",
+      "url": "https://creator-ops.vercel.app"
+    }
+  };
+
+  const breadcrumbSchema = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      {
+        "@type": "ListItem",
+        "position": 1,
+        "name": "Home",
+        "item": "https://creator-ops.vercel.app"
+      },
+      {
+        "@type": "ListItem",
+        "position": 2,
+        "name": "AI Tools",
+        "item": "https://creator-ops.vercel.app/tools"
+      }
+    ]
+  };
+
+  return (
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(softwareSchema) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
+      />
+    </>
+  );
+}

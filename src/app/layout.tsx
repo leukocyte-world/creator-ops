@@ -1,15 +1,61 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import { Providers } from './providers';
+import JsonLd from '@/components/JsonLd';
 
 export const metadata: Metadata = {
-  title: "CreatorOps — AI Tools for X & YouTube Creators",
-  description: "Reverse-engineer viral posts, generate hooks, build faceless YouTube channels, and grow your creator business with AI-powered tools.",
-  keywords: ["creator tools", "AI writing", "YouTube growth", "X Twitter viral", "content creator"],
+  title: "CreatorOps — AI Toolkit for Viral X (Twitter) & YouTube Growth",
+  description: "Stop guessing and start going viral. Use AI to reverse-engineer viral posts, generate hooks, build faceless YouTube channels, and scale your creator business.",
+  verification: {
+    google: 'SGdaiH54RwxqCcWTS5zduiCwdh8jsJwTU3gkQiOgX8M',
+  },
+  keywords: [
+    "AI creator tools",
+    "viral hook generator",
+    "faceless YouTube channel AI",
+    "Twitter growth engine",
+    "X content generator",
+    "YouTube automation tools",
+    "content creator toolkit",
+    "viral post AI",
+    "AI script writer"
+  ],
+  authors: [{ name: "CreatorOps Team" }],
+  creator: "CreatorOps",
+  publisher: "CreatorOps",
+  formatDetection: {
+    email: false,
+    address: false,
+    telephone: false,
+  },
+  metadataBase: new URL('https://creator-ops.vercel.app'), // Placeholder, usually fixed on deployment
+  alternates: {
+    canonical: '/',
+  },
   openGraph: {
-    title: "CreatorOps",
-    description: "AI-powered creator toolkit for X & YouTube",
-    type: "website",
+    title: "CreatorOps — AI Toolkit for X & YouTube",
+    description: "The ultimate AI-powered system for modern creators. Scale your audience on X and YouTube with 17+ specialized tools.",
+    url: 'https://creator-ops.vercel.app',
+    siteName: 'CreatorOps',
+    locale: 'en_US',
+    type: 'website',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: "CreatorOps — Stop Guessing. Start Going Viral.",
+    description: "17+ AI tools to help you dominate X and YouTube.",
+    creator: '@creatorops',
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      'max-video-preview': -1,
+      'max-image-preview': 'large',
+      'max-snippet': -1,
+    },
   },
 };
 
@@ -26,6 +72,7 @@ export default function RootLayout({
       </head>
       <body>
         <Providers>
+          <JsonLd />
           {children}
         </Providers>
       </body>
