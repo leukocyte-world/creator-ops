@@ -28,9 +28,16 @@ export async function POST(req: NextRequest) {
 
   // Handle 100% discount (zero price)
   if (price <= 0) {
+    const expiresAt = new Date();
+    expiresAt.setMonth(expiresAt.getMonth() + 1);
+
     const { error: updateError } = await (require('@/lib/supabase').supabase)
       .from('users')
-      .update({ is_pro: true })
+      .update({ 
+        is_pro: true,
+        subscription_expires_at: expiresAt.toISOString(),
+        nowpayments_payment_id: `discount-${discount_code || '100pct'}-${Date.now()}`
+      })
       .eq('email', session.user.email);
 
     if (updateError) {

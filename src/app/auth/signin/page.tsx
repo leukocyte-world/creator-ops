@@ -30,7 +30,7 @@ export default function SignInPage() {
         setError('Invalid email or password');
         setLoading(false);
       } else {
-        router.push('/tools');
+        router.push('/dashboard');
         router.refresh();
       }
     } else {
@@ -53,7 +53,7 @@ export default function SignInPage() {
         await signIn('credentials', {
           email,
           password,
-          callbackUrl: '/tools'
+          callbackUrl: '/dashboard'
         });
       } catch {
         setError('Network error. Try again.');
