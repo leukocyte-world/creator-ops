@@ -70,11 +70,11 @@ export default function DashboardPage() {
                   margin: '0 auto 16px', display: 'flex', alignItems: 'center', justifyContent: 'center',
                   fontSize: 32, fontWeight: 800, color: 'white'
                 }}>
-                  {session.user.email?.[0].toUpperCase()}
+                  {session.user?.email?.[0].toUpperCase()}
                 </div>
-                <h2 style={{ fontSize: 20, marginBottom: 4 }}>{session.user.name || session.user.email?.split('@')[0]}</h2>
+                <h2 style={{ fontSize: 20, marginBottom: 4 }}>{session.user?.name || session.user?.email?.split('@')[0]}</h2>
                 <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 6, fontSize: 13, color: 'var(--text-secondary)' }}>
-                  <User size={14} /> {session.user.email}
+                  <User size={14} /> {session.user?.email}
                 </div>
                 
                 <div style={{ marginTop: 20 }}>
