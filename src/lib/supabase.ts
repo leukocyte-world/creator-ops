@@ -163,8 +163,7 @@ export async function upsertPost(post: Partial<Post>): Promise<{ data: Post | nu
   const { data, error } = await supabase
     .from('posts')
     .upsert({
-      ...post,
-      updated_at: new Date().toISOString(),
+      ...post
     })
     .select()
     .single();

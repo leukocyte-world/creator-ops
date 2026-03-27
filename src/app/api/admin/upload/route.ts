@@ -27,6 +27,12 @@ export async function POST(request: Request) {
     const fileName = `${Math.random().toString(36).substring(2)}-${Date.now()}.${fileExt}`;
     const filePath = `blog/${fileName}`;
 
+    // Ensure bucket exists
+    const { data: buckets } = await supabase.storage.listBuckets();
+    if (!buckets?.find(b => b.name === 'blog-images')) {
+      await supabase.storage.createBucket('blog-images', { public: true });
+    }
+
     const { data, error } = await supabase.storage
       .from('blog-images')
       .upload(filePath, file, {
@@ -35,9 +41,7 @@ export async function POST(request: Request) {
       });
 
     if (error) {
-      // If bucket doesn't exist, this might fail. 
-      // In a real app we'd ensure bucket exists, but here we assume 'blog-images' exists or needs creation.
-      return NextResponse.json({ error: error.message }, { status: 500 });
+      return NextResponse.json({ error: `Upload error: ${error.message}` }, { status: 500 });
     }
 
     const { data: { publicUrl } } = supabase.storage
