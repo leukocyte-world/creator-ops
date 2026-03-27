@@ -6,9 +6,10 @@ import Link from 'next/link';
 import Footer from '@/components/Footer';
 import { 
   Users, Ticket, Activity, ShieldCheck, 
-  Search, RefreshCw, Trash2, Plus, ArrowLeft, BookOpen, Edit2
+  Search, RefreshCw, Trash2, Plus, ArrowLeft, BookOpen, Edit2, Upload, Loader2, Image as ImageIcon
 } from 'lucide-react';
 import { Post } from '../blog/page';
+import BlogEditor from './components/BlogEditor';
 
 export default function AdminDashboard() {
   const { data: session, status } = useSession();
@@ -26,6 +27,7 @@ export default function AdminDashboard() {
   // New Post Form
   const [editingPost, setEditingPost] = useState<Partial<Post> | null>(null);
   const [savingPost, setSavingPost] = useState(false);
+  const [uploadingCover, setUploadingCover] = useState(false);
 
   const fetchData = async () => {
     setLoading(true);
@@ -175,6 +177,33 @@ export default function AdminDashboard() {
       fetchData();
     } catch (e) {
       console.error(e);
+    }
+  };
+
+  const handleCoverUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file || !editingPost) return;
+
+    setUploadingCover(true);
+    const formData = new FormData();
+    formData.append('file', file);
+
+    try {
+      const res = await fetch('/api/admin/upload', {
+        method: 'POST',
+        body: formData,
+      });
+      const data = await res.json();
+      if (data.url) {
+        setEditingPost({ ...editingPost, cover_image: data.url });
+      } else {
+        alert('Upload failed: ' + (data.error || 'Unknown error'));
+      }
+    } catch (err) {
+      console.error('Upload error:', err);
+      alert('Upload failed');
+    } finally {
+      setUploadingCover(false);
     }
   };
 
@@ -417,8 +446,11 @@ export default function AdminDashboard() {
                         <input className="input" required value={editingPost.excerpt || ''} onChange={e => setEditingPost({...editingPost, excerpt: e.target.value})} />
                       </div>
                       <div className="input-wrap">
-                        <label className="input-label">Content (Markdown)</label>
-                        <textarea className="input" style={{ height: 200, padding: 12 }} required value={editingPost.content || ''} onChange={e => setEditingPost({...editingPost, content: e.target.value})} />
+                        <label className="input-label">Content (Rich Markdown Editor)</label>
+                        <BlogEditor 
+                          content={editingPost.content || ''} 
+                          onChange={(val) => setEditingPost({ ...editingPost, content: val })} 
+                        />
                       </div>
                       <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: 20 }}>
                          <div className="input-wrap">
@@ -430,8 +462,14 @@ export default function AdminDashboard() {
                           <input className="input" value={editingPost.author || ''} onChange={e => setEditingPost({...editingPost, author: e.target.value})} />
                         </div>
                         <div className="input-wrap">
-                          <label className="input-label">Cover Image URL</label>
-                          <input className="input" value={editingPost.cover_image || ''} onChange={e => setEditingPost({...editingPost, cover_image: e.target.value})} />
+                          <label className="input-label">Cover Image</label>
+                          <div style={{ display: 'flex', gap: 8 }}>
+                            <input className="input" placeholder="URL or upload..." value={editingPost.cover_image || ''} onChange={e => setEditingPost({...editingPost, cover_image: e.target.value})} />
+                            <label className={`btn btn-secondary ${uploadingCover ? 'disabled' : ''}`} style={{ padding: '0 12px', flexShrink: 0, cursor: 'pointer' }}>
+                              {uploadingCover ? <Loader2 size={16} className="animate-spin" /> : <ImageIcon size={16} />}
+                              <input type="file" hidden accept="image/*" onChange={handleCoverUpload} disabled={uploadingCover} />
+                            </label>
+                          </div>
                         </div>
                       </div>
                       <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
