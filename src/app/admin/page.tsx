@@ -8,7 +8,7 @@ import {
   Users, Ticket, Activity, ShieldCheck, 
   Search, RefreshCw, Trash2, Plus, ArrowLeft, BookOpen, Edit2
 } from 'lucide-react';
-import { getPosts, upsertPost, deletePost, Post } from '@/lib/supabase';
+import { Post } from '../blog/page';
 
 export default function AdminDashboard() {
   const { data: session, status } = useSession();
@@ -45,8 +45,9 @@ export default function AdminDashboard() {
         if (Array.isArray(discData)) setDiscounts(discData);
       }
 
-      const postData = await getPosts(false);
-      setPosts(postData || []);
+      const postRes = await fetch('/api/blog?all=true');
+      const postData = await postRes.json();
+      setPosts(Array.isArray(postData) ? postData : []);
     } catch (e) {
       console.error('Admin Fetch Error:', e);
     } finally {
@@ -140,13 +141,23 @@ export default function AdminDashboard() {
     if (!editingPost?.title || !editingPost?.slug) return;
     setSavingPost(true);
     try {
-      await upsertPost({
-        ...editingPost,
-        author: editingPost.author || 'CreatorOps AI',
-        category: editingPost.category || 'Strategy',
-        is_published: editingPost.is_published ?? false,
-        published_at: editingPost.published_at || new Date().toISOString(),
+      const res = await fetch('/api/blog', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          ...editingPost,
+          author: editingPost.author || 'CreatorOps AI',
+          category: editingPost.category || 'Strategy',
+          is_published: editingPost.is_published ?? false,
+          published_at: editingPost.published_at || new Date().toISOString(),
+        })
       });
+
+      if (!res.ok) {
+        const err = await res.json();
+        throw new Error(err.error || 'Failed to save');
+      }
+      
       setEditingPost(null);
       fetchData();
     } catch (e) {
@@ -160,7 +171,7 @@ export default function AdminDashboard() {
   const removePost = async (id: string) => {
     if (!confirm('Delete this post forever?')) return;
     try {
-      await deletePost(id);
+      await fetch(`/api/blog?id=${id}`, { method: 'DELETE' });
       fetchData();
     } catch (e) {
       console.error(e);

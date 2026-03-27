@@ -2,140 +2,139 @@
 
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
-import { useParams } from 'next/navigation';
-import { getPostBySlug, Post } from '@/lib/supabase';
-import Footer from '@/components/Footer';
 import ReactMarkdown from 'react-markdown';
+import Footer from '@/components/Footer';
+import Sidebar from '@/components/Sidebar';
+import { Post } from '../page';
+import { useSession } from 'next-auth/react';
+import { ArrowLeft, Calendar, User, Tag, Share2 } from 'lucide-react';
 
-export default function PostDetailPage() {
-  const params = useParams();
-  const slug = params.slug as string;
+export default function BlogPost({ params }: { params: { slug: string } }) {
+  const { data: session } = useSession();
   const [post, setPost] = useState<Post | null>(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     async function fetchPost() {
-      if (slug) {
-        const data = await getPostBySlug(slug);
+      try {
+        const res = await fetch(`/api/blog?slug=${params.slug}`);
+        const data = await res.json();
         setPost(data);
+      } catch (err) {
+        console.error('Error fetching post:', err);
+      } finally {
         setLoading(false);
       }
     }
     fetchPost();
-  }, [slug]);
+  }, [params.slug]);
 
-  if (loading) return <div className="min-h-screen pt-40 flex justify-center"><span className="spinner" /></div>;
+  if (loading) {
+    return (
+      <div className="app-shell">
+        <Sidebar hiddenOnDesktop />
+        <main className="main-content" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', minHeight: '100vh' }}>
+          <div className="spinner" style={{ width: 40, height: 40, borderTopColor: 'var(--accent-orange)' }}></div>
+        </main>
+      </div>
+    );
+  }
 
   if (!post) {
     return (
-      <div className="min-h-screen pt-40 text-center">
-        <h1 style={{ fontSize: 32, fontWeight: 800, marginBottom: 20 }}>Post not found</h1>
-        <Link href="/blog" style={{ color: 'var(--brand-primary)', textDecoration: 'none' }}>Return to Resources</Link>
+      <div className="app-shell">
+        <Sidebar hiddenOnDesktop />
+        <main className="main-content" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', minHeight: '100vh' }}>
+          <h1 style={{ marginBottom: 20 }}>Post not found</h1>
+          <Link href="/blog" className="btn btn-primary">Back to Blog</Link>
+        </main>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen flex flex-col pt-32 px-4 md:px-8">
-      {/* Basic Navigation */}
-      <nav style={{ position: 'fixed', top: 0, left: 0, right: 0, height: 80, backgroundColor: 'rgba(10, 10, 10, 0.8)', backdropFilter: 'blur(10px)', borderBottom: '1px solid var(--border-color)', display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '0 5%', zIndex: 100 }}>
-        <a href="/" style={{ fontSize: 24, fontWeight: 900, fontFamily: 'Syne, sans-serif', letterSpacing: -1, color: 'var(--text-primary)', textDecoration: 'none' }}>
-          CREATOR<span style={{ color: 'var(--brand-primary)' }}>OPS</span>
-        </a>
-        <div style={{ display: 'flex', gap: 30 }}>
-          <a href="/" style={{ color: 'var(--text-secondary)', textDecoration: 'none', fontSize: 14, fontWeight: 600 }}>Home</a>
-          <a href="/tools" style={{ color: 'var(--text-secondary)', textDecoration: 'none', fontSize: 14, fontWeight: 600 }}>Tools</a>
-          <a href="/blog" style={{ color: 'var(--brand-primary)', textDecoration: 'none', fontSize: 14, fontWeight: 600 }}>Resources</a>
+    <div className="app-shell">
+      <nav className="desktop-nav" style={{ backgroundColor: 'rgba(13, 15, 20, 0.8)', backdropFilter: 'blur(12px)', borderBottom: '1px solid var(--border)' }}>
+        <div className="nav-container">
+          <Link href="/" className="logo-mark">
+            <div className="logo-icon">C</div>
+            <span className="logo-text">CreatorOps</span>
+          </Link>
+          <div className="nav-links">
+            <Link href="/tools">AI Tools</Link>
+            <Link href="/blog" style={{ color: 'var(--text-primary)' }}>Resources</Link>
+            <Link href="/#pricing">Pricing</Link>
+            <Link href={session ? "/dashboard" : "/auth/signin"} className="btn btn-secondary btn-sm">Sign In</Link>
+            <Link href={session ? "/dashboard" : "/auth/signin"} className="btn btn-primary btn-sm">Start Free</Link>
+          </div>
         </div>
       </nav>
 
-      <article className="max-w-3xl mx-auto w-full pb-20">
-        <header className="mb-12">
-          <div style={{ display: 'flex', gap: 8, marginBottom: 16 }}>
-            <span style={{ backgroundColor: 'rgba(0, 243, 255, 0.1)', color: 'var(--brand-primary)', fontSize: 12, fontWeight: 700, padding: '4px 12px', borderRadius: 100, border: '1px solid rgba(0, 243, 255, 0.2)' }}>
-              {post.category}
-            </span>
-          </div>
-          <h1 style={{ fontFamily: 'Syne, sans-serif', fontSize: 'clamp(32px, 5vw, 56px)', fontWeight: 800, lineHeight: 1.1, letterSpacing: -1.5, marginBottom: 24 }}>
-            {post.title}
-          </h1>
-          <div style={{ display: 'flex', alignItems: 'center', gap: 12, color: 'var(--text-secondary)', fontSize: 14 }}>
-            <div style={{ width: 32, height: 32, borderRadius: '50%', backgroundColor: 'var(--bg-secondary)', display: 'flex', alignItems: 'center', justifyContent: 'center', border: '1px solid var(--border-color)' }}>
-              AI
+      <Sidebar hiddenOnDesktop />
+
+      <main className="main-content" style={{ paddingBottom: 100 }}>
+        <article className="tool-page" style={{ maxWidth: 860, paddingTop: 120 }}>
+          <Link href="/blog" style={{ display: 'flex', alignItems: 'center', gap: 8, color: 'var(--text-secondary)', marginBottom: 40, fontSize: 14 }}>
+            <ArrowLeft size={16} /> Back to all resources
+          </Link>
+
+          <header style={{ marginBottom: 48 }}>
+            <div style={{ display: 'flex', gap: 8, marginBottom: 20 }}>
+               <span className="badge badge-x">{post.category}</span>
+               <span className="badge badge-pro">Creator Guide</span>
             </div>
-            <span>By <strong>{post.author}</strong></span>
-            <span>•</span>
-            <span>{new Date(post.published_at).toLocaleDateString(undefined, { month: 'long', day: 'numeric', year: 'numeric' })}</span>
+            <h1 style={{ fontSize: 'clamp(32px, 5vw, 56px)', fontWeight: 800, lineHeight: 1.1, marginBottom: 24 }}>{post.title}</h1>
+            
+            <div style={{ display: 'flex', flexWrap: 'wrap', gap: 24, padding: '20px 0', borderTop: '1px solid var(--border)', borderBottom: '1px solid var(--border)', color: 'var(--text-secondary)', fontSize: 13 }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+                <User size={14} /> Author: <strong>{post.author}</strong>
+              </div>
+              <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+                <Calendar size={14} /> Published: {new Date(post.published_at).toLocaleDateString()}
+              </div>
+              <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+                <Tag size={14} /> {post.category}
+              </div>
+            </div>
+          </header>
+
+          {post.cover_image && (
+            <div style={{ width: '100%', borderRadius: 24, overflow: 'hidden', marginBottom: 48, border: '1px solid var(--border)' }}>
+              <img src={post.cover_image} alt={post.title} style={{ width: '100%', display: 'block' }} />
+            </div>
+          )}
+
+          <div className="blog-content">
+            <ReactMarkdown>{post.content}</ReactMarkdown>
           </div>
-        </header>
 
-        {post.cover_image && (
-          <div style={{ borderRadius: 24, overflow: 'hidden', marginBottom: 40, border: '1px solid var(--border-color)', boxShadow: '0 20px 50px rgba(0,0,0,0.5)' }}>
-            <img src={post.cover_image} alt={post.title} style={{ width: '100%', display: 'block' }} />
+          <div style={{ marginTop: 64, padding: '40px 32px', background: 'var(--bg-glass)', borderRadius: 24, border: '1px solid var(--border)', textAlign: 'center' }}>
+            <h2 style={{ marginBottom: 12 }}>Ready to apply these strategies?</h2>
+            <p style={{ color: 'var(--text-secondary)', marginBottom: 24 }}>Get started with our 17+ AI tools designed specifically for modern creators.</p>
+            <Link href={session ? "/tools" : "/auth/signin"} className="btn btn-primary btn-lg">
+              Start Building Now
+            </Link>
           </div>
-        )}
+        </article>
 
-        <div className="prose">
-          <ReactMarkdown>{post.content}</ReactMarkdown>
-        </div>
-
-        <section style={{ marginTop: 80, padding: 40, borderRadius: 32, backgroundColor: 'var(--bg-secondary)', border: '1px solid var(--border-color)', textAlign: 'center' }}>
-          <h2 style={{ fontFamily: 'Syne, sans-serif', fontSize: 24, fontWeight: 800, marginBottom: 16 }}>Ready to Go Viral?</h2>
-          <p style={{ color: 'var(--text-secondary)', marginBottom: 24, maxWidth: 500, margin: '0 auto 24px' }}>
-            Get access to 17+ AI tools designed specifically for creators. Build your empire today.
-          </p>
-          <a href="/tools" className="btn btn-primary" style={{ display: 'inline-block', textDecoration: 'none' }}>
-            Browse All Tools
-          </a>
-        </section>
-      </article>
-
-      <Footer />
+        <Footer />
+      </main>
 
       <style jsx global>{`
-        .prose {
-          color: var(--text-primary);
+        .blog-content {
+          font-size: 17px;
           line-height: 1.8;
-          font-size: 18px;
-        }
-        .prose h2 {
-          font-family: 'Syne, sans-serif';
-          font-size: 28px;
-          margin-top: 48px;
-          margin-bottom: 24px;
-          color: #fff;
-          font-weight: 800;
-        }
-        .prose h3 {
-          font-family: 'Syne, sans-serif';
-          font-size: 22px;
-          margin-top: 32px;
-          margin-bottom: 16px;
-          color: #fff;
-          font-weight: 700;
-        }
-        .prose p {
-          margin-bottom: 24px;
-          color: var(--text-secondary);
-        }
-        .prose ul, .prose ol {
-          margin-bottom: 24px;
-          padding-left: 20px;
-          color: var(--text-secondary);
-        }
-        .prose li {
-          margin-bottom: 12px;
-        }
-        .prose strong {
-          color: #fff;
-        }
-        .prose blockquote {
-          border-left: 4px solid var(--brand-primary);
-          padding-left: 24px;
-          font-style: italic;
-          margin: 32px 0;
           color: var(--text-primary);
         }
+        .blog-content h2 { font-size: 28px; margin-top: 48px; margin-bottom: 20px; }
+        .blog-content h3 { font-size: 22px; margin-top: 32px; margin-bottom: 16px; }
+        .blog-content p { margin-bottom: 24px; }
+        .blog-content ul, .blog-content ol { margin-bottom: 24px; padding-left: 20px; }
+        .blog-content li { margin-bottom: 8px; }
+        .blog-content code { background: var(--bg-surface); padding: 2px 6px; border-radius: 4px; color: var(--accent-orange); font-family: monospace; }
+        .blog-content pre { background: var(--bg-surface); padding: 20px; border-radius: 12px; overflow-x: auto; margin-bottom: 24px; border: 1px solid var(--border); }
+        .blog-content blockquote { border-left: 4px solid var(--accent-orange); padding-left: 20px; color: var(--text-secondary); font-style: italic; margin-bottom: 24px; }
+        .blog-content img { max-width: 100%; border-radius: 16px; margin: 32px 0; }
       `}</style>
     </div>
   );

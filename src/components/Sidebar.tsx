@@ -195,7 +195,7 @@ export default function Sidebar({ hiddenOnDesktop = false }: { hiddenOnDesktop?:
           </div>
         ) : (
           <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
-            <button className="btn btn-secondary btn-md btn-full" onClick={() => signIn()}>
+            <button className="btn btn-secondary btn-md btn-full" onClick={() => signIn(undefined, { callbackUrl: '/dashboard' })}>
               Sign In
             </button>
             <Link href="/auth/signin" className="btn btn-primary btn-md btn-full">

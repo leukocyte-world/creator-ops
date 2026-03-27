@@ -107,6 +107,18 @@ export default function SignInPage() {
             />
           </div>
 
+          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+            <label style={{ display: 'flex', alignItems: 'center', gap: 8, fontSize: 13, cursor: 'pointer', color: 'var(--text-secondary)' }}>
+              <input type="checkbox" style={{ accentColor: 'var(--accent-orange)' }} />
+              Remember me
+            </label>
+            {isLogin && (
+              <Link href="/auth/reset-password" style={{ fontSize: 13, color: 'var(--accent-orange)' }}>
+                Forgot password?
+              </Link>
+            )}
+          </div>
+
           {error && <div style={{ color: '#ff7070', fontSize: 13, background: 'rgba(255,0,0,0.1)', padding: 10, borderRadius: 6 }}>{error}</div>}
 
           <button type="submit" className="btn btn-primary btn-full" disabled={loading}>
