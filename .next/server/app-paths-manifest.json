@@ -1,7 +1,0 @@
-{
-  "/tools/x/one-liner/page": "app/tools/x/one-liner/page.js",
-  "/tools/x/hook-generator/page": "app/tools/x/hook-generator/page.js",
-  "/page": "app/page.js",
-  "/tools/youtube/retention-script/page": "app/tools/youtube/retention-script/page.js",
-  "/auth/signin/page": "app/auth/signin/page.js"
-}

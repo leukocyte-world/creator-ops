@@ -162,9 +162,9 @@ export default function AdminDashboard() {
       
       setEditingPost(null);
       fetchData();
-    } catch (e) {
+    } catch (e: any) {
       console.error(e);
-      alert('Error saving post. Check console.');
+      alert('Error saving post: ' + (e.message || 'Unknown error'));
     } finally {
       setSavingPost(false);
     }
