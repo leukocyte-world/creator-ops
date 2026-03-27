@@ -1,12 +1,14 @@
 'use client';
 
 import Link from "next/link";
+import { useSession } from 'next-auth/react';
 import Sidebar from "@/components/Sidebar";
 import Footer from "@/components/Footer";
 
 import { X_TOOLS, YT_TOOLS } from "@/lib/tools-config";
 
 export default function LandingPage() {
+  const { data: session } = useSession();
   const currentYear = new Date().getFullYear();
 
   return (
@@ -21,8 +23,8 @@ export default function LandingPage() {
             <Link href="/tools">AI Tools</Link>
             <Link href="/blog">Resources</Link>
             <Link href="/#pricing">Pricing</Link>
-            <Link href="/auth/signin" className="btn btn-secondary btn-sm">Sign In</Link>
-            <Link href="/auth/signin" className="btn btn-primary btn-sm">Start Free</Link>
+            <Link href={session ? "/tools" : "/auth/signin"} className="btn btn-secondary btn-sm">Sign In</Link>
+            <Link href={session ? "/tools" : "/auth/signin"} className="btn btn-primary btn-sm">Start Free</Link>
           </div>
         </div>
       </nav>
@@ -49,7 +51,7 @@ export default function LandingPage() {
           </p>
 
           <div className="hero-ctas animate-fade-up animate-delay-3">
-            <Link href="/auth/signin" className="btn btn-primary btn-lg">
+            <Link href={session ? "/tools" : "/auth/signin"} className="btn btn-primary btn-lg">
               <span>→</span> Start for free
             </Link>
             <Link href="/#features" className="btn btn-secondary btn-lg">
@@ -154,7 +156,7 @@ export default function LandingPage() {
                 <li>Full AI-generated output</li>
                 <li>Copy to clipboard</li>
               </ul>
-              <Link href="/auth/signin" className="btn btn-secondary btn-full">
+              <Link href={session ? "/tools" : "/auth/signin"} className="btn btn-secondary btn-full">
                 Get started free
               </Link>
             </div>

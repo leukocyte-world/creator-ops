@@ -11,7 +11,7 @@ import {
 import { getPosts, upsertPost, deletePost, Post } from '@/lib/supabase';
 
 export default function AdminDashboard() {
-  const { data: session } = useSession();
+  const { data: session, status } = useSession();
   const [users, setUsers] = useState<any[]>([]);
   const [discounts, setDiscounts] = useState<any[]>([]);
   const [posts, setPosts] = useState<Post[]>([]);
@@ -27,93 +27,48 @@ export default function AdminDashboard() {
   const [editingPost, setEditingPost] = useState<Partial<Post> | null>(null);
   const [savingPost, setSavingPost] = useState(false);
 
-  useEffect(() => {
-    if (session?.user) {
-      fetchData();
-    }
-  }, [session]);
-
   const fetchData = async () => {
     setLoading(true);
     try {
-      const res = await Promise.all([
+      const [usersRes, discsRes] = await Promise.all([
         fetch('/api/admin/users_list'),
         fetch('/api/admin/discounts')
       ]);
       
-      const userData = await res[0].json();
-      const discData = await res[1].json();
-      const postData = await getPosts(false);
+      if (usersRes.ok) {
+        const userData = await usersRes.json();
+        if (Array.isArray(userData)) setUsers(userData);
+      }
       
-      if (Array.isArray(userData)) setUsers(userData);
-      if (Array.isArray(discData)) setDiscounts(discData);
-      setPosts(postData);
+      if (discsRes.ok) {
+        const discData = await discsRes.json();
+        if (Array.isArray(discData)) setDiscounts(discData);
+      }
+
+      const postData = await getPosts(false);
+      setPosts(postData || []);
     } catch (e) {
-      console.error(e);
+      console.error('Admin Fetch Error:', e);
+    } finally {
+      setLoading(false);
     }
-    setLoading(false);
   };
 
-  const togglePro = async (email: string, current: boolean) => {
-    await fetch('/api/admin/users', {
-      method: 'PATCH',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ email, is_pro: !current })
-    });
-    fetchData();
-  };
+  useEffect(() => {
+    if (status === 'authenticated' && (session?.user as any)?.role === 'admin') {
+      fetchData();
+    }
+  }, [session, status]);
 
-  const changeRole = async (email: string, role: string) => {
-    await fetch('/api/admin/users', {
-      method: 'PATCH',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ email, role })
-    });
-    fetchData();
-  };
+  if (status === 'loading') {
+    return (
+      <div className="tool-page" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', minHeight: '60vh' }}>
+        <RefreshCw className="animate-spin" size={32} style={{ color: 'var(--accent-blue)' }} />
+      </div>
+    );
+  }
 
-  const addDiscount = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setAddingDisc(true);
-    await fetch('/api/admin/discounts', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ code: newDisc.code.toUpperCase(), percent_off: newDisc.percent })
-    });
-    setNewDisc({ code: '', percent: 20 });
-    fetchData();
-    setAddingDisc(false);
-  };
-
-  const deleteDiscount = async (id: string) => {
-    if (!confirm('Are you sure?')) return;
-    await fetch(`/api/admin/discounts?id=${id}`, { method: 'DELETE' });
-    fetchData();
-  };
-
-  const savePost = async (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!editingPost?.title || !editingPost?.slug) return;
-    setSavingPost(true);
-    await upsertPost({
-      ...editingPost,
-      author: editingPost.author || 'CreatorOps AI',
-      category: editingPost.category || 'Strategy',
-      is_published: editingPost.is_published ?? false,
-      published_at: editingPost.published_at || new Date().toISOString(),
-    });
-    setEditingPost(null);
-    fetchData();
-    setSavingPost(false);
-  };
-
-  const removePost = async (id: string) => {
-    if (!confirm('Delete this post forever?')) return;
-    await deletePost(id);
-    fetchData();
-  };
-
-  if (!session?.user || (session.user as any).role !== 'admin') {
+  if (status !== 'authenticated' || (session?.user as any)?.role !== 'admin') {
     return (
       <div className="tool-page" style={{ textAlign: 'center', paddingTop: 100 }}>
         <h1 style={{ color: 'var(--accent-yt)' }}>401 Unauthorized</h1>
@@ -125,14 +80,101 @@ export default function AdminDashboard() {
     );
   }
 
-  const filteredUsers = users.filter(u => 
-    u.email.toLowerCase().includes(search.toLowerCase())
+  const togglePro = async (email: string, current: boolean) => {
+    try {
+      await fetch('/api/admin/users', {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, is_pro: !current })
+      });
+      fetchData();
+    } catch (e) {
+      console.error(e);
+    }
+  };
+
+  const changeRole = async (email: string, role: string) => {
+    try {
+      await fetch('/api/admin/users', {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, role })
+      });
+      fetchData();
+    } catch (e) {
+      console.error(e);
+    }
+  };
+
+  const addDiscount = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!newDisc.code) return;
+    setAddingDisc(true);
+    try {
+      await fetch('/api/admin/discounts', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ code: newDisc.code.toUpperCase(), percent_off: newDisc.percent })
+      });
+      setNewDisc({ code: '', percent: 20 });
+      fetchData();
+    } catch (e) {
+      console.error(e);
+    } finally {
+      setAddingDisc(false);
+    }
+  };
+
+  const deleteDiscount = async (id: string) => {
+    if (!confirm('Are you sure?')) return;
+    try {
+      await fetch(`/api/admin/discounts?id=${id}`, { method: 'DELETE' });
+      fetchData();
+    } catch (e) {
+      console.error(e);
+    }
+  };
+
+  const savePost = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!editingPost?.title || !editingPost?.slug) return;
+    setSavingPost(true);
+    try {
+      await upsertPost({
+        ...editingPost,
+        author: editingPost.author || 'CreatorOps AI',
+        category: editingPost.category || 'Strategy',
+        is_published: editingPost.is_published ?? false,
+        published_at: editingPost.published_at || new Date().toISOString(),
+      });
+      setEditingPost(null);
+      fetchData();
+    } catch (e) {
+      console.error(e);
+      alert('Error saving post. Check console.');
+    } finally {
+      setSavingPost(false);
+    }
+  };
+
+  const removePost = async (id: string) => {
+    if (!confirm('Delete this post forever?')) return;
+    try {
+      await deletePost(id);
+      fetchData();
+    } catch (e) {
+      console.error(e);
+    }
+  };
+
+  const filteredUsers = (users || []).filter(u => 
+    u && u.email && u.email.toLowerCase().includes(search.toLowerCase())
   );
 
   const stats = {
-    total: users.length,
-    pro: users.filter(u => u.is_pro).length,
-    gens: users.reduce((acc, u) => acc + (u.usage_count || 0), 0)
+    total: users?.length || 0,
+    pro: (users || []).filter(u => u?.is_pro).length,
+    gens: (users || []).reduce((acc, u) => acc + (u?.usage_count || 0), 0)
   };
 
   return (
@@ -218,17 +260,17 @@ export default function AdminDashboard() {
                     </tr>
                   </thead>
                   <tbody>
-                    {filteredUsers.map(u => (
-                      <tr key={u.email} style={{ borderBottom: '1px solid var(--border)', fontSize: 14 }}>
+                    {filteredUsers.map((u, i) => (
+                      <tr key={u?.email || i} style={{ borderBottom: '1px solid var(--border)', fontSize: 14 }}>
                         <td style={{ padding: '16px 24px' }}>
-                          <div style={{ fontWeight: 600 }}>{u.email}</div>
-                          <div style={{ fontSize: 11, color: 'var(--text-muted)' }}>Joined {new Date(u.created_at).toLocaleDateString()}</div>
+                          <div style={{ fontWeight: 600 }}>{u?.email}</div>
+                          <div style={{ fontSize: 11, color: 'var(--text-muted)' }}>Joined {u?.created_at ? new Date(u.created_at).toLocaleDateString() : 'Unknown'}</div>
                         </td>
                         <td style={{ padding: '16px 24px' }}>
-                          <span style={{ color: u.usage_count >= 5 ? 'var(--accent-yt)' : 'inherit' }}>{u.usage_count} / 5</span>
+                          <span style={{ color: (u?.usage_count || 0) >= 5 ? 'var(--accent-yt)' : 'inherit' }}>{u?.usage_count || 0} / 5</span>
                         </td>
                         <td style={{ padding: '16px 24px' }}>
-                          {u.is_pro ? (
+                          {u?.is_pro ? (
                             <span className="badge badge-pro">PRO MEMBER</span>
                           ) : (
                             <span className="badge badge-free">FREE TIER</span>
@@ -238,7 +280,7 @@ export default function AdminDashboard() {
                           <select 
                             className="select" 
                             style={{ width: 100, padding: '4px 8px', height: 32 }}
-                            value={u.role || 'user'}
+                            value={u?.role || 'user'}
                             onChange={(e) => changeRole(u.email, e.target.value)}
                           >
                             <option value="user">User</option>
@@ -247,14 +289,17 @@ export default function AdminDashboard() {
                         </td>
                         <td style={{ padding: '16px 24px' }}>
                           <button 
-                            className={`btn btn-sm ${u.is_pro ? 'btn-ghost' : 'btn-primary'}`}
+                            className={`btn btn-sm ${u?.is_pro ? 'btn-ghost' : 'btn-primary'}`}
                             onClick={() => togglePro(u.email, u.is_pro)}
                           >
-                            {u.is_pro ? 'Revoke PRO' : 'Grant PRO'}
+                            {u?.is_pro ? 'Revoke PRO' : 'Grant PRO'}
                           </button>
                         </td>
                       </tr>
                     ))}
+                    {filteredUsers.length === 0 && (
+                      <tr><td colSpan={5} style={{ padding: 40, textAlign: 'center', color: 'var(--text-muted)' }}>No users found.</td></tr>
+                    )}
                   </tbody>
                 </table>
               </div>
@@ -312,7 +357,7 @@ export default function AdminDashboard() {
                           {d.percent_off}% OFF
                         </td>
                         <td style={{ padding: '16px 24px', color: 'var(--text-secondary)', fontSize: 12 }}>
-                          {new Date(d.created_at).toLocaleDateString()}
+                          {d.created_at ? new Date(d.created_at).toLocaleDateString() : 'Recent'}
                         </td>
                         <td style={{ padding: '16px 24px' }}>
                           <button 
@@ -349,29 +394,29 @@ export default function AdminDashboard() {
                       <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 20 }}>
                         <div className="input-wrap">
                           <label className="input-label">Title</label>
-                          <input className="input" required value={editingPost.title} onChange={e => setEditingPost({...editingPost, title: e.target.value})} />
+                          <input className="input" required value={editingPost.title || ''} onChange={e => setEditingPost({...editingPost, title: e.target.value})} />
                         </div>
                         <div className="input-wrap">
                           <label className="input-label">Slug</label>
-                          <input className="input" required value={editingPost.slug} onChange={e => setEditingPost({...editingPost, slug: e.target.value.toLowerCase().replace(/ /g, '-')})} />
+                          <input className="input" required value={editingPost.slug || ''} onChange={e => setEditingPost({...editingPost, slug: e.target.value.toLowerCase().replace(/ /g, '-')})} />
                         </div>
                       </div>
                       <div className="input-wrap">
                         <label className="input-label">Excerpt</label>
-                        <input className="input" required value={editingPost.excerpt} onChange={e => setEditingPost({...editingPost, excerpt: e.target.value})} />
+                        <input className="input" required value={editingPost.excerpt || ''} onChange={e => setEditingPost({...editingPost, excerpt: e.target.value})} />
                       </div>
                       <div className="input-wrap">
                         <label className="input-label">Content (Markdown)</label>
-                        <textarea className="input" style={{ height: 200, padding: 12 }} required value={editingPost.content} onChange={e => setEditingPost({...editingPost, content: e.target.value})} />
+                        <textarea className="input" style={{ height: 200, padding: 12 }} required value={editingPost.content || ''} onChange={e => setEditingPost({...editingPost, content: e.target.value})} />
                       </div>
                       <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: 20 }}>
                          <div className="input-wrap">
                           <label className="input-label">Category</label>
-                          <input className="input" value={editingPost.category} onChange={e => setEditingPost({...editingPost, category: e.target.value})} />
+                          <input className="input" value={editingPost.category || ''} onChange={e => setEditingPost({...editingPost, category: e.target.value})} />
                         </div>
                         <div className="input-wrap">
                           <label className="input-label">Author</label>
-                          <input className="input" value={editingPost.author} onChange={e => setEditingPost({...editingPost, author: e.target.value})} />
+                          <input className="input" value={editingPost.author || ''} onChange={e => setEditingPost({...editingPost, author: e.target.value})} />
                         </div>
                         <div className="input-wrap">
                           <label className="input-label">Cover Image URL</label>
@@ -379,7 +424,7 @@ export default function AdminDashboard() {
                         </div>
                       </div>
                       <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
-                        <input type="checkbox" checked={editingPost.is_published} onChange={e => setEditingPost({...editingPost, is_published: e.target.checked})} />
+                        <input type="checkbox" checked={editingPost.is_published || false} onChange={e => setEditingPost({...editingPost, is_published: e.target.checked})} />
                         <label>Publish immediately</label>
                       </div>
                       <div style={{ display: 'flex', gap: 12, marginTop: 20 }}>
@@ -404,7 +449,7 @@ export default function AdminDashboard() {
                     </tr>
                   </thead>
                   <tbody>
-                    {posts.map(p => (
+                    {(posts || []).map(p => (
                       <tr key={p.id} style={{ borderBottom: '1px solid var(--border)', fontSize: 14 }}>
                         <td style={{ padding: '16px 24px' }}>
                           <div style={{ fontWeight: 600 }}>{p.title}</div>
@@ -430,7 +475,7 @@ export default function AdminDashboard() {
                         </td>
                       </tr>
                     ))}
-                    {posts.length === 0 && (
+                    {(posts || []).length === 0 && (
                       <tr><td colSpan={4} style={{ padding: 40, textAlign: 'center', color: 'var(--text-muted)' }}>No posts found.</td></tr>
                     )}
                   </tbody>
