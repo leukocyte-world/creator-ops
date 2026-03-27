@@ -4,24 +4,7 @@ import Link from "next/link";
 import Sidebar from "@/components/Sidebar";
 import Footer from "@/components/Footer";
 
-const X_TOOLS = [
-  { icon: '🔬', label: 'Viral Reverse Engineer', href: '/tools/x/reverse-engineer' },
-  { icon: '⚡', label: 'Viral One-Liner', href: '/tools/x/one-liner' },
-  { icon: '🔄', label: '4-Line Transformation', href: '/tools/x/transformation' },
-  { icon: '🎣', label: 'Hook Generator', href: '/tools/x/hook-generator' },
-  { icon: '📋', label: 'Listicle Post', href: '/tools/x/listicle' },
-];
-
-const YT_TOOLS = [
-  { icon: '💰', label: 'Find Your Money Niche', href: '/tools/youtube/money-niche' },
-  { icon: '🎭', label: 'Faceless Video System', href: '/tools/youtube/faceless-video' },
-  { icon: '🚀', label: 'Viral Title Machine', href: '/tools/youtube/viral-titles' },
-  { icon: '💸', label: 'Multiple Income Streams', href: '/tools/youtube/income-streams' },
-  { icon: '📊', label: 'Algorithm Hack System', href: '/tools/youtube/algorithm-hack' },
-  { icon: '🗺️', label: '90-Day Money Map', href: '/tools/youtube/90-day-map' },
-  { icon: '🎯', label: 'Retention Killer Script', href: '/tools/youtube/retention-script' },
-  { icon: '📱', label: 'Shorts Growth Engine', href: '/tools/youtube/shorts' },
-];
+import { X_TOOLS, YT_TOOLS } from "@/lib/tools-config";
 
 export default function LandingPage() {
   const currentYear = new Date().getFullYear();
@@ -36,6 +19,7 @@ export default function LandingPage() {
           </Link>
           <div className="nav-links">
             <Link href="/tools">AI Tools</Link>
+            <Link href="/blog">Resources</Link>
             <Link href="/#pricing">Pricing</Link>
             <Link href="/auth/signin" className="btn btn-secondary btn-sm">Sign In</Link>
             <Link href="/auth/signin" className="btn btn-primary btn-sm">Start Free</Link>
@@ -56,7 +40,7 @@ export default function LandingPage() {
 
           <h1 className="hero-title animate-fade-up animate-delay-1">
             Stop Guessing. <br />
-            <span className="hero-title-gradient">Master Viral AI Creator Tools.</span>
+            <span className="hero-title-gradient">Master Viral AI Creator Toolkit.</span>
           </h1>
 
           <p className="hero-sub animate-fade-up animate-delay-2">
@@ -125,9 +109,9 @@ export default function LandingPage() {
               </div>
               <div className="tool-list">
                 {X_TOOLS.map(t => (
-                  <Link key={t.href} href="/auth/signin" className="tool-list-item">
+                  <Link key={t.href} href={t.href} className="tool-list-item">
                     <div className="tool-list-item-icon x-icon-bg" role="img" aria-label={t.label}>{t.icon}</div>
-                    {t.label}
+                    <h2 style={{ fontSize: 'inherit', fontWeight: 'inherit', margin: 0 }}>{t.label}</h2>
                     <span style={{ marginLeft: 'auto', opacity: 0.4, fontSize: 12 }}>→</span>
                   </Link>
                 ))}
@@ -141,9 +125,9 @@ export default function LandingPage() {
               </div>
               <div className="tool-list">
                 {YT_TOOLS.map(t => (
-                  <Link key={t.href} href="/auth/signin" className="tool-list-item">
+                  <Link key={t.href} href={t.href} className="tool-list-item">
                     <div className="tool-list-item-icon yt-icon-bg" role="img" aria-label={t.label}>{t.icon}</div>
-                    {t.label}
+                    <h2 style={{ fontSize: 'inherit', fontWeight: 'inherit', margin: 0 }}>{t.label}</h2>
                     <span style={{ marginLeft: 'auto', opacity: 0.4, fontSize: 12 }}>→</span>
                   </Link>
                 ))}

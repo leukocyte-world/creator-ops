@@ -20,6 +20,20 @@ export interface UserRecord {
   created_at: string;
 }
 
+export interface Post {
+  id: string;
+  title: string;
+  slug: string;
+  content: string;
+  excerpt: string;
+  cover_image?: string;
+  author: string;
+  category: string;
+  published_at: string;
+  created_at: string;
+  is_published: boolean;
+}
+
 export async function registerUser(email: string, password: string): Promise<{ user?: UserRecord; error?: string }> {
   // Check if user exists
   const { data: existing } = await supabase
@@ -128,4 +142,35 @@ export async function activatePro(email: string, paymentId: string): Promise<voi
       subscription_expires_at: expiresAt.toISOString(),
     })
     .eq('email', email);
+}
+
+// Blog Functions
+export async function getPosts(publishedOnly = true): Promise<Post[]> {
+  let query = supabase.from('posts').select('*').order('published_at', { ascending: false });
+  if (publishedOnly) {
+    query = query.eq('is_published', true);
+  }
+  const { data } = await query;
+  return (data || []) as Post[];
+}
+
+export async function getPostBySlug(slug: string): Promise<Post | null> {
+  const { data } = await supabase.from('posts').select('*').eq('slug', slug).single();
+  return data as Post | null;
+}
+
+export async function upsertPost(post: Partial<Post>): Promise<{ data: Post | null; error: any }> {
+  const { data, error } = await supabase
+    .from('posts')
+    .upsert({
+      ...post,
+      updated_at: new Date().toISOString(),
+    })
+    .select()
+    .single();
+  return { data: data as Post | null, error };
+}
+
+export async function deletePost(id: string): Promise<void> {
+  await supabase.from('posts').delete().eq('id', id);
 }

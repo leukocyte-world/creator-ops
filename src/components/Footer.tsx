@@ -32,6 +32,7 @@ export default function Footer() {
       <div style={{ display: 'flex', gap: 24, flexWrap: 'wrap', justifyContent: 'center' }}>
         <Link href="/" style={{ color: 'var(--text-secondary)' }}>Home</Link>
         <Link href="/tools" style={{ color: 'var(--text-secondary)' }}>Tools</Link>
+        <Link href="/blog" style={{ color: 'var(--text-secondary)' }}>Resources</Link>
         <Link href="/#pricing" style={{ color: 'var(--text-secondary)' }}>Pricing</Link>
         <a
           href="https://cv-resume-murex-iota.vercel.app/"

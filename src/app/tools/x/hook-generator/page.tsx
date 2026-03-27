@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import ToolLayout, { ResultDisplay, UpgradePrompt, useAI } from '@/components/ToolLayout';
+import { X_TOOLS } from '@/lib/tools-config';
 
 export default function HookGeneratorPage() {
   const [topic, setTopic] = useState('');
@@ -32,8 +33,41 @@ Output:
     });
   };
 
+  const relatedTools = X_TOOLS.filter(t => t.href !== '/tools/x/hook-generator').slice(0, 3);
+
+  const extraContent = (
+    <div className="prose">
+      <h2 style={{ fontFamily: 'Syne, sans-serif', fontSize: 24, fontWeight: 800, marginBottom: 20 }}>The Art of the Open Loop</h2>
+      <p style={{ color: 'var(--text-secondary)', lineHeight: 1.8, marginBottom: 20 }}>
+        In the attention economy, your hook is 90% of the battle. If your first line doesn't grab them, the rest of your post doesn't exist. 
+        Our Hook Generator focuses on the "Open Loop" technique—a psychological principle where the brain feels a physical need to resolve an unanswered question. 
+        By teasing a specific result or secret without giving it away immediately, you force the reader to stop and engage.
+      </p>
+
+      <h3 style={{ fontFamily: 'Syne, sans-serif', fontSize: 18, fontWeight: 700, marginBottom: 16 }}>Stopping the Scroll in 2026</h3>
+      <p style={{ color: 'var(--text-secondary)', lineHeight: 1.8, marginBottom: 20 }}>
+        Modern readers are hyper-aware of "clickbait." To win on X today, your hooks must be both provocative and authentic. 
+        This tool helps you find the sweet spot between "boring" and "spammy." 
+        It generates variations based on your specific audience, ensuring the tone matches their expectations—whether they are crypto degens, serious founders, or hobbyist developers.
+      </p>
+
+      <h3 style={{ fontFamily: 'Syne, sans-serif', fontSize: 18, fontWeight: 700, marginBottom: 16 }}>SEO and Authority</h3>
+      <p style={{ color: 'var(--text-secondary)', lineHeight: 1.8, marginBottom: 20 }}>
+        Generating high-engagement hooks tells search engines and social algorithms that your content is "High Quality." 
+        This tool isn't just for posts; use these hooks for your blog titles, YouTube descriptions, and email subject lines. 
+        It's a universal growth engine that ensures your message never goes unheard.
+      </p>
+    </div>
+  );
+
   return (
-    <ToolLayout title="🎣 Hook Generator" description="Generate loop-opening hooks that make readers physically unable to scroll past your post." badge="x">
+    <ToolLayout 
+      title="🎣 Hook Generator" 
+      description="Generate loop-opening hooks that make readers physically unable to scroll past your post." 
+      badge="x"
+      extraContent={extraContent}
+      relatedTools={relatedTools}
+    >
       <form className="tool-form" onSubmit={handleSubmit}>
         <div className="input-wrap">
           <label className="input-label">Topic</label>

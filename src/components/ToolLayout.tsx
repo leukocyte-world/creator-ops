@@ -10,14 +10,34 @@ interface ToolLayoutProps {
   description: string;
   badge: 'x' | 'youtube';
   children: React.ReactNode;
+  extraContent?: React.ReactNode;
+  relatedTools?: { label: string; href: string; icon: string }[];
 }
 
-export default function ToolLayout({ title, description, badge, children }: ToolLayoutProps) {
+export default function ToolLayout({ title, description, badge, children, extraContent, relatedTools }: ToolLayoutProps) {
+  const schema = {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    "name": title.replace(/^[^\s]+\s/, ''), // Remove emoji from title
+    "applicationCategory": badge === 'x' ? "SocialNetworkingApplication" : "MultimediaApplication",
+    "operatingSystem": "Web",
+    "description": description,
+    "offers": {
+      "@type": "Offer",
+      "price": "0.00",
+      "priceCurrency": "USD"
+    }
+  };
+
   return (
     <div className="app-shell">
       <Sidebar />
       <main className="main-content">
         <div className="tool-page">
+          <script
+            type="application/ld+json"
+            dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
+          />
           <div className="tool-header">
             <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 14 }}>
               <Link href="/tools" style={{ color: 'var(--text-muted)', fontSize: 13, display: 'flex', alignItems: 'center', gap: 5 }}>
@@ -31,7 +51,30 @@ export default function ToolLayout({ title, description, badge, children }: Tool
             <h1 className="tool-title">{title}</h1>
             <p className="tool-desc">{description}</p>
           </div>
-          {children}
+          
+          <div className="tool-content-wrap">
+            {children}
+          </div>
+
+          {extraContent && (
+            <div className="tool-extra-content animate-fade-up" style={{ marginTop: 80, borderTop: '1px solid var(--border)', paddingTop: 40 }}>
+              {extraContent}
+            </div>
+          )}
+
+          {relatedTools && relatedTools.length > 0 && (
+            <div className="related-tools-section" style={{ marginTop: 80, borderTop: '1px solid var(--border)', paddingTop: 40, marginBottom: 40 }}>
+              <h3 style={{ fontFamily: 'Syne, sans-serif', fontSize: 20, fontWeight: 700, marginBottom: 24 }}>Related Tools</h3>
+              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(250px, 1fr))', gap: 16 }}>
+                {relatedTools.map(t => (
+                  <Link key={t.href} href={t.href} className="card" style={{ padding: '16px 20px', display: 'flex', alignItems: 'center', gap: 12, textDecoration: 'none' }}>
+                    <div className={`tool-list-item-icon ${badge}-icon-bg`} style={{ width: 32, height: 32, fontSize: 16 }}>{t.icon}</div>
+                    <span style={{ fontWeight: 600, fontSize: 14 }}>{t.label}</span>
+                  </Link>
+                ))}
+              </div>
+            </div>
+          )}
         </div>
         <Footer />
       </main>

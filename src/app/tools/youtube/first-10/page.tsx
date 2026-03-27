@@ -1,6 +1,7 @@
 'use client';
 import { useState } from 'react';
 import ToolLayout, { ResultDisplay, UpgradePrompt, useAI } from '@/components/ToolLayout';
+import { YT_TOOLS } from '@/lib/tools-config';
 
 export default function First10Page() {
   const [niche, setNiche] = useState('');
@@ -23,8 +24,46 @@ Crucially, **arrange them in the EXACT order I should post them** (Video 1 to Vi
     });
   };
 
+  const relatedTools = YT_TOOLS.filter(t => t.href !== '/tools/youtube/first-10').slice(0, 3);
+
+  const extraContent = (
+    <div className="prose">
+      <h2 style={{ fontFamily: 'Syne, sans-serif', fontSize: 24, fontWeight: 800, marginBottom: 20 }}>The Critical Mission of Your First 10 Videos</h2>
+      <p style={{ color: 'var(--text-secondary)', lineHeight: 1.8, marginBottom: 20 }}>
+        YouTube's algorithm is a machine that needs data. When you launch a new channel, the machine has no data on you. 
+        Your first 10 videos aren't just content; they are <strong>data signals</strong>. 
+        If your first 10 videos are scattered across different topics, the algorithm will never know who to show your videos to. 
+        Our First 10 Videos Blueprint ensures that every upload is reinforcing the same "Topic Cluster," 
+        training the algorithm to find your perfect audience 10x faster.
+      </p>
+
+      <h3 style={{ fontFamily: 'Syne, sans-serif', fontSize: 18, fontWeight: 700, marginBottom: 16 }}>Building the "Binge-Watch" Funnel</h3>
+      <p style={{ color: 'var(--text-secondary)', lineHeight: 1.8, marginBottom: 20 }}>
+        The Goal of your first 10 videos is to get one viewer to watch <strong>all of them</strong>. 
+        When a new viewer finds Your Video #1 and then immediately clicks on Your Video #2, 
+        the YouTube algorithm gets a "High Satisfaction" signal. 
+        This tool helps you design a series of videos that naturally flow into one another, 
+        creating a feedback loop of views that can propel a tiny channel to thousands of subscribers in weeks.
+      </p>
+
+      <h3 style={{ fontFamily: 'Syne, sans-serif', fontSize: 18, fontWeight: 700, marginBottom: 16 }}>Low-Subscriber Clickability</h3>
+      <p style={{ color: 'var(--text-secondary)', lineHeight: 1.8, marginBottom: 20 }}>
+        When you have 0 subscribers, you can't rely on "loyalty" for clicks. You must rely on <strong>Intent</strong>. 
+        We map out titles and thumbnails that focus on solving urgent problems or answering burning questions in your niche. 
+        By providing immediate, undeniable value to strangers, you build a foundation of "Superfans" 
+        who will support you for years to come.
+      </p>
+    </div>
+  );
+
   return (
-    <ToolLayout title="🎬 First 10 Videos Blueprint" description="Don't guess. Get the exact 10 videos you need to launch a new channel, ordered for maximum algorithmic momentum." badge="youtube">
+    <ToolLayout 
+      title="🎬 First 10 Videos Blueprint" 
+      description="Don't guess. Get the exact 10 videos you need to launch a new channel, ordered for maximum algorithmic momentum." 
+      badge="youtube"
+      extraContent={extraContent}
+      relatedTools={relatedTools}
+    >
       <form className="tool-form" onSubmit={handleSubmit}>
         <div className="input-wrap"><label className="input-label">Channel Niche</label><input className="input" value={niche} onChange={e => setNiche(e.target.value)} required /></div>
         <button type="submit" className="btn btn-primary" disabled={loading}>{loading ? 'Mapping Videos...' : 'Generate 10-Video Plan'}</button>

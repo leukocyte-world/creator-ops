@@ -1,6 +1,7 @@
 'use client';
 import { useState } from 'react';
 import ToolLayout, { ResultDisplay, UpgradePrompt, useAI } from '@/components/ToolLayout';
+import { YT_TOOLS } from '@/lib/tools-config';
 
 export default function IncomeStreamsPage() {
   const [niche, setNiche] = useState('');
@@ -26,8 +27,44 @@ Show total realistic monthly income at my current size, AND project it for 10K /
     });
   };
 
+  const relatedTools = YT_TOOLS.filter(t => t.href !== '/tools/youtube/income-streams').slice(0, 3);
+
+  const extraContent = (
+    <div className="prose">
+      <h2 style={{ fontFamily: 'Syne, sans-serif', fontSize: 24, fontWeight: 800, marginBottom: 20 }}>The 7 Streams of Modern Creator Income</h2>
+      <p style={{ color: 'var(--text-secondary)', lineHeight: 1.8, marginBottom: 20 }}>
+        Relying solely on YouTube AdSense is the biggest mistake a new creator can make. Ad revenue is volatile and subject to the whims of advertisers. 
+        Our Multiple Income Streams tool helps you build a diversified financial fortress. 
+        By identifying affiliate opportunities, digital product potential, and sponsorship models early on, 
+        you can start earning a full-time income even with a small, dedicated audience.
+      </p>
+
+      <h3 style={{ fontFamily: 'Syne, sans-serif', fontSize: 18, fontWeight: 700, marginBottom: 16 }}>Affiliate Marketing and Partnerships</h3>
+      <p style={{ color: 'var(--text-secondary)', lineHeight: 1.8, marginBottom: 20 }}>
+        Affiliate marketing is often the most immediate way to monetize a new channel. 
+        This tool scans your niche for the highest-paying and most relevant partner programs. 
+        Instead of promoting generic products, we help you find the tools and services that your audience actually needs. 
+        This builds trust while also maximizing your conversion rates.
+      </p>
+
+      <h3 style={{ fontFamily: 'Syne, sans-serif', fontSize: 18, fontWeight: 700, marginBottom: 16 }}>Digital Products and Communities</h3>
+      <p style={{ color: 'var(--text-secondary)', lineHeight: 1.8, marginBottom: 20 }}>
+        The real "wealth" on YouTube comes from owning the customer relationship. 
+        We provide ideas for e-books, templates, checklists, and private communities 
+        that you can sell directly to your fans. These high-margin products allow you to 
+        decouple your income from your view count, creating a stable and predictable business model.
+      </p>
+    </div>
+  );
+
   return (
-    <ToolLayout title="💸 Multiple Income Streams" description="Calculate your earning potential and discover 7 different ways to monetize your specific channel." badge="youtube">
+    <ToolLayout 
+      title="💸 Multiple Income Streams" 
+      description="Calculate your earning potential and discover 7 different ways to monetize your specific channel." 
+      badge="youtube"
+      extraContent={extraContent}
+      relatedTools={relatedTools}
+    >
       <form className="tool-form" onSubmit={handleSubmit}>
         <div className="input-wrap"><label className="input-label">Channel Niche</label><input className="input" placeholder="e.g. personal finance, gaming, cooking..." value={niche} onChange={e => setNiche(e.target.value)} required /></div>
         <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 14 }}>

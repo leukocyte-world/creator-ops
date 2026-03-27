@@ -4,7 +4,7 @@ import { Providers } from './providers';
 import JsonLd from '@/components/JsonLd';
 
 export const metadata: Metadata = {
-  title: "CreatorOps — AI Toolkit for Viral X (Twitter) & YouTube Growth",
+  title: "CreatorOps — AI Toolkit for X & YouTube Growth",
   description: "Stop guessing and start going viral. Use AI to reverse-engineer viral posts, generate hooks, build faceless YouTube channels, and scale your creator business.",
   verification: {
     google: 'SGdaiH54RwxqCcWTS5zduiCwdh8jsJwTU3gkQiOgX8M',

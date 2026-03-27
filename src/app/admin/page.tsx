@@ -6,20 +6,26 @@ import Link from 'next/link';
 import Footer from '@/components/Footer';
 import { 
   Users, Ticket, Activity, ShieldCheck, 
-  Search, Check, X, RefreshCw, Trash2, Plus, ArrowLeft
+  Search, RefreshCw, Trash2, Plus, ArrowLeft, BookOpen, Edit2
 } from 'lucide-react';
+import { getPosts, upsertPost, deletePost, Post } from '@/lib/supabase';
 
 export default function AdminDashboard() {
   const { data: session } = useSession();
   const [users, setUsers] = useState<any[]>([]);
   const [discounts, setDiscounts] = useState<any[]>([]);
+  const [posts, setPosts] = useState<Post[]>([]);
   const [loading, setLoading] = useState(true);
   const [search, setSearch] = useState('');
-  const [tab, setTab] = useState<'users' | 'discounts'>('users');
+  const [tab, setTab] = useState<'users' | 'discounts' | 'resources'>('users');
   
   // New Discount Form
   const [newDisc, setNewDisc] = useState({ code: '', percent: 20 });
   const [addingDisc, setAddingDisc] = useState(false);
+  
+  // New Post Form
+  const [editingPost, setEditingPost] = useState<Partial<Post> | null>(null);
+  const [savingPost, setSavingPost] = useState(false);
 
   useEffect(() => {
     if (session?.user) {
@@ -27,7 +33,7 @@ export default function AdminDashboard() {
     }
   }, [session]);
 
-  async function fetchData() {
+  const fetchData = async () => {
     setLoading(true);
     try {
       const res = await Promise.all([
@@ -37,14 +43,16 @@ export default function AdminDashboard() {
       
       const userData = await res[0].json();
       const discData = await res[1].json();
+      const postData = await getPosts(false);
       
       if (Array.isArray(userData)) setUsers(userData);
       if (Array.isArray(discData)) setDiscounts(discData);
+      setPosts(postData);
     } catch (e) {
       console.error(e);
     }
     setLoading(false);
-  }
+  };
 
   const togglePro = async (email: string, current: boolean) => {
     await fetch('/api/admin/users', {
@@ -80,6 +88,28 @@ export default function AdminDashboard() {
   const deleteDiscount = async (id: string) => {
     if (!confirm('Are you sure?')) return;
     await fetch(`/api/admin/discounts?id=${id}`, { method: 'DELETE' });
+    fetchData();
+  };
+
+  const savePost = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!editingPost?.title || !editingPost?.slug) return;
+    setSavingPost(true);
+    await upsertPost({
+      ...editingPost,
+      author: editingPost.author || 'CreatorOps AI',
+      category: editingPost.category || 'Strategy',
+      is_published: editingPost.is_published ?? false,
+      published_at: editingPost.published_at || new Date().toISOString(),
+    });
+    setEditingPost(null);
+    fetchData();
+    setSavingPost(false);
+  };
+
+  const removePost = async (id: string) => {
+    if (!confirm('Delete this post forever?')) return;
+    await deletePost(id);
     fetchData();
   };
 
@@ -145,17 +175,14 @@ export default function AdminDashboard() {
 
           {/* Tabs */}
           <div style={{ display: 'flex', gap: 10, marginBottom: 24 }}>
-            <button 
-              className={`btn ${tab === 'users' ? 'btn-primary' : 'btn-ghost'}`}
-              onClick={() => setTab('users')}
-            >
+            <button className={`btn ${tab === 'users' ? 'btn-primary' : 'btn-ghost'}`} onClick={() => setTab('users')}>
               <Users size={18} /> User Management
             </button>
-            <button 
-              className={`btn ${tab === 'discounts' ? 'btn-primary' : 'btn-ghost'}`}
-              onClick={() => setTab('discounts')}
-            >
+            <button className={`btn ${tab === 'discounts' ? 'btn-primary' : 'btn-ghost'}`} onClick={() => setTab('discounts')}>
               <Ticket size={18} /> Discount Codes
+            </button>
+            <button className={`btn ${tab === 'resources' ? 'btn-primary' : 'btn-ghost'}`} onClick={() => setTab('resources')}>
+              <BookOpen size={18} /> Blog/Resources
             </button>
             <button className="btn btn-ghost" onClick={fetchData} disabled={loading} style={{ marginLeft: 'auto' }}>
               <RefreshCw size={16} className={loading ? 'animate-spin' : ''} />
@@ -232,8 +259,8 @@ export default function AdminDashboard() {
                 </table>
               </div>
             </div>
-          ) : (
-            <div style={{ display: 'grid', gridTemplateColumns: '350px 1fr', gap: 24, alignItems: 'start' }}>
+          ) : tab === 'discounts' ? (
+            <div style={{ display: 'grid', gridTemplateColumns: 'minmax(300px, 350px) 1fr', gap: 24, alignItems: 'start' }}>
               <div className="card" style={{ padding: 24 }}>
                 <h3 style={{ marginBottom: 20 }}>Create Discount</h3>
                 <form onSubmit={addDiscount} style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
@@ -300,6 +327,111 @@ export default function AdminDashboard() {
                     ))}
                     {discounts.length === 0 && (
                       <tr><td colSpan={4} style={{ padding: 40, textAlign: 'center', color: 'var(--text-muted)' }}>No discount codes created yet.</td></tr>
+                    )}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          ) : (
+            <div>
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 20 }}>
+                <h2 style={{ fontSize: 20, fontWeight: 700 }}>Blog Posts</h2>
+                <button className="btn btn-primary btn-sm" onClick={() => setEditingPost({ title: '', slug: '', content: '', excerpt: '', category: 'Strategy', author: 'CreatorOps AI', is_published: false })}>
+                  <Plus size={16} /> New Post
+                </button>
+              </div>
+
+              {editingPost && (
+                <div style={{ position: 'fixed', inset: 0, backgroundColor: 'rgba(0,0,0,0.8)', zIndex: 1000, display: 'flex', alignItems: 'center', justifyContent: 'center', padding: 20 }}>
+                  <div className="card" style={{ width: '100%', maxWidth: 800, maxHeight: '90vh', overflowY: 'auto', padding: 32 }}>
+                    <h3 style={{ marginBottom: 24, fontSize: 24 }}>{editingPost.id ? 'Edit Post' : 'Create New Post'}</h3>
+                    <form onSubmit={savePost} style={{ display: 'flex', flexDirection: 'column', gap: 20 }}>
+                      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 20 }}>
+                        <div className="input-wrap">
+                          <label className="input-label">Title</label>
+                          <input className="input" required value={editingPost.title} onChange={e => setEditingPost({...editingPost, title: e.target.value})} />
+                        </div>
+                        <div className="input-wrap">
+                          <label className="input-label">Slug</label>
+                          <input className="input" required value={editingPost.slug} onChange={e => setEditingPost({...editingPost, slug: e.target.value.toLowerCase().replace(/ /g, '-')})} />
+                        </div>
+                      </div>
+                      <div className="input-wrap">
+                        <label className="input-label">Excerpt</label>
+                        <input className="input" required value={editingPost.excerpt} onChange={e => setEditingPost({...editingPost, excerpt: e.target.value})} />
+                      </div>
+                      <div className="input-wrap">
+                        <label className="input-label">Content (Markdown)</label>
+                        <textarea className="input" style={{ height: 200, padding: 12 }} required value={editingPost.content} onChange={e => setEditingPost({...editingPost, content: e.target.value})} />
+                      </div>
+                      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: 20 }}>
+                         <div className="input-wrap">
+                          <label className="input-label">Category</label>
+                          <input className="input" value={editingPost.category} onChange={e => setEditingPost({...editingPost, category: e.target.value})} />
+                        </div>
+                        <div className="input-wrap">
+                          <label className="input-label">Author</label>
+                          <input className="input" value={editingPost.author} onChange={e => setEditingPost({...editingPost, author: e.target.value})} />
+                        </div>
+                        <div className="input-wrap">
+                          <label className="input-label">Cover Image URL</label>
+                          <input className="input" value={editingPost.cover_image || ''} onChange={e => setEditingPost({...editingPost, cover_image: e.target.value})} />
+                        </div>
+                      </div>
+                      <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
+                        <input type="checkbox" checked={editingPost.is_published} onChange={e => setEditingPost({...editingPost, is_published: e.target.checked})} />
+                        <label>Publish immediately</label>
+                      </div>
+                      <div style={{ display: 'flex', gap: 12, marginTop: 20 }}>
+                        <button type="button" className="btn btn-ghost" onClick={() => setEditingPost(null)}>Cancel</button>
+                        <button type="submit" className="btn btn-primary" disabled={savingPost}>
+                          {savingPost ? 'Saving...' : 'Save Post'}
+                        </button>
+                      </div>
+                    </form>
+                  </div>
+                </div>
+              )}
+
+              <div className="card" style={{ overflow: 'hidden' }}>
+                <table style={{ width: '100%', borderCollapse: 'collapse', textAlign: 'left' }}>
+                  <thead>
+                    <tr style={{ background: 'var(--bg-glass)', fontSize: 12, color: 'var(--text-secondary)', textTransform: 'uppercase' }}>
+                      <th style={{ padding: '16px 24px' }}>Title</th>
+                      <th style={{ padding: '16px 24px' }}>Category</th>
+                      <th style={{ padding: '16px 24px' }}>Status</th>
+                      <th style={{ padding: '16px 24px' }}>Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {posts.map(p => (
+                      <tr key={p.id} style={{ borderBottom: '1px solid var(--border)', fontSize: 14 }}>
+                        <td style={{ padding: '16px 24px' }}>
+                          <div style={{ fontWeight: 600 }}>{p.title}</div>
+                          <div style={{ fontSize: 11, color: 'var(--text-muted)' }}>/{p.slug}</div>
+                        </td>
+                        <td style={{ padding: '16px 24px' }}>{p.category}</td>
+                        <td style={{ padding: '16px 24px' }}>
+                          {p.is_published ? (
+                            <span className="badge badge-pro">PUBLISHED</span>
+                          ) : (
+                            <span className="badge badge-free">DRAFT</span>
+                          )}
+                        </td>
+                        <td style={{ padding: '16px 24px' }}>
+                          <div style={{ display: 'flex', gap: 8 }}>
+                            <button className="btn btn-sm btn-ghost" onClick={() => setEditingPost(p)}>
+                              <Edit2 size={16} />
+                            </button>
+                            <button className="btn btn-sm btn-ghost" style={{ color: 'var(--accent-yt)' }} onClick={() => removePost(p.id)}>
+                              <Trash2 size={16} />
+                            </button>
+                          </div>
+                        </td>
+                      </tr>
+                    ))}
+                    {posts.length === 0 && (
+                      <tr><td colSpan={4} style={{ padding: 40, textAlign: 'center', color: 'var(--text-muted)' }}>No posts found.</td></tr>
                     )}
                   </tbody>
                 </table>

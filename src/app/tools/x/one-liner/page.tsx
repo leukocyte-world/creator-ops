@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import ToolLayout, { ResultDisplay, UpgradePrompt, useAI } from '@/components/ToolLayout';
+import { X_TOOLS } from '@/lib/tools-config';
 
 export default function OneLinerPage() {
   const [topic, setTopic] = useState('');
@@ -27,8 +28,43 @@ Rules:
     });
   };
 
+  const relatedTools = X_TOOLS.filter(t => t.href !== '/tools/x/one-liner').slice(0, 3);
+
+  const extraContent = (
+    <div className="prose">
+      <h2 style={{ fontFamily: 'Syne, sans-serif', fontSize: 24, fontWeight: 800, marginBottom: 20 }}>The Power of the One-Liner</h2>
+      <p style={{ color: 'var(--text-secondary)', lineHeight: 1.8, marginBottom: 20 }}>
+        In the fast-paced world of X, brevity isn't just a constraint; it's a superpower. A single, well-crafted sentence can travel further than a thousand-word article. 
+        The "One-Liner" tool is designed to help you master the art of the punchy, emotionally-charged post that resonates instantly with your audience. 
+        Whether you're sharing a controversial take, an inspiring lesson, or a painful truth, these one-liners are built to stop the scroll and trigger a reaction.
+      </p>
+
+      <h3 style={{ fontFamily: 'Syne, sans-serif', fontSize: 18, fontWeight: 700, marginBottom: 16 }}>Emotional Resonance and Virality</h3>
+      <p style={{ color: 'var(--text-secondary)', lineHeight: 1.8, marginBottom: 20 }}>
+        Why do one-liners work? Because they remove all friction from the reading experience. 
+        In less than second, a reader can consume your entire thought and decide whether to engage. 
+        By stripping away the "fluff," you expose the core emotion or logic of your message. 
+        Our AI generates 10 different variations so you can choose the one that best fits your current voice and audience mood.
+      </p>
+
+      <h3 style={{ fontFamily: 'Syne, sans-serif', fontSize: 18, fontWeight: 700, marginBottom: 16 }}>Why This Matters for AI Growth</h3>
+      <p style={{ color: 'var(--text-secondary)', lineHeight: 1.8, marginBottom: 20 }}>
+        High-performing accounts on X use one-liners to maintain a high "signal-to-noise" ratio. 
+        Each post serves as a entry point to your profile. If your one-liners are consistently strong, your follower conversion rate sky-rockets. 
+        This tool ensures you never run out of ideas, even on days when your own creativity is low. 
+        It leverages the Gemini 1.5 Flash engine to ensure every sentence carries enough weight to stand alone as a viral hit.
+      </p>
+    </div>
+  );
+
   return (
-    <ToolLayout title="⚡ Viral One-Liner" description="Drop your topic. Get 10 raw, emotionally charged one-line posts built to stop the scroll." badge="x">
+    <ToolLayout 
+      title="⚡ Viral One-Liner" 
+      description="Drop your topic. Get 10 raw, emotionally charged one-line posts built to stop the scroll." 
+      badge="x"
+      extraContent={extraContent}
+      relatedTools={relatedTools}
+    >
       <form className="tool-form" onSubmit={handleSubmit}>
         <div className="input-wrap">
           <label className="input-label">Topic</label>
