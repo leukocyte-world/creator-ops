@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import { Providers } from './providers';
-import JsonLd from '@/components/JsonLd';
 
 export const metadata: Metadata = {
   title: "CreatorOps AI — Toolkit for X & YouTube Growth",
@@ -70,7 +69,6 @@ export default function RootLayout({
       </head>
       <body>
         <Providers>
-          <JsonLd />
           {children}
         </Providers>
       </body>

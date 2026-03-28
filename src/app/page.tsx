@@ -7,12 +7,15 @@ import Footer from "@/components/Footer";
 
 import { X_TOOLS, YT_TOOLS } from "@/lib/tools-config";
 
+import JsonLd from "@/components/JsonLd";
+
 export default function LandingPage() {
   const { data: session } = useSession();
   const currentYear = new Date().getFullYear();
 
   return (
     <div className="app-shell">
+      <JsonLd />
       <nav className="desktop-nav">
         <div className="nav-container">
           <Link href="/" className="logo-mark">

@@ -1,4 +1,5 @@
 import { Metadata } from 'next';
+import JsonLd from '@/components/JsonLd';
 
 export const metadata: Metadata = {
   title: {
@@ -13,5 +14,10 @@ export default function ToolsLayout({
 }: {
   children: React.ReactNode;
 }) {
-  return <>{children}</>;
+  return (
+    <>
+      <JsonLd />
+      {children}
+    </>
+  );
 }
