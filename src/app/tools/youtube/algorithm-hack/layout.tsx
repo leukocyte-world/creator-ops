@@ -1,7 +1,7 @@
 import { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: 'YouTube Algorithm Hack System: Master the Feed | CreatorOps',
+  title: 'YouTube Algorithm Hack System: Master the Feed',
   description: 'The strategy and checklist to hack the YouTube algorithm for your specific niche. Get more views now.',
   keywords: ['YouTube algorithm hack', 'video ranking strategy', 'YouTube visibility'],
 };

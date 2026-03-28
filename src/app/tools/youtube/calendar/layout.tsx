@@ -1,7 +1,7 @@
 import { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: 'AI Content Calendar: 30-Day Creator Strategy | CreatorOps',
+  title: 'AI Content Calendar: 30-Day Creator Strategy',
   description: '30-day content calendar with high-engagement educational, viral, and trending post ideas.',
   keywords: ['content calendar generator', 'social media planner', 'creator strategy'],
 };

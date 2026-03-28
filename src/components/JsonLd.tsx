@@ -5,14 +5,16 @@ export default function JsonLd() {
     "@context": "https://schema.org",
     "@type": "SoftwareApplication",
     "name": "CreatorOps AI",
+    "image": "https://creatorops.site/icon.svg",
+    "screenshot": "https://creatorops.site/dashboard-preview.png",
     "brand": {
       "@type": "Brand",
-      "name": "CreatorOps",
+      "name": "CreatorOps AI",
       "logo": "https://creatorops.site/icon.svg"
     },
     "operatingSystem": "Web",
     "applicationCategory": "BusinessApplication, MultimediaApplication",
-    "description": "The ultimate AI-powered system for modern creators. Scale your audience on X (Twitter) and YouTube with 17+ specialized viral growth tools.",
+    "description": "The ultimate AI-powered system for modern creators. Scale your audience on X (Twitter) and YouTube with 17+ specialized CreatorOps AI viral growth tools.",
     "url": "https://creatorops.site",
     "aggregateRating": {
       "@type": "AggregateRating",
@@ -28,11 +30,12 @@ export default function JsonLd() {
       "Viral Reverse Engineer",
       "Twitter Hook Generator",
       "Faceless YouTube Automation",
-      "90-Day Creator Money Map"
+      "90-Day Creator Money Map",
+      "Retention Killer Scripts"
     ],
     "author": {
       "@type": "Organization",
-      "name": "CreatorOps",
+      "name": "CreatorOps AI",
       "url": "https://creatorops.site"
     }
   };

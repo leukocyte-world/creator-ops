@@ -1,7 +1,7 @@
 import { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: 'Shorts Growth Engine: Viral Short-Form AI | CreatorOps',
+  title: 'Shorts Growth Engine: Viral Short-Form AI',
   description: '30 viral Shorts ideas and 5 ready-to-post scripts tailored for YouTube Shorts, Reels, and TikTok.',
   keywords: ['YouTube Shorts generator', 'viral shorts ideas', 'short form content AI'],
 };

@@ -1,53 +1,38 @@
-Our current title ("CreatorOps — AI Toolkit for Viral X (Twitter) & YouTube Growth") is descriptive and keyword-rich.
+I just took an SEO audit for our site on semrush and here are the issues with suggested fix;
+- invalid structured data items (42 pages)
 
-But we need to ensure it stays under 60 characters to avoid being cut off in search results.
+suggested fix: Check structured data on your webpages with a validation tool. Please note that different markup testing tools may show different results.
+We recommend that you use the Rich Results Test (https://search.google.com/test/rich-results) tool to review and validate your pages’ structured data against their rich snippet requirements.
 
-Ensure there is only one <h1> tag per page. Our current main headline ("Stop Guessing. Master Viral AI Creator Tools.") is strong, but we could include a primary keyword like "AI Creator Toolkit" inside it for better weight.
+- incorrect pages found in sitemap.xml (19 pages)
 
-We should use our tool names (e.g., "Viral Reverse Engineer," "Faceless Video System") as <h2> tags. This tells Google exactly what services we offer.
+suggested fix: Review your sitemap.xml for any redirected, non-canonical or non-200 URLs. Provide the final destination URLs that are canonical and return a 200 status code.
 
-Confirm that we have a meta description (150-160 characters) that acts as an "ad" for the site.
+- 4xx errors (1 page)
 
-Ensure every icon and image has an alt attribute. Instead of alt="icon", use alt="AI YouTube automation tool icon". This helps with Google Image Search traffic.
+suggested fix: If a webpage returns an error, remove all links leading to the error page or replace it with another resource.
+To identify all pages on your website that contain links to a 4xx page, click "View broken links" next to the error page.
+If the links reported as 4xx do work when accessed with a browser, you can try either of the following:
+- Contact your web hosting support team
+- Instruct search engine robots not to crawl your website too frequently by specifying the "crawl-delay" directive in your robots.txt
 
-Confirm if we have implemented "SoftwareApplication" or "Product" schema. This helps Google display "rich snippets" (like star ratings or pricing) directly in the search results, which significantly increases click-through rates.
+- long title element (17 pages)
 
-Confirm how the site looks when shared on X. Ensure we have a high-quality og:image that shows a preview of the dashboard or a "viral" result.
+suggested fix: Try to rewrite your page titles to be 70 characters or less.
 
-We need to Add a "Resources" or "Blog" section. Even 3–5 high-quality articles about "How to use AI for X growth" will drastically improve our ranking for "AI growth" keywords. And after fixing this, it means that from the admin dashboard I should be able to make posts, articles etc and edit them.
+- low word count (3 pages)
 
-Right now, clicking on a tool (like "Viral Reverse Engineer") from the homepage takes a user directly to /auth/signin. Ensure to take them to each tool pages when they click from the homepage listing. User should be directed here /auth/signin when they to use any of the tools without signing in.
+suggested fix: Improve your on-page content and be sure to include more than 200 meaningful words.
 
-Also, we need to Fix "Title Tag Cannibalization" - currently, our tool pages use a broad category title (e.g., "YouTube Automation & Growth AI").
+- low text-html ratio (23 pages)
 
-. The Problem: If all 8 YouTube tools have the same title, Google won't know which one to show for a specific search. They will fight each other for the same spot.
-. The Fix: Every page must have a unique title tag.
-Bad: YouTube Automation & Growth AI | CreatorOps
-Good: Find Your Money Niche: AI YouTube CPM Calculator | CreatorOps
-Good: Viral X Post Reverse Engineer: Deconstruct Viral Tweets | CreatorOps
-The goal is to make a different by far from competitors, there are a lot of competitors even with same name “creatorops.com, creatorops.live etc).
+suggested fix: Split your webpage's text content and code into separate files and compare their size. If the size of your code file exceeds the size of the text file, review your page's HTML code and consider optimizing its structure and removing embedded scripts and styles.
 
-Also we need to Solve the "Thin Content" Issue - Right now, the description for each tool is only 1–2 sentences. Google considers this "Thin Content" and often refuses to rank it.
+- Llms.txt not found
 
-. The Fix: Add a "How it Works" or "Why this Matters" section below the tool input. Aim for 300+ words per page.
+suggested fix: Create an llms.txt file.
+• Place it in your website's root directory and ensure the file is accessible.
+• Refer to llmstxt.org (https://llmstxt.org/) for examples and tips on how to properly create and manage it.
 
-. What to include:
-The Problem: Why is finding a niche hard? (High competition, low CPM).
-The Solution: How our AI solves it using the Gemini 1.5 Flash engine.
-Step-by-Step Guide: 1. Enter age. 2. Enter interests. 3. Get data.
-Keywords: Use phrases like "high CPM YouTube niches 2026" or "faceless YouTube channel ideas."
-Note that this is only an example for you to follow, you know the right keywords for each pages and you know what works best for the description. This is only a guide for you to follow.
 
-Remember that we need to tell Google’s "robot" exactly what this page is so it can give us a better snippet in search results.
-
-The Fix: we should Add SoftwareApplication schema to the <head> of each tool page.
-
-To keep users on the site longer, we need to Add a "Related Tools" or "Most Popular This Week" on every tool page.
-
-Additionally;
-
-Unique Title: [Tool Name] + [Primary Keyword] | CreatorOps
-Unique Meta Description: Describe exactly what that specific tool does in 155 characters.
-H2 & H3 Tags: Add headings like "How to use the Viral X Reverse Engineer" to the page.
-
-Summarily, if any of these changes will at any point affect the site original functionality or cause error to the system, skip them.
+NB: All of these are feedback from semrush so we can fix the ones that are easy to fix and ignore the ones that are not important.

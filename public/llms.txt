@@ -1,0 +1,31 @@
+# CreatorOps AI — Ultimate Toolkit for X & YouTube Growth
+
+> Stop guessing and start going viral. 17+ specialized AI tools for modern creators.
+
+## Overview
+CreatorOps AI provides a comprehensive suite of AI-powered systems to help creators scale their audience on X (formerly Twitter) and YouTube. From reverse-engineering viral posts to full YouTube automation workflows, it's designed to remove the guesswork from content creation.
+
+## Core Features
+### YouTube Tools
+- **Competitor Breakdown**: Analyze top channels and identify market gaps.
+- **Faceless Video System**: Concept to script and thumbnail for automation channels.
+- **90-Day Money Map**: Strategic roadmap to monetization.
+- **Viral Title Machine**: CTR-optimized title generation.
+- **Retention Killer Script**: Scriptwriting focused on audience retention.
+
+### X (Twitter) Tools
+- **Viral Reverse Engineer**: Break down viral formulas for your own posts.
+- **Hook Generator**: High-conversion opening lines.
+- **4-Line Transformation**: High-impact educational post structuring.
+- **Listicle Post Engine**: Readability-optimized growth threads.
+
+## Links
+- [Home](https://creatorops.site)
+- [All AI Tools](https://creatorops.site/tools)
+- [User Dashboard](https://creatorops.site/dashboard)
+- [Blog](https://creatorops.site/blog)
+- [Pricing / Upgrade](https://creatorops.site/upgrade)
+
+## Technical Information
+- **Category**: SaaS, AI Tools, Content Creation
+- **Tags**: #CreatorEconomy #AITools #YouTubeGrowth #XGrowth #ContentStrategy

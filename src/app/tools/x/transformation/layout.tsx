@@ -1,7 +1,7 @@
 import { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: '4-Line Transformation: High-Impact Post Generator | CreatorOps',
+  title: '4-Line Transformation: High-Impact Post Generator',
   description: 'Before → Change → After → Lesson. The 4-line formula that dominates X feeds. Maximum impact, zero fluff.',
   keywords: ['4-line post formula', 'X content strategy', 'transformation posts'],
 };

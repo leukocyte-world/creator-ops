@@ -1,7 +1,7 @@
 import { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: 'Competitor Breakdown: AI YouTube Analysis | CreatorOps',
+  title: 'Competitor Breakdown: AI YouTube Analysis',
   description: 'Analyze your top competitors and get 10 actionable ideas to outperform them on YouTube.',
   keywords: ['YouTube competitor analysis', 'channel audit AI', 'content strategy'],
 };
