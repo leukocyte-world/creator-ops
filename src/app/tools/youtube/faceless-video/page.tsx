@@ -10,17 +10,20 @@ export default function FacelessVideoPage() {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    const currentDate = new Date().toLocaleDateString('en-US', { month: 'long', year: 'numeric' });
     generate({
-      prompt: `Create a complete faceless YouTube video concept for a [${niche}] channel targeting [${audience}].
+      prompt: `Today is ${currentDate}. Create a complete faceless YouTube video concept for a [${niche}] channel targeting [${audience}].
+
+Base this on what is CURRENTLY trending and performing well in this niche in ${new Date().getFullYear()} — the most recent viral formats, angles, and topics that are gaining traction RIGHT NOW.
 
 Include:
-- Video title (SEO optimized)
+- Video title (SEO optimized for current search trends)
 - Full script (no camera needed)
 - Voiceover instructions (tone, pacing)
 - Stock footage keywords to search for the edit
 - Background music mood
 - Thumbnail concept (text + color + emotion)
-- Estimated CPM for this video topic
+- Estimated CPM for this video topic (current 2026 rates)
 - Monetization angle beyond AdSense`
     });
   };
@@ -31,10 +34,9 @@ Include:
     <div className="prose">
       <h2 style={{ fontFamily: 'Syne, sans-serif', fontSize: 24, fontWeight: 800, marginBottom: 20 }}>Building Your Faceless Empire</h2>
       <p style={{ color: 'var(--text-secondary)', lineHeight: 1.8, marginBottom: 20 }}>
-        The era of the "faceless superstar" is here. You no longer need to be on camera to build a multi-million dollar audience. 
+        The era of the &quot;faceless superstar&quot; is here. You no longer need to be on camera to build a multi-million dollar audience. 
         Our Faceless Video System provides the complete production framework—from script to final edit markers. 
-        It leverages AI to generate high-retention scripts that keep viewers engaged, even without a personal host present. 
-        This is the ultimate system for creators who value privacy, scale, and efficiency.
+        It leverages AI to generate high-retention scripts that keep viewers engaged, even without a personal host present.
       </p>
 
       <h3 style={{ fontFamily: 'Syne, sans-serif', fontSize: 18, fontWeight: 700, marginBottom: 16 }}>The Production Pipeline</h3>
@@ -47,17 +49,16 @@ Include:
 
       <h3 style={{ fontFamily: 'Syne, sans-serif', fontSize: 18, fontWeight: 700, marginBottom: 16 }}>Why This Matters for Scalability</h3>
       <p style={{ color: 'var(--text-secondary)', lineHeight: 1.8, marginBottom: 20 }}>
-        The biggest advantage of a faceless channel is that it's an asset you can sell. 
-        Because the brand isn't tied to your face, it has a much higher market value for investors. 
-        Additionally, you can run 5 or 10 channels simultaneously using this system, effectively building a "content studio" rather than just a hobby. 
-        This tool ensures that every video you publish meets the high-quality standards required to compete in the 2026 YouTube landscape.
+        The biggest advantage of a faceless channel is that it&apos;s an asset you can sell. 
+        Because the brand isn&apos;t tied to your face, it has a much higher market value for investors. 
+        Additionally, you can run 5 or 10 channels simultaneously using this system, effectively building a &quot;content studio&quot; rather than just a hobby.
       </p>
     </div>
   );
 
   return (
     <ToolLayout 
-      title="🎭 Faceless Video System" 
+      title="Faceless Video System" 
       description="Generate a complete, ready-to-produce faceless video concept including script, visuals, and monetization strategy." 
       badge="youtube"
       extraContent={extraContent}
@@ -68,7 +69,7 @@ Include:
         <div className="input-wrap"><label className="input-label">Target Audience</label><input className="input" value={audience} onChange={e => setAudience(e.target.value)} required /></div>
         <button type="submit" className="btn btn-primary" disabled={loading}>{loading ? 'Creating System...' : 'Generate Video Concept'}</button>
       </form>
-      {error && <div style={{ color: '#ff7070' }}>⚠ {error}</div>}
+      {error && <div style={{ color: '#ff7070' }}>{error}</div>}
       {upgradeRequired && <UpgradePrompt />}
       {result && <ResultDisplay result={result} label="Faceless Video Blueprint" />}
     </ToolLayout>

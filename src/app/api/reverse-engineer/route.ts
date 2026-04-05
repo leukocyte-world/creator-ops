@@ -25,7 +25,10 @@ export async function POST(req: NextRequest) {
   // Fetch actual tweet content
   const threadContent = await fetchThread(urls);
 
-  const prompt = `You are a master content strategist and reverse engineer of viral social media content.
+  const currentDate = new Date().toLocaleDateString('en-US', { month: 'long', year: 'numeric' });
+  const prompt = `Today is ${currentDate}. You are a master content strategist and reverse engineer of viral social media content.
+
+Analyze these posts based on what is performing best on X RIGHT NOW in ${new Date().getFullYear()}.
 
 Here are ${urls.length} viral posts from X (Twitter):
 

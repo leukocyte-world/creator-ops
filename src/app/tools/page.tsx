@@ -1,6 +1,7 @@
 import Sidebar from '@/components/Sidebar';
 import Link from 'next/link';
 import Footer from '@/components/Footer';
+import ToolIcon from '@/components/ToolIcon';
 
 import { X_TOOLS, YT_TOOLS } from '@/lib/tools-config';
 
@@ -30,7 +31,9 @@ export default function ToolsDashboard() {
               {X_TOOLS.map(t => (
                 <Link key={t.href} href={t.href} className="card" style={{ padding: '18px 20px', display: 'block', textDecoration: 'none' }}>
                   <div style={{ display: 'flex', alignItems: 'flex-start', gap: 12 }}>
-                    <div className="tool-list-item-icon x-icon-bg" style={{ width: 36, height: 36, fontSize: 18, flexShrink: 0 }}>{t.icon}</div>
+                    <div className="tool-list-item-icon x-icon-bg" style={{ width: 36, height: 36, flexShrink: 0, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                      <ToolIcon name={t.icon} size={18} />
+                    </div>
                     <div>
                       <div style={{ fontFamily: 'Syne, sans-serif', fontWeight: 700, fontSize: 15, marginBottom: 4 }}>{t.label}</div>
                       <div style={{ color: 'var(--text-secondary)', fontSize: 13, lineHeight: 1.5 }}>{t.desc}</div>
@@ -52,7 +55,9 @@ export default function ToolsDashboard() {
               {YT_TOOLS.map(t => (
                 <Link key={t.href} href={t.href} className="card" style={{ padding: '18px 20px', display: 'block', textDecoration: 'none' }}>
                   <div style={{ display: 'flex', alignItems: 'flex-start', gap: 12 }}>
-                    <div className="tool-list-item-icon yt-icon-bg" style={{ width: 36, height: 36, fontSize: 18, flexShrink: 0 }}>{t.icon}</div>
+                    <div className="tool-list-item-icon yt-icon-bg" style={{ width: 36, height: 36, flexShrink: 0, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                      <ToolIcon name={t.icon} size={18} />
+                    </div>
                     <div>
                       <div style={{ fontFamily: 'Syne, sans-serif', fontWeight: 700, fontSize: 15, marginBottom: 4 }}>{t.label}</div>
                       <div style={{ color: 'var(--text-secondary)', fontSize: 13, lineHeight: 1.5 }}>{t.desc}</div>

@@ -4,6 +4,8 @@ import { useState, useCallback } from 'react';
 import Link from 'next/link';
 import Sidebar from '@/components/Sidebar';
 import Footer from '@/components/Footer';
+import ToolIcon from '@/components/ToolIcon';
+import { Copy, Check, Lock } from 'lucide-react';
 
 interface ToolLayoutProps {
   title: string;
@@ -68,7 +70,9 @@ export default function ToolLayout({ title, description, badge, children, extraC
               <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(250px, 1fr))', gap: 16 }}>
                 {relatedTools.map(t => (
                   <Link key={t.href} href={t.href} className="card" style={{ padding: '16px 20px', display: 'flex', alignItems: 'center', gap: 12, textDecoration: 'none' }}>
-                    <div className={`tool-list-item-icon ${badge}-icon-bg`} style={{ width: 32, height: 32, fontSize: 16 }}>{t.icon}</div>
+                    <div className={`tool-list-item-icon ${badge}-icon-bg`} style={{ width: 32, height: 32, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                      <ToolIcon name={t.icon} size={16} />
+                    </div>
                     <span style={{ fontWeight: 600, fontSize: 14 }}>{t.label}</span>
                   </Link>
                 ))}
@@ -105,8 +109,8 @@ export function ResultDisplay({ result, label = 'AI Output' }: ResultDisplayProp
     <div className="result-card animate-fade-up">
       <div className="result-card-header">
         <span className="result-card-title">{label}</span>
-        <button className={`copy-btn ${copied ? 'copied' : ''}`} onClick={copy}>
-          {copied ? '✓ Copied!' : '⎘ Copy'}
+        <button className={`copy-btn ${copied ? 'copied' : ''}`} onClick={copy} style={{ display: 'flex', alignItems: 'center', gap: 5 }}>
+          {copied ? <><Check size={13} /> Copied!</> : <><Copy size={13} /> Copy</>}
         </button>
       </div>
       <div className="result-body">{result}</div>
@@ -120,7 +124,7 @@ export function UpgradePrompt() {
   return (
     <div className="result-card" style={{ borderColor: 'rgba(255,107,53,0.3)', background: 'linear-gradient(135deg, rgba(255,107,53,0.07) 0%, rgba(65,88,208,0.07) 100%)' }}>
       <div className="result-card-header">
-        <span className="result-card-title">🔒 Usage Limit Reached</span>
+        <span className="result-card-title" style={{ display: 'flex', alignItems: 'center', gap: 6 }}><Lock size={14} /> Usage Limit Reached</span>
       </div>
       <div className="result-body" style={{ display: 'flex', flexDirection: 'column', gap: 16, alignItems: 'flex-start' }}>
         <p>You&apos;ve used all 5 free uses. Upgrade to Pro to continue using all 17 tools without limits.</p>

@@ -11,14 +11,16 @@ export default function IncomeStreamsPage() {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    const currentDate = new Date().toLocaleDateString('en-US', { month: 'long', year: 'numeric' });
     generate({
-      prompt: `I have a YouTube channel about [${niche}] with [${subs}] subscribers and [${views}] monthly views.
+      prompt: `Today is ${currentDate}. I have a YouTube channel about [${niche}] with [${subs}] subscribers and [${views}] monthly views.
 
-Build a complete income blueprint:
-- AdSense revenue estimate based on average CPM for this niche
-- Top 10 affiliate programs for my exact niche
-- Digital product ideas I can create and sell
-- Sponsorship rate card for my channel size (what to charge)
+Build a complete income blueprint based on what is ACTUALLY paying well in ${new Date().getFullYear()} — use current affiliate program rates, current CPM benchmarks, and what brands are actively sponsoring in this niche RIGHT NOW:
+
+- AdSense revenue estimate based on CURRENT average CPM for this niche in 2026
+- Top 10 affiliate programs for my exact niche that are actively running in 2026
+- Digital product ideas I can create and sell TODAY
+- Sponsorship rate card for my channel size (what to charge brands right now)
 - Merchandise potential
 - Paid community model structure
 - Course or coaching opportunity
@@ -42,24 +44,24 @@ Show total realistic monthly income at my current size, AND project it for 10K /
       <h3 style={{ fontFamily: 'Syne, sans-serif', fontSize: 18, fontWeight: 700, marginBottom: 16 }}>Affiliate Marketing and Partnerships</h3>
       <p style={{ color: 'var(--text-secondary)', lineHeight: 1.8, marginBottom: 20 }}>
         Affiliate marketing is often the most immediate way to monetize a new channel. 
-        This tool scans your niche for the highest-paying and most relevant partner programs. 
-        Instead of promoting generic products, we help you find the tools and services that your audience actually needs. 
-        This builds trust while also maximizing your conversion rates.
+        This tool scans your niche for the highest-paying and most relevant partner programs active in 2026. 
+        Instead of promoting generic products, we help you find the tools and services that your audience actually needs, 
+        building trust while maximizing your conversion rates.
       </p>
 
       <h3 style={{ fontFamily: 'Syne, sans-serif', fontSize: 18, fontWeight: 700, marginBottom: 16 }}>Digital Products and Communities</h3>
       <p style={{ color: 'var(--text-secondary)', lineHeight: 1.8, marginBottom: 20 }}>
-        The real "wealth" on YouTube comes from owning the customer relationship. 
+        The real &quot;wealth&quot; on YouTube comes from owning the customer relationship. 
         We provide ideas for e-books, templates, checklists, and private communities 
-        that you can sell directly to your fans. These high-margin products allow you to 
-        decouple your income from your view count, creating a stable and predictable business model.
+        that you can sell directly to your fans — creating a stable and predictable business model 
+        that decouples your income from your view count.
       </p>
     </div>
   );
 
   return (
     <ToolLayout 
-      title="💸 Multiple Income Streams" 
+      title="Multiple Income Streams" 
       description="Calculate your earning potential and discover 7 different ways to monetize your specific channel." 
       badge="youtube"
       extraContent={extraContent}
@@ -73,7 +75,7 @@ Show total realistic monthly income at my current size, AND project it for 10K /
         </div>
         <button type="submit" className="btn btn-primary" disabled={loading}>{loading ? 'Calculating...' : 'Build Income Blueprint'}</button>
       </form>
-      {error && <div style={{ color: '#ff7070' }}>⚠ {error}</div>}
+      {error && <div style={{ color: '#ff7070' }}>{error}</div>}
       {upgradeRequired && <UpgradePrompt />}
       {result && <ResultDisplay result={result} label="Monetization Blueprint" />}
     </ToolLayout>
