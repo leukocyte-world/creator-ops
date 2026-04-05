@@ -8,6 +8,8 @@ import Footer from "@/components/Footer";
 import { X_TOOLS, YT_TOOLS } from "@/lib/tools-config";
 
 import JsonLd from "@/components/JsonLd";
+import ToolIcon from "@/components/ToolIcon";
+import { Microscope, Video, Zap } from 'lucide-react';
 
 export default function LandingPage() {
   const { data: session } = useSession();
@@ -79,18 +81,18 @@ export default function LandingPage() {
           </p>
           <div className="value-props" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))', gap: 30, maxWidth: 1200, margin: '0 auto' }}>
             <div className="value-card">
-              <div style={{ fontSize: 32, marginBottom: 16 }}>🧠</div>
+              <div style={{ marginBottom: 16, display: 'flex', justifyContent: 'center' }}><Microscope size={32} /></div>
               <h3>Reverse Engineering</h3>
               <p>Don't just copy. Understand <em>why</em> a post went viral and replicate the chemistry.</p>
             </div>
             <div className="value-card">
-              <div style={{ fontSize: 32, marginBottom: 16 }}>🎭</div>
+              <div style={{ marginBottom: 16, display: 'flex', justifyContent: 'center' }}><Video size={32} /></div>
               <h3>Faceless Systems</h3>
               <p>Full YouTube automation paths designed for creators who value privacy and scale.</p>
             </div>
             <div className="value-card">
-              <div style={{ fontSize: 32, marginBottom: 16 }}>⚡</div>
-              <h3>0% Fluff</h3>
+              <div style={{ marginBottom: 16, display: 'flex', justifyContent: 'center' }}><Zap size={32} /></div>
+              <h3>0% Friction</h3>
               <p>No complex dashboards. Paste your idea, get your viral output in 3 seconds.</p>
             </div>
           </div>
@@ -101,7 +103,7 @@ export default function LandingPage() {
           <div className="section-tag">
             <span>What's inside</span>
           </div>
-          <h2 className="section-title">17 tools. Zero fluff.</h2>
+          <h2 className="section-title">17 tools. Zero friction.</h2>
           <p className="section-sub">
             Every tool is laser-focused on one job. Pick the one you need right now.
           </p>
@@ -110,12 +112,12 @@ export default function LandingPage() {
             {/* X column */}
             <div>
               <div className="platform-column-header x-col">
-                <span role="img" aria-label="X (Twitter)">𝕏</span> Viral Twitter / X Tools
+                <span className="platform-column-header-icon" style={{ fontSize: 20 }}>𝕏</span> Viral Twitter / X Tools
               </div>
               <div className="tool-list">
                 {X_TOOLS.map(t => (
                   <Link key={t.href} href={t.href} className="tool-list-item">
-                    <div className="tool-list-item-icon x-icon-bg" role="img" aria-label={t.label}>{t.icon}</div>
+                    <div className="tool-list-item-icon x-icon-bg" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', width: 28, height: 28 }}><ToolIcon name={t.icon} size={16} /></div>
                     <h2 style={{ fontSize: 'inherit', fontWeight: 'inherit', margin: 0 }}>{t.label}</h2>
                     <span style={{ marginLeft: 'auto', opacity: 0.4, fontSize: 12 }}>→</span>
                   </Link>
@@ -126,12 +128,12 @@ export default function LandingPage() {
             {/* YouTube column */}
             <div>
               <div className="platform-column-header yt-col">
-                <span role="img" aria-label="YouTube">▶</span> AI YouTube Automation
+                <span className="platform-column-header-icon" style={{ fontSize: 20 }}>▶</span> AI YouTube Automation
               </div>
               <div className="tool-list">
                 {YT_TOOLS.map(t => (
                   <Link key={t.href} href={t.href} className="tool-list-item">
-                    <div className="tool-list-item-icon yt-icon-bg" role="img" aria-label={t.label}>{t.icon}</div>
+                    <div className="tool-list-item-icon yt-icon-bg" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', width: 28, height: 28 }}><ToolIcon name={t.icon} size={16} /></div>
                     <h2 style={{ fontSize: 'inherit', fontWeight: 'inherit', margin: 0 }}>{t.label}</h2>
                     <span style={{ marginLeft: 'auto', opacity: 0.4, fontSize: 12 }}>→</span>
                   </Link>
