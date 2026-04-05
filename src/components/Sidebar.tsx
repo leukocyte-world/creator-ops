@@ -132,7 +132,7 @@ export default function Sidebar({ hiddenOnDesktop = false }: { hiddenOnDesktop?:
         {/* CV Builder */}
         <div className="nav-section-label">Other Tools</div>
         <a
-          href="https://cv-resume-murex-iota.vercel.app/"
+          href="https://cv.creatorops.site/"
           target="_blank"
           rel="noopener noreferrer"
           className="nav-item special"
