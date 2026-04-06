@@ -16,6 +16,7 @@ const CURRENCIES = [
 
 export default function UpgradePage() {
   const { data: session } = useSession();
+  const [paymentMethod, setPaymentMethod] = useState<'crypto' | 'card'>('card');
   const [selected, setSelected] = useState('usdtbsc');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
@@ -51,17 +52,18 @@ export default function UpgradePage() {
     if (!session) { signIn(); return; }
     setLoading(true); setError('');
     try {
-      const res = await fetch('/api/payment/create', {
+      const endpoint = paymentMethod === 'crypto' ? '/api/payment/create' : '/api/payment/flutterwave/create';
+      const res = await fetch(endpoint, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ 
-          currency: selected,
+          currency: paymentMethod === 'crypto' ? selected : 'USD', 
           discount_code: appliedDiscount?.code
         }),
       });
       const data = await res.json();
-      if (data.invoice_url) {
-        window.location.href = data.invoice_url;
+      if (data.invoice_url || data.link) {
+        window.location.href = data.invoice_url || data.link;
       } else if (data.success) {
         window.location.href = '/upgrade/success';
       } else {
@@ -90,6 +92,33 @@ export default function UpgradePage() {
           </p>
         </div>
 
+        <div className="card" style={{ padding: 20, marginBottom: 20, display: 'flex', gap: 8, background: 'var(--bg-glass-heavy)' }}>
+          <button 
+            onClick={() => setPaymentMethod('card')}
+            style={{ 
+              flex: 1, padding: '10px', borderRadius: 'var(--r-md)', border: '1px solid',
+              borderColor: paymentMethod === 'card' ? 'var(--accent-orange)' : 'transparent',
+              background: paymentMethod === 'card' ? 'rgba(255,107,53,0.1)' : 'transparent',
+              color: paymentMethod === 'card' ? 'var(--text-primary)' : 'var(--text-muted)',
+              fontSize: 13, fontWeight: 600, cursor: 'pointer', transition: 'all 0.2s'
+            }}
+          >
+            💳 Card / Mobile Money
+          </button>
+          <button 
+            onClick={() => setPaymentMethod('crypto')}
+            style={{ 
+              flex: 1, padding: '10px', borderRadius: 'var(--r-md)', border: '1px solid',
+              borderColor: paymentMethod === 'crypto' ? 'var(--accent-orange)' : 'transparent',
+              background: paymentMethod === 'crypto' ? 'rgba(255,107,53,0.1)' : 'transparent',
+              color: paymentMethod === 'crypto' ? 'var(--text-primary)' : 'var(--text-muted)',
+              fontSize: 13, fontWeight: 600, cursor: 'pointer', transition: 'all 0.2s'
+            }}
+          >
+            ₿ Crypto Payment
+          </button>
+        </div>
+
         <div className="card" style={{ padding: 28, marginBottom: 20 }}>
           <h3 style={{ fontSize: 14, fontWeight: 600, color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '0.08em', marginBottom: 16 }}>
             What&apos;s included
@@ -103,30 +132,32 @@ export default function UpgradePage() {
           </ul>
         </div>
 
-        <div className="card" style={{ padding: 28, marginBottom: 20 }}>
-          <h3 style={{ fontSize: 14, fontWeight: 600, color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '0.08em', marginBottom: 16 }}>
-            Pay with crypto
-          </h3>
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 10 }}>
-            {CURRENCIES.map(c => (
-              <button
-                key={c.id}
-                onClick={() => setSelected(c.id)}
-                style={{
-                  display: 'flex', alignItems: 'center', gap: 10, padding: '12px 14px',
-                  borderRadius: 'var(--r-md)', border: '1px solid',
-                  borderColor: selected === c.id ? 'var(--accent-orange)' : 'var(--border)',
-                  background: selected === c.id ? 'rgba(255,107,53,0.08)' : 'var(--bg-glass)',
-                  color: selected === c.id ? 'var(--text-primary)' : 'var(--text-secondary)',
-                  cursor: 'pointer', fontSize: 13, fontWeight: 500, transition: 'all 0.18s',
-                }}
-              >
-                <span style={{ fontSize: 18, opacity: 0.8 }}>{c.icon}</span>
-                {c.label}
-              </button>
-            ))}
+        {paymentMethod === 'crypto' && (
+          <div className="card" style={{ padding: 28, marginBottom: 20 }}>
+            <h3 style={{ fontSize: 14, fontWeight: 600, color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '0.08em', marginBottom: 16 }}>
+              Select Crypto
+            </h3>
+            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 10 }}>
+              {CURRENCIES.map(c => (
+                <button
+                  key={c.id}
+                  onClick={() => setSelected(c.id)}
+                  style={{
+                    display: 'flex', alignItems: 'center', gap: 10, padding: '12px 14px',
+                    borderRadius: 'var(--r-md)', border: '1px solid',
+                    borderColor: selected === c.id ? 'var(--accent-orange)' : 'var(--border)',
+                    background: selected === c.id ? 'rgba(255,107,53,0.08)' : 'var(--bg-glass)',
+                    color: selected === c.id ? 'var(--text-primary)' : 'var(--text-secondary)',
+                    cursor: 'pointer', fontSize: 13, fontWeight: 500, transition: 'all 0.18s',
+                  }}
+                >
+                  <span style={{ fontSize: 18, opacity: 0.8 }}>{c.icon}</span>
+                  {c.label}
+                </button>
+              ))}
+            </div>
           </div>
-        </div>
+        )}
 
         <div className="card" style={{ padding: 28, marginBottom: 20 }}>
           <h3 style={{ fontSize: 14, fontWeight: 600, color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '0.08em', marginBottom: 16 }}>
@@ -168,13 +199,14 @@ export default function UpgradePage() {
           style={{ fontSize: 16 }}
         >
           {loading ? <><span className="spinner" /> Processing...</> : (
-            `Pay $${appliedDiscount ? (10 * (1 - appliedDiscount.percent/100)).toFixed(2) : '10'} with ${CURRENCIES.find(c => c.id === selected)?.label}`
+            `Pay $${appliedDiscount ? (10 * (1 - appliedDiscount.percent/100)).toFixed(2) : '10'} with ${paymentMethod === 'card' ? 'Card / Mobile Money' : CURRENCIES.find(c => c.id === selected)?.label}`
           )}
         </button>
 
         <p style={{ textAlign: 'center', color: 'var(--text-muted)', fontSize: 12, marginTop: 14 }}>
-          Secure payment via NOWPayments · Cancel anytime
+          Secure payment via {paymentMethod === 'card' ? 'Flutterwave' : 'NOWPayments'} · Cancel anytime
         </p>
+
       </div>
     </div>
   );
