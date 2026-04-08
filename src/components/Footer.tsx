@@ -35,7 +35,7 @@ export default function Footer() {
         <Link href="/blog" style={{ color: 'var(--text-secondary)' }}>Resources</Link>
         <Link href="/#pricing" style={{ color: 'var(--text-secondary)' }}>Pricing</Link>
         <a
-          href="https://cv.creatorops.site/"
+          href="https://cvbuilder.creatorops.site/"
           target="_blank"
           rel="noopener noreferrer"
           style={{ color: 'var(--text-secondary)' }}

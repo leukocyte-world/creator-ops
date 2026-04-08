@@ -1,23 +1,18 @@
 // Professional-grade Gemini API client with SDK + REST fallback
 // Bypasses SDK bugs/404s by forcing stable v1 endpoints and verified model names.
 
-const KEYS = [
-  process.env.GEMINI_API_KEY_1,
-  process.env.GEMINI_API_KEY_2,
-  process.env.GEMINI_API_KEY_3,
-].filter(Boolean) as string[];
+const KEYS = Array.from({ length: 20 }, (_, i) => process.env[`GEMINI_API_KEY_${i + 1}`])
+  .filter(Boolean) as string[];
+
+console.log(`[Gemini] Loaded ${KEYS.length} keys.`);
 
 /**
- * MODELS verified for this environment via API discovery:
- * - gemini-2.5-flash (Primary)
- * - gemini-2.0-flash
- * - gemini-2.5-pro
- * - gemini-2.0-flash-lite
+ * MODELS prioritize stable versions.
  */
 const MODELS = [
-  'gemini-2.5-flash',
+  'gemini-1.5-flash',
+  'gemini-1.5-pro',
   'gemini-2.0-flash',
-  'gemini-2.5-pro',
   'gemini-2.0-flash-lite'
 ];
 
@@ -66,6 +61,13 @@ export async function askGemini(prompt: string): Promise<string> {
         
         // Handle rate limits (retry with next key)
         if (msg.includes('429') || msg.includes('quota')) {
+          // If the error explicitly mentions limit: 0, it means THIS model is unavailable for this key.
+          // In that case, we should NOT break the model loop, but continue to try the next model.
+          if (msg.includes('limit: 0') || msg.includes('PermissionDenied')) {
+            console.warn(`[Gemini] Model ${modelName} unavailable (Limit 0) for key #${k + 1}. Trying next model...`);
+            continue;
+          }
+          
           console.warn(`[Gemini] Rate limit hit on key #${k + 1}.`);
           break; // Move to next key
         }

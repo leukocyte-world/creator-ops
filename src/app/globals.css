@@ -2,22 +2,23 @@
 
 :root {
   /* Base colors */
-  --bg-base: #0d0f14;
-  --bg-surface: #13161e;
-  --bg-card: #181c26;
-  --bg-card-hover: #1e2333;
-  --bg-glass: rgba(255,255,255,0.04);
-  --bg-glass-hover: rgba(255,255,255,0.07);
+  --bg-base: #0b091a;
+  --bg-surface: #12102e;
+  --bg-card: #18163d;
+  --bg-card-hover: #1f1d4d;
+  --bg-glass: rgba(255,255,255,0.03);
+  --bg-glass-hover: rgba(255,255,255,0.05);
   --border: rgba(255,255,255,0.07);
   --border-bright: rgba(255,255,255,0.13);
 
-  /* Brand gradients */
-  --gradient-hero: linear-gradient(135deg, #ff6b35 0%, #f7931e 35%, #c850c0 70%, #4158d0 100%);
-  --gradient-x: linear-gradient(135deg, #1d9bf0 0%, #4158d0 100%);
-  --gradient-yt: linear-gradient(135deg, #ff0000 0%, #ff6b35 100%);
-  --gradient-accent: linear-gradient(135deg, #c850c0 0%, #4158d0 100%);
-  --gradient-gold: linear-gradient(135deg, #f7931e 0%, #ffd700 100%);
-  --gradient-card: linear-gradient(135deg, rgba(255,107,53,0.08) 0%, rgba(65,88,208,0.08) 100%);
+  /* Brand Colors (Solid) */
+  --brand-primary: #6366f1;
+  --brand-secondary: #4f46e5;
+  --brand-accent: #f59e0b;
+  --brand-success: #10b981;
+  --brand-danger: #ef4444;
+  --brand-x: #1d9bf0;
+  --brand-yt: #ff0000;
 
   /* Text */
   --text-primary: #f0f2f7;
@@ -53,6 +54,7 @@
 
 html { scroll-behavior: smooth; }
 
+/* Background */
 body {
   font-family: 'DM Sans', system-ui, sans-serif;
   background-color: var(--bg-base);
@@ -61,19 +63,6 @@ body {
   -webkit-font-smoothing: antialiased;
   overflow-x: hidden;
   min-height: 100vh;
-}
-
-/* Background mesh */
-body::before {
-  content: '';
-  position: fixed;
-  inset: 0;
-  background:
-    radial-gradient(ellipse 60% 50% at 15% 20%, rgba(255,107,53,0.07) 0%, transparent 60%),
-    radial-gradient(ellipse 50% 60% at 85% 80%, rgba(65,88,208,0.07) 0%, transparent 60%),
-    radial-gradient(ellipse 40% 40% at 50% 50%, rgba(200,80,192,0.04) 0%, transparent 60%);
-  pointer-events: none;
-  z-index: 0;
 }
 
 /* ─── Typography ──────────────────────────── */
@@ -112,9 +101,9 @@ a { color: inherit; text-decoration: none; }
   .sidebar.hidden-on-desktop {
     display: none;
   }
-  .app-shell:has(.sidebar.hidden-on-desktop) .main-content {
-    margin-left: 0;
-  }
+}
+.landing-page-shell .main-content {
+  margin-left: 0 !important;
 }
 
 .mobile-header { display: none; }
@@ -323,13 +312,13 @@ a { color: inherit; text-decoration: none; }
 }
 
 .btn-primary {
-  background: var(--gradient-hero);
-  color: #fff;
-  box-shadow: 0 4px 20px rgba(255,107,53,0.3);
+  background: var(--brand-accent);
+  color: #1a1000;
+  box-shadow: 0 4px 14px rgba(245, 158, 11, 0.2);
 }
 .btn-primary:hover {
   transform: translateY(-1px);
-  box-shadow: 0 6px 28px rgba(255,107,53,0.45);
+  box-shadow: 0 6px 20px rgba(245, 158, 11, 0.3);
 }
 
 .btn-secondary {
@@ -518,10 +507,7 @@ a { color: inherit; text-decoration: none; }
 }
 
 .hero-title-gradient {
-  background: var(--gradient-hero);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
+  color: #fff;
   display: block;
 }
 

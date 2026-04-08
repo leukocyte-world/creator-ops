@@ -10,64 +10,139 @@ import { X_TOOLS, YT_TOOLS } from "@/lib/tools-config";
 import JsonLd from "@/components/JsonLd";
 import ToolIcon from "@/components/ToolIcon";
 import { Microscope, Video, Zap } from 'lucide-react';
+import { useState, useEffect } from 'react';
+
+function LiveUserTicker() {
+  const [count, setCount] = useState(542);
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCount(prev => prev + Math.floor(Math.random() * 2));
+    }, 4000);
+    return () => clearInterval(interval);
+  }, []);
+  return (
+    <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+      <span style={{ width: 8, height: 8, background: '#10b981', borderRadius: '50%', boxShadow: '0 0 10px #1bbf8a' }}></span>
+      <span style={{ fontWeight: 600, color: 'var(--text-secondary)' }}><span style={{ color: 'var(--text-primary)' }}>{count}</span> creators live now</span>
+    </div>
+  );
+}
 
 export default function LandingPage() {
   const { data: session } = useSession();
   const currentYear = new Date().getFullYear();
 
   return (
-    <div className="app-shell">
+    <div className="landing-page-root" style={{ background: 'var(--bg-base)', minHeight: '100vh', overflowX: 'hidden' }}>
       <JsonLd />
-      <nav className="desktop-nav">
-        <div className="nav-container">
-          <Link href="/" className="logo-mark">
-            <div className="logo-icon">C</div>
-            <span className="logo-text">CreatorOps</span>
+      <div className="top-banner" style={{ background: '#1c1842', color: '#fff', fontSize: 13, padding: '10px 0', textAlign: 'center', borderBottom: '1px solid var(--border)' }}>
+        Try out CreatorOps for free. <Link href="/auth/signin" style={{ color: 'var(--brand-accent)', fontWeight: 600, textDecoration: 'underline' }}>Here!</Link>
+      </div>
+
+      <nav className="desktop-nav" style={{ position: 'relative', height: 'auto', padding: '24px 40px' }}>
+        <div className="nav-container" style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', maxWidth: 1400, margin: '0 auto' }}>
+          <Link href="/" className="logo-mark" style={{ flexShrink: 0 }}>
+            <div className="logo-icon" style={{ background: 'var(--brand-primary)' }}>C</div>
+            <span className="logo-text" style={{ background: 'none', WebkitTextFillColor: 'var(--text-primary)', color: 'var(--text-primary)' }}>CreatorOps</span>
           </Link>
-          <div className="nav-links">
+          
+          <div className="nav-links" style={{ display: 'flex', gap: 32, fontSize: 14, fontWeight: 500 }}>
             <Link href="/tools">AI Tools</Link>
             <Link href="/blog">Resources</Link>
             <Link href="/#pricing">Pricing</Link>
-            <Link href={session ? "/dashboard" : "/auth/signin"} className="btn btn-secondary btn-sm">Sign In</Link>
-            <Link href={session ? "/dashboard" : "/auth/signin"} className="btn btn-primary btn-sm">Start Free</Link>
+            <Link href="/#contact">Contact Us</Link>
+          </div>
+
+          <div style={{ display: 'flex', alignItems: 'center', gap: 16, flexShrink: 0 }}>
+            <div className="lang-flags" style={{ display: 'flex', gap: 10, opacity: 0.8 }}>
+              <span title="Spanish" style={{ cursor: 'pointer', fontSize: 18 }}>🇪🇸</span>
+              <span title="Ukrainian" style={{ cursor: 'pointer', fontSize: 18 }}>🇺🇦</span>
+            </div>
+            <Link href={session ? "/dashboard" : "/auth/signin"} style={{ fontSize: 14, fontWeight: 500, marginLeft: 8 }}>Login</Link>
+            <Link href={session ? "/dashboard" : "/auth/signin"} className="btn btn-primary btn-sm" style={{ borderRadius: 99, padding: '10px 24px', background: 'var(--brand-accent)', color: '#1a1000' }}>Sign Up</Link>
           </div>
         </div>
       </nav>
 
       <Sidebar hiddenOnDesktop />
-      <main className="main-content landing">
+      <div className="landing-main">
         {/* Hero */}
-        <section className="hero" style={{ paddingTop: 120 }}>
-          <div className="hero-glow" />
+        <section className="hero" style={{ padding: '80px 20px 40px' }}>
+          <div className="hero-glow" style={{ background: 'radial-gradient(circle, rgba(99, 102, 241, 0.08) 0%, transparent 70%)', top: '10%' }} />
 
-          <div className="hero-eyebrow animate-fade-up">
-            <span className="hero-eyebrow-dot" />
-            AI-powered creator toolkit — X & YouTube
+          <div style={{ display: 'flex', gap: 12, marginBottom: 28 }}>
+            <span style={{ padding: '5px 14px', background: 'var(--brand-accent)', color: '#1a1000', borderRadius: 99, fontSize: 11, fontWeight: 700, letterSpacing: '0.05em', textTransform: 'uppercase' }}>Latest All Tools</span>
+            <span style={{ padding: '5px 14px', background: 'var(--bg-glass)', border: '1px solid var(--border)', color: 'var(--text-secondary)', borderRadius: 99, fontSize: 11, fontWeight: 500, letterSpacing: '0.05em', textTransform: 'uppercase' }}>Explore All World</span>
           </div>
 
-          <h1 className="hero-title animate-fade-up animate-delay-1">
+          <h1 className="hero-title animate-fade-up" style={{ fontSize: 'clamp(40px, 6vw, 76px)', maxWidth: 1000, color: '#fff', textAlign: 'center', marginBottom: 20 }}>
             Stop Guessing. <br />
-            <span className="hero-title-gradient">Master Viral AI Creator Toolkit.</span>
+            Master Viral AI <span style={{ color: 'var(--brand-accent)' }}>Creator</span> Toolkit.
           </h1>
 
-          <p className="hero-sub animate-fade-up animate-delay-2">
+          <p className="hero-sub animate-fade-up animate-delay-1" style={{ maxWidth: 650, fontSize: 18, opacity: 0.8 }}>
             The ultimate AI toolkit for X and YouTube growth. Reverse-engineer viral posts, generate scroll-stopping hooks, 
-            build faceless YouTube channels, and scale your creator business.
+            build faceless YouTube channels, and scale your business.
           </p>
 
-          <div className="hero-ctas animate-fade-up animate-delay-3">
-            <Link href={session ? "/dashboard" : "/auth/signin"} className="btn btn-primary btn-lg">
-              <span>→</span> Start for free
+          <div className="hero-ctas animate-fade-up animate-delay-2" style={{ display: 'flex', gap: 20, alignItems: 'center' }}>
+            <Link href={session ? "/dashboard" : "/auth/signin"} className="btn btn-primary btn-lg" style={{ borderRadius: 12, padding: '16px 36px', background: 'var(--brand-accent)' }}>
+              Get Started 🚀
             </Link>
-            <Link href="/#features" className="btn btn-secondary btn-lg">
-              See all 17 tools
+            <Link href="/#features" className="btn btn-ghost btn-lg" style={{ borderRadius: 12, border: '1px solid var(--border)', display: 'flex', alignItems: 'center', gap: 8 }}>
+              <span style={{ fontSize: 18, opacity: 0.7 }}>⚙</span> Our All Tools
             </Link>
           </div>
 
-          <div className="hero-social-proof animate-fade-up" style={{ animationDelay: '0.4s' }}>
-            <div>✓ <span>5 free uses</span> — no credit card</div>
-            <div>✓ <span>17 AI tools</span> for creators</div>
-            <div>✓ <span>Instant</span> results</div>
+          <div className="live-user-counter animate-fade-up" style={{ marginTop: 40, padding: '8px 20px', background: 'var(--bg-glass)', borderRadius: 99, border: '1px solid var(--border)', fontSize: 14 }}>
+            <LiveUserTicker />
+          </div>
+        </section>
+
+        {/* Trust Bar */}
+        <section className="trust-bar animate-fade-up" style={{ padding: '24px 0', margin: '40px 0', borderTop: '1px solid var(--border)', borderBottom: '1px solid var(--border)', background: 'rgba(255,255,255,0.01)' }}>
+          <div className="trust-bar-container" style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center', gap: '40px', opacity: 0.6, fontSize: 13, fontWeight: 600, letterSpacing: '0.08em', textTransform: 'uppercase' }}>
+            <span>17 ai tools</span>
+            <span>gemini-powered</span>
+            <span>cancel anytime</span>
+            <span>pay with crypto/card</span>
+          </div>
+        </section>
+
+        {/* Video Demo Section */}
+        <section className="demo-section animate-fade-up" style={{ padding: '60px 20px', maxWidth: 1000, margin: '0 auto', textAlign: 'center' }}>
+          <div className="section-tag" style={{ margin: '0 auto 16px' }}><span>See it in action</span></div>
+          <h2 className="section-title" style={{ marginBottom: 40 }}>How to Find Your Money Niche</h2>
+          <div className="video-container" style={{ position: 'relative', borderRadius: 24, overflow: 'hidden', border: '1px solid var(--border)', background: 'var(--bg-glass)', boxShadow: '0 20px 40px rgba(0,0,0,0.4)' }}>
+            <img 
+              src="/money-niche-demo.webp" 
+              alt="Find Your Money Niche Demo"
+              style={{ width: '100%', height: 'auto', display: 'block' }}
+            />
+            <div style={{ position: 'absolute', bottom: 20, left: 20, right: 20, padding: '16px 24px', background: 'rgba(0,0,0,0.6)', backdropFilter: 'blur(10px)', borderRadius: 12, textAlign: 'left', pointerEvents: 'none' }}>
+              <div style={{ fontWeight: 600, fontSize: 14 }}>Find Your Money Niche Demo</div>
+              <div style={{ fontSize: 12, opacity: 0.7 }}>See how we identify high-CPM topics tailored to your interests.</div>
+            </div>
+          </div>
+        </section>
+
+        {/* Testimonials */}
+        <section className="testimonials-fold animate-fade-up" style={{ padding: '60px 20px', maxWidth: 1200, margin: '0 auto' }}>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: 24 }}>
+            {[
+              { name: "@AlexCreator", text: "CreatorOps doubled my X engagement in 2 weeks. The reverse-engineering tool is magic.", role: "YouTube Strategist" },
+              { name: "@SarahGrowth", text: "Finally an AI tool that doesn't sound like a bot. My scripts sound more human than ever.", role: "Content House Lead" },
+              { name: "@DavidWeb3", text: "The faceless YouTube systems are a game changer. Scaled to 100k subs with zero friction.", role: "Viral Creator" }
+            ].map((t, i) => (
+              <div key={i} className="card-glass" style={{ padding: 24, textAlign: 'left', display: 'flex', flexDirection: 'column', gap: 12 }}>
+                <div style={{ color: 'var(--brand-accent)', fontSize: 20 }}>★★★★★</div>
+                <p style={{ fontSize: 15, fontStyle: 'italic', opacity: 0.9 }}>"{t.text}"</p>
+                <div style={{ marginTop: 'auto' }}>
+                  <div style={{ fontWeight: 700 }}>{t.name}</div>
+                  <div style={{ fontSize: 12, opacity: 0.5 }}>{t.role}</div>
+                </div>
+              </div>
+            ))}
           </div>
         </section>
 
@@ -190,7 +265,7 @@ export default function LandingPage() {
 
         {/* Footer */}
         <Footer />
-      </main>
+      </div>
     </div>
   );
 }
