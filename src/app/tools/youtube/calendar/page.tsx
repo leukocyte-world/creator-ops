@@ -62,6 +62,7 @@ Provide a week-by-week calendar with:
       title="Content Calendar Generator" 
       description="Stop staring at a blank page. Generate a balanced 30-day content calendar engineered for both views AND revenue." 
       badge="youtube"
+      slug="calendar"
       extraContent={extraContent}
       relatedTools={relatedTools}
     >

@@ -63,6 +63,7 @@ Rules:
       title="4-Line Transformation" 
       description="Before → Change → After → Lesson. 4 lines, 7-8 words each. Maximum emotional punch." 
       badge="x"
+      slug="transformation"
       extraContent={extraContent}
       relatedTools={relatedTools}
     >

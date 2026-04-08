@@ -38,12 +38,30 @@ End with a strict, actionable weekly checklist I can follow starting this week.`
         Our Algorithm Hack System provides a deep-dive into how these metrics are weighted in your specific niche, giving you a clear edge over creators who are just &quot;guessing.&quot;
       </p>
 
+      <h3 style={{ fontFamily: 'Syne, sans-serif', fontSize: 18, fontWeight: 700, marginBottom: 16 }}>The 3 Pillars of Algorithmic Success</h3>
+      <div style={{ color: 'var(--text-secondary)', lineHeight: 1.8, marginBottom: 20 }}>
+        <ul style={{ listStyle: 'disc', paddingLeft: 20 }}>
+          <li style={{ marginBottom: 10 }}><strong>Content Satisfaction:</strong> YouTube now measures how the viewer FEELS after watching. High "Satisfaction Scores" lead to long-term recommendation shelf-life.</li>
+          <li style={{ marginBottom: 10 }}><strong>Session Duration:</strong> Does your video keep the user on YouTube? If they watch another video after yours (even not yours), the algorithm loves you.</li>
+          <li style={{ marginBottom: 10 }}><strong>Velocity:</strong> How fast you get views in the first 24 hours relative to your usual performance. This is the primary trigger for the "Browse" feature.</li>
+        </ul>
+      </div>
+
       <h3 style={{ fontFamily: 'Syne, sans-serif', fontSize: 18, fontWeight: 700, marginBottom: 16 }}>The Suggested Video Engine</h3>
       <p style={{ color: 'var(--text-secondary)', lineHeight: 1.8, marginBottom: 20 }}>
         Search is great, but &quot;Suggested&quot; is where the true scale happens. When YouTube&apos;s AI decides to show your video 
         next to a major creator&apos;s content, your views can jump by 10,000% overnight. 
         We show you how to optimize your metadata and content structure to &quot;bridge&quot; your videos to the largest channels in your niche.
       </p>
+
+      <h3 style={{ fontFamily: 'Syne, sans-serif', fontSize: 18, fontWeight: 700, marginBottom: 16 }}>2026 Algorithmic Checklist</h3>
+      <div style={{ color: 'var(--text-secondary)', lineHeight: 1.8, marginBottom: 20 }}>
+        <ul style={{ listStyle: 'decimal', paddingLeft: 20 }}>
+          <li style={{ marginBottom: 10 }}><strong>Hook 2.0:</strong> Capture attention in 3 seconds AND reveal the value proposition in 10 seconds.</li>
+          <li style={{ marginBottom: 10 }}><strong>Engagement Pattern Interrupts:</strong> Use b-roll or text overlays every 15-20 seconds to reset the viewer's attention.</li>
+          <li style={{ marginBottom: 10 }}><strong>Community Reinforcement:</strong> Use community posts to poll viewers before you upload to prime the algorithm for the topic.</li>
+        </ul>
+      </div>
 
       <h3 style={{ fontFamily: 'Syne, sans-serif', fontSize: 18, fontWeight: 700, marginBottom: 16 }}>The Importance of Consistency</h3>
       <p style={{ color: 'var(--text-secondary)', lineHeight: 1.8, marginBottom: 20 }}>
@@ -59,6 +77,7 @@ End with a strict, actionable weekly checklist I can follow starting this week.`
       title="Algorithm Hack System" 
       description="Understand exactly how YouTube's algorithm treats your niche right now, and how to trigger it." 
       badge="youtube"
+      slug="algorithm-hack"
       extraContent={extraContent}
       relatedTools={relatedTools}
     >

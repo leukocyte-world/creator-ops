@@ -41,6 +41,16 @@ Show total realistic monthly income at my current size, AND project it for 10K /
         you can start earning a full-time income even with a small, dedicated audience.
       </p>
 
+      <h3 style={{ fontFamily: 'Syne, sans-serif', fontSize: 18, fontWeight: 700, marginBottom: 16 }}>The Creator Monetization Pyramid</h3>
+      <div style={{ color: 'var(--text-secondary)', lineHeight: 1.8, marginBottom: 20 }}>
+        <p>Think of your income in three tiers:</p>
+        <ul style={{ listStyle: 'disc', paddingLeft: 20 }}>
+          <li style={{ marginBottom: 10 }}><strong>Base Layer (Passive):</strong> AdSense and YouTube Premium revenue. Reliable but lower margin.</li>
+          <li style={{ marginBottom: 10 }}><strong>Middle Layer (Semi-Passive):</strong> Affiliate Marketing and Merch. Scales with your audience size.</li>
+          <li style={{ marginBottom: 10 }}><strong>Top Layer (High Intent):</strong> Digital Products, Memberships, and Coaching. High margin and decoupled from view counts.</li>
+        </ul>
+      </div>
+
       <h3 style={{ fontFamily: 'Syne, sans-serif', fontSize: 18, fontWeight: 700, marginBottom: 16 }}>Affiliate Marketing and Partnerships</h3>
       <p style={{ color: 'var(--text-secondary)', lineHeight: 1.8, marginBottom: 20 }}>
         Affiliate marketing is often the most immediate way to monetize a new channel. 
@@ -48,6 +58,16 @@ Show total realistic monthly income at my current size, AND project it for 10K /
         Instead of promoting generic products, we help you find the tools and services that your audience actually needs, 
         building trust while maximizing your conversion rates.
       </p>
+
+      <h3 style={{ fontFamily: 'Syne, sans-serif', fontSize: 18, fontWeight: 700, marginBottom: 16 }}>Digital Product Pricing Strategy</h3>
+      <div style={{ color: 'var(--text-secondary)', lineHeight: 1.8, marginBottom: 20 }}>
+        <p>When launching your first digital product, consider these price points:</p>
+        <ul style={{ listStyle: 'decimal', paddingLeft: 20 }}>
+          <li style={{ marginBottom: 10 }}><strong>The Lead Magnet ($0):</strong> A free checklist or template to build your email list.</li>
+          <li style={{ marginBottom: 10 }}><strong>The Quick Win ($27 - $97):</strong> A specialized guide or mini-course that solves one specific problem.</li>
+          <li style={{ marginBottom: 10 }}><strong>The Transformation ($297+):</strong> A comprehensive system or group coaching program.</li>
+        </ul>
+      </div>
 
       <h3 style={{ fontFamily: 'Syne, sans-serif', fontSize: 18, fontWeight: 700, marginBottom: 16 }}>Digital Products and Communities</h3>
       <p style={{ color: 'var(--text-secondary)', lineHeight: 1.8, marginBottom: 20 }}>
@@ -64,6 +84,7 @@ Show total realistic monthly income at my current size, AND project it for 10K /
       title="Multiple Income Streams" 
       description="Calculate your earning potential and discover 7 different ways to monetize your specific channel." 
       badge="youtube"
+      slug="income-streams"
       extraContent={extraContent}
       relatedTools={relatedTools}
     >

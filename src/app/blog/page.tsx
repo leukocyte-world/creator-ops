@@ -43,37 +43,46 @@ export default function BlogPage() {
   }, []);
 
   return (
-    <div className="app-shell">
-      <nav className="desktop-nav" style={{ backgroundColor: 'rgba(13, 15, 20, 0.8)', backdropFilter: 'blur(12px)', borderBottom: '1px solid var(--border)' }}>
-        <div className="nav-container">
-          <Link href="/" className="logo-mark">
+    <div className="blog-page-root" style={{ background: 'var(--bg-base)', minHeight: '100vh', overflowX: 'hidden' }}>
+      <nav className="desktop-nav" style={{ position: 'relative', height: 'auto', padding: '24px 40px', background: 'rgba(13, 15, 20, 0.4)', backdropFilter: 'blur(12px)', borderBottom: '1px solid var(--border)' }}>
+        <div className="nav-container" style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', maxWidth: 1400, margin: '0 auto' }}>
+          <Link href="/" className="logo-mark" style={{ flexShrink: 0 }}>
             <div className="logo-icon">C</div>
             <span className="logo-text">CreatorOps</span>
           </Link>
-          <div className="nav-links">
+          
+          <div className="nav-links" style={{ display: 'flex', gap: 32, fontSize: 14, fontWeight: 500 }}>
             <Link href="/tools">AI Tools</Link>
             <Link href="/blog" style={{ color: 'var(--text-primary)' }}>Resources</Link>
             <Link href="/#pricing">Pricing</Link>
-            <Link href={session ? "/dashboard" : "/auth/signin"} className="btn btn-secondary btn-sm">Sign In</Link>
-            <Link href={session ? "/dashboard" : "/auth/signin"} className="btn btn-primary btn-sm">Start Free</Link>
+            <Link href="/#contact">Contact Us</Link>
+          </div>
+
+          <div style={{ display: 'flex', alignItems: 'center', gap: 16, flexShrink: 0 }}>
+            <div className="lang-flags" style={{ display: 'flex', gap: 10, opacity: 0.8 }}>
+              <span title="Spanish" style={{ cursor: 'pointer', fontSize: 18 }}>🇪🇸</span>
+              <span title="Ukrainian" style={{ cursor: 'pointer', fontSize: 18 }}>🇺🇦</span>
+            </div>
+            <Link href={session ? "/dashboard" : "/auth/signin"} style={{ fontSize: 14, fontWeight: 500, marginLeft: 8 }}>Login</Link>
+            <Link href={session ? "/dashboard" : "/auth/signin"} className="btn btn-primary btn-sm" style={{ borderRadius: 99, padding: '10px 24px', background: 'var(--brand-accent)', color: '#1a1000' }}>Sign Up</Link>
           </div>
         </div>
       </nav>
 
       <Sidebar hiddenOnDesktop />
       
-      <main className="main-content" style={{ paddingBottom: 100 }}>
-        <header className="tool-page" style={{ textAlign: 'center', paddingTop: 120, maxWidth: 1000 }}>
+      <main className="main-content" style={{ paddingBottom: 100, marginLeft: 0 }}>
+        <header className="tool-page" style={{ textAlign: 'center', paddingTop: 80, maxWidth: 1000, margin: '0 auto' }}>
           <div className="badge badge-pro" style={{ marginBottom: 16 }}>The Creator Playbook</div>
-          <h1 className="hero-title" style={{ fontSize: 'clamp(40px, 6vw, 64px)', margin: '0 0 16px' }}>
-            Scale Your <span className="hero-title-gradient">Attention.</span>
+          <h1 className="hero-title" style={{ fontSize: 'clamp(32px, 5vw, 56px)', margin: '0 0 16px', lineHeight: 1.1 }}>
+            Scale Your <span className="hero-title-gradient" style={{ display: 'inline' }}>Attention.</span>
           </h1>
-          <p className="hero-sub" style={{ margin: '0 auto 40px' }}>
+          <p className="hero-sub" style={{ margin: '0 auto 40px', opacity: 0.8 }}>
             Expert strategies on AI content creation, algorithm hacking, and building digital assets.
           </p>
         </header>
 
-        <section className="tool-page" style={{ maxWidth: 1200 }}>
+        <section className="tool-page" style={{ maxWidth: 1200, margin: '0 auto' }}>
           {loading ? (
             <div style={{ display: 'flex', justifyContent: 'center', padding: '60px 0' }}>
               <div className="spinner" style={{ width: 32, height: 32, borderTopColor: 'var(--accent-orange)' }}></div>

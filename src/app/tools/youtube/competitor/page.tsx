@@ -60,6 +60,7 @@ Pitch exactly **10 hyper-specific video ideas** designed specifically to outperf
       title="Competitor Breakdown" 
       description="Analyze the top players in your niche, identify their weaknesses, and get 10 video ideas to steal their audience." 
       badge="youtube"
+      slug="competitor"
       extraContent={extraContent}
       relatedTools={relatedTools}
     >

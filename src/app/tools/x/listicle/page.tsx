@@ -65,6 +65,7 @@ Output ONLY the post. Nothing else.`
       title="Listicle Post" 
       description="All-caps title + bullets ordered by length — the format that prints engagement every time." 
       badge="x"
+      slug="listicle"
       extraContent={extraContent}
       relatedTools={relatedTools}
     >

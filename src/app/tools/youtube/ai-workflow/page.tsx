@@ -59,6 +59,7 @@ Map out:
       title="AI Automation Workflow" 
       description="Map out a complete $0 AI automation system for your channel — from idea to upload." 
       badge="youtube"
+      slug="ai-workflow"
       extraContent={extraContent}
       relatedTools={relatedTools}
     >

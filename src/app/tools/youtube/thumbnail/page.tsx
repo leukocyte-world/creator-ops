@@ -59,6 +59,7 @@ Rank the 5 concepts from highest to lowest expected CTR.`
       title="Thumbnail Psychology" 
       description="Generate high-CTR thumbnail concepts that open curiosity gaps perfectly aligned with your video title." 
       badge="youtube"
+      slug="thumbnail"
       extraContent={extraContent}
       relatedTools={relatedTools}
     >

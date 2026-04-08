@@ -43,6 +43,16 @@ Finally, rank all 20 from most to least viral potential.`
         sorted by curiosity, data, emotion, and transformation — all tuned to what&apos;s working right now in 2026.
       </p>
 
+      <h3 style={{ fontFamily: 'Syne, sans-serif', fontSize: 18, fontWeight: 700, marginBottom: 16 }}>Proven Viral Title Formulas</h3>
+      <div style={{ color: 'var(--text-secondary)', lineHeight: 1.8, marginBottom: 20 }}>
+        <ul style={{ listStyle: 'disc', paddingLeft: 20 }}>
+          <li style={{ marginBottom: 10 }}><strong>The Paradox:</strong> "How I Failed but Won Anyway" - Triggers curiosity by presenting a contradiction.</li>
+          <li style={{ marginBottom: 10 }}><strong>The Specificity:</strong> "How to Scale to $12,453/mo" - Specific numbers build trust and show authority.</li>
+          <li style={{ marginBottom: 10 }}><strong>The Fear of Missing Out (FOMO):</strong> "The Stop Doing This Before You Fail" - Uses negative emotion to drive urgency.</li>
+          <li style={{ marginBottom: 10 }}><strong>The Bridge:</strong> "From Broke to $100k (The True Story)" - Promises a transformation that viewers desire.</li>
+        </ul>
+      </div>
+
       <h3 style={{ fontFamily: 'Syne, sans-serif', fontSize: 18, fontWeight: 700, marginBottom: 16 }}>CTR and Algorithm Visibility</h3>
       <p style={{ color: 'var(--text-secondary)', lineHeight: 1.8, marginBottom: 20 }}>
         The YouTube algorithm tracks CTR (Click-Through Rate) obsessively. 
@@ -57,6 +67,17 @@ Finally, rank all 20 from most to least viral potential.`
         This tool analyzes the SEO strength of your keywords, ensuring your video ranks both in YouTube search and Google search results. 
         This dual benefit ensures a steady flow of organic traffic to your channel, week after week.
       </p>
+
+      <h3 style={{ fontFamily: 'Syne, sans-serif', fontSize: 18, fontWeight: 700, marginBottom: 16 }}>Optimization Checklist</h3>
+      <div style={{ color: 'var(--text-secondary)', lineHeight: 1.8, marginBottom: 20 }}>
+        <p>Before you publish, check your title against these criteria:</p>
+        <ul style={{ listStyle: 'decimal', paddingLeft: 20 }}>
+          <li>Is the title under 60 characters? (Prevents cutoff on mobile)</li>
+          <li>Does it correlate with the thumbnail?</li>
+          <li>Does it contain the primary keyword near the beginning?</li>
+          <li>Does it evoke a specific emotion?</li>
+        </ul>
+      </div>
     </div>
   );
 
@@ -65,6 +86,7 @@ Finally, rank all 20 from most to least viral potential.`
       title="Viral Title Machine" 
       description="Stop struggling with titles. Get 20 high-CTR title variations ranked by viral potential." 
       badge="youtube"
+      slug="viral-titles"
       extraContent={extraContent}
       relatedTools={relatedTools}
     >

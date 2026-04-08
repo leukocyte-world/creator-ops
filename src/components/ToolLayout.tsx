@@ -6,21 +6,26 @@ import Sidebar from '@/components/Sidebar';
 import Footer from '@/components/Footer';
 import ToolIcon from '@/components/ToolIcon';
 import { Copy, Check, Lock } from 'lucide-react';
+import StructuredData from '@/components/StructuredData';
 
 interface ToolLayoutProps {
   title: string;
   description: string;
   badge: 'x' | 'youtube';
+  slug: string;
   children: React.ReactNode;
   extraContent?: React.ReactNode;
   relatedTools?: { label: string; href: string; icon: string }[];
 }
 
-export default function ToolLayout({ title, description, badge, children, extraContent, relatedTools }: ToolLayoutProps) {
-  const schema = {
+export default function ToolLayout({ title, description, badge, slug, children, extraContent, relatedTools }: ToolLayoutProps) {
+  // Better regex to remove emojis and clean up the title for schema
+  const cleanName = title.replace(/[\u{1F600}-\u{1F64F}\u{1F300}-\u{1F5FF}\u{1F680}-\u{1F6FF}\u{2600}-\u{26FF}\u{2700}-\u{27BF}]/gu, '').trim();
+  
+  const softwareSchema = {
     "@context": "https://schema.org",
     "@type": "SoftwareApplication",
-    "name": title.replace(/^[^\s]+\s/, ''), // Remove emoji from title
+    "name": cleanName || title,
     "applicationCategory": badge === 'x' ? "SocialNetworkingApplication" : "MultimediaApplication",
     "operatingSystem": "Web",
     "description": description,
@@ -31,15 +36,38 @@ export default function ToolLayout({ title, description, badge, children, extraC
     }
   };
 
+  const breadcrumbSchema = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      {
+        "@type": "ListItem",
+        "position": 1,
+        "name": "Home",
+        "item": "https://creatorops.site"
+      },
+      {
+        "@type": "ListItem",
+        "position": 2,
+        "name": "Tools",
+        "item": "https://creatorops.site/tools"
+      },
+      {
+        "@type": "ListItem",
+        "position": 3,
+        "name": cleanName || title,
+        "item": `https://creatorops.site/tools/${badge}/${slug}`
+      }
+    ]
+  };
+
   return (
     <div className="app-shell">
       <Sidebar />
       <main className="main-content">
         <div className="tool-page">
-          <script
-            type="application/ld+json"
-            dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
-          />
+          <StructuredData data={softwareSchema} />
+          <StructuredData data={breadcrumbSchema} />
           <div className="tool-header">
             <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 14 }}>
               <Link href="/tools" style={{ color: 'var(--text-muted)', fontSize: 13, display: 'flex', alignItems: 'center', gap: 5 }}>

@@ -57,6 +57,7 @@ Generate a complete Shorts Growth Engine based on what is TRENDING and performin
       title="Shorts Growth Engine" 
       description="Get 30 viral Shorts ideas and 5 ready-to-shoot scripts engineered for the Shorts feed algorithm." 
       badge="youtube"
+      slug="shorts"
       extraContent={extraContent}
       relatedTools={relatedTools}
     >

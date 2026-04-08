@@ -62,6 +62,7 @@ export default function ReverseEngineerPage() {
       title="Viral Reverse Engineer"
       description="Paste 3+ viral X posts. The AI breaks down the exact formula, structure, and hook pattern — then rewrites your post using the same winning blueprint."
       badge="x"
+      slug="reverse-engineer"
       extraContent={extraContent}
       relatedTools={relatedTools}
     >

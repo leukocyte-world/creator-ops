@@ -67,6 +67,7 @@ Include:
       title="90-Day Money Map" 
       description="A strict, step-by-step 90 day roadmap connecting your current state to your first YouTube paycheck." 
       badge="youtube"
+      slug="90-day-map"
       extraContent={extraContent}
       relatedTools={relatedTools}
     >

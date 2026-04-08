@@ -65,6 +65,7 @@ Rules:
       title="Viral One-Liner" 
       description="Drop your topic. Get 10 raw, emotionally charged one-line posts built to stop the scroll." 
       badge="x"
+      slug="one-liner"
       extraContent={extraContent}
       relatedTools={relatedTools}
     >

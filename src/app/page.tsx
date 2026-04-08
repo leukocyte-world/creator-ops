@@ -42,8 +42,8 @@ export default function LandingPage() {
       <nav className="desktop-nav" style={{ position: 'relative', height: 'auto', padding: '24px 40px' }}>
         <div className="nav-container" style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', maxWidth: 1400, margin: '0 auto' }}>
           <Link href="/" className="logo-mark" style={{ flexShrink: 0 }}>
-            <div className="logo-icon" style={{ background: 'var(--brand-primary)' }}>C</div>
-            <span className="logo-text" style={{ background: 'none', WebkitTextFillColor: 'var(--text-primary)', color: 'var(--text-primary)' }}>CreatorOps</span>
+            <div className="logo-icon">C</div>
+            <span className="logo-text">CreatorOps</span>
           </Link>
           
           <div className="nav-links" style={{ display: 'flex', gap: 32, fontSize: 14, fontWeight: 500 }}>
@@ -113,11 +113,14 @@ export default function LandingPage() {
         <section className="demo-section animate-fade-up" style={{ padding: '60px 20px', maxWidth: 1000, margin: '0 auto', textAlign: 'center' }}>
           <div className="section-tag" style={{ margin: '0 auto 16px' }}><span>See it in action</span></div>
           <h2 className="section-title" style={{ marginBottom: 40 }}>How to Find Your Money Niche</h2>
-          <div className="video-container" style={{ position: 'relative', borderRadius: 24, overflow: 'hidden', border: '1px solid var(--border)', background: 'var(--bg-glass)', boxShadow: '0 20px 40px rgba(0,0,0,0.4)' }}>
-            <img 
+          <div className="video-container" style={{ position: 'relative', borderRadius: 24, overflow: 'hidden', border: '1px solid var(--border)', background: '#000', boxShadow: '0 20px 40px rgba(0,0,0,0.4)', aspectRatio: '16/9' }}>
+            <video 
               src="/money-niche-demo.webp" 
-              alt="Find Your Money Niche Demo"
-              style={{ width: '100%', height: 'auto', display: 'block' }}
+              autoPlay 
+              muted 
+              loop 
+              playsInline
+              style={{ width: '100%', height: '100%', objectFit: 'cover' }}
             />
             <div style={{ position: 'absolute', bottom: 20, left: 20, right: 20, padding: '16px 24px', background: 'rgba(0,0,0,0.6)', backdropFilter: 'blur(10px)', borderRadius: 12, textAlign: 'left', pointerEvents: 'none' }}>
               <div style={{ fontWeight: 600, fontSize: 14 }}>Find Your Money Niche Demo</div>
@@ -261,6 +264,57 @@ export default function LandingPage() {
               </Link>
             </div>
           </div>
+        </section>
+
+        {/* Contact Section */}
+        <section id="contact" className="contact-section" style={{ padding: '100px 24px', maxWidth: 800, margin: '0 auto' }}>
+          <div className="section-tag" style={{ margin: '0 auto 16px' }}><span>Get in touch</span></div>
+          <h2 className="section-title" style={{ marginBottom: 12 }}>Have Questions?</h2>
+          <p className="section-sub" style={{ marginBottom: 48 }}>
+            Whether you need help with a tool or want to discuss custom solutions, we're here to help.
+          </p>
+          
+          <form 
+            className="card-glass" 
+            style={{ padding: 40, display: 'flex', flexDirection: 'column', gap: 24 }}
+            onSubmit={async (e) => {
+              e.preventDefault();
+              const formData = new FormData(e.currentTarget);
+              const data = Object.fromEntries(formData);
+              
+              try {
+                const res = await fetch('/api/contact', {
+                  method: 'POST',
+                  body: JSON.stringify(data),
+                  headers: { 'Content-Type': 'application/json' }
+                });
+                if (res.ok) {
+                  alert("Message sent! We'll get back to you at leukocyteng@gmail.com.");
+                  (e.target as HTMLFormElement).reset();
+                } else {
+                  alert("Failed to send message. Please try again.");
+                }
+              } catch (err) {
+                alert("An error occurred. Please try again later.");
+              }
+            }}
+          >
+            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 20 }}>
+              <div className="input-wrap">
+                <label className="input-label">Name</label>
+                <input name="name" className="input" placeholder="Your name" required />
+              </div>
+              <div className="input-wrap">
+                <label className="input-label">Email</label>
+                <input name="email" type="email" className="input" placeholder="your@email.com" required />
+              </div>
+            </div>
+            <div className="input-wrap">
+              <label className="input-label">Message</label>
+              <textarea name="message" className="textarea" placeholder="How can we help?" required style={{ minHeight: 120 }}></textarea>
+            </div>
+            <button type="submit" className="btn btn-primary btn-lg" style={{ width: '100%' }}>Send Message</button>
+          </form>
         </section>
 
         {/* Footer */}

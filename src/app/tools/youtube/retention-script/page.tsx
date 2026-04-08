@@ -40,12 +40,31 @@ HIGH DROP-OFF RISK: [Where it is and how this script prevents it]`
         combined with pattern interrupts to ensure your audience stays glued to the screen from start to finish.
       </p>
 
+      <h3 style={{ fontFamily: 'Syne, sans-serif', fontSize: 18, fontWeight: 700, marginBottom: 16 }}>The 3-Act Retention Structure</h3>
+      <div style={{ color: 'var(--text-secondary)', lineHeight: 1.8, marginBottom: 20 }}>
+        <ul style={{ listStyle: 'disc', paddingLeft: 20 }}>
+          <li style={{ marginBottom: 10 }}><strong>The Hook (0-15s):</strong> Establish the "Why" immediately. Use a "Visual Hook" (something changing on screen) and an "Audio Hook" (an intriguing question or statement).</li>
+          <li style={{ marginBottom: 10 }}><strong>The Meat (15s - 80% mark):</strong> Deliver the core value. Use "Open Loops" to keep viewers curious about the next point before the current one finishes.</li>
+          <li style={{ marginBottom: 10 }}><strong>The Payoff (80% - End):</strong> Summarize the value and provide a clear, logical next step (CTA) that encourages them to watch another video.</li>
+        </ul>
+      </div>
+
       <h3 style={{ fontFamily: 'Syne, sans-serif', fontSize: 18, fontWeight: 700, marginBottom: 16 }}>Anatomy of a High-Retention Script</h3>
       <p style={{ color: 'var(--text-secondary)', lineHeight: 1.8, marginBottom: 20 }}>
         A great script is like a well-paced thriller. You must constantly promise value, deliver it, and immediately tease the next point. 
         This tool identifies the &quot;danger zones&quot; in your content — places where viewers typically lose interest — and provides 
         specific &quot;Retention Fixes&quot; like visual switches, controversial takes, or direct questions to keep the audience engaged.
       </p>
+
+      <h3 style={{ fontFamily: 'Syne, sans-serif', fontSize: 18, fontWeight: 700, marginBottom: 16 }}>Pacing & Editing Cues</h3>
+      <div style={{ color: 'var(--text-secondary)', lineHeight: 1.8, marginBottom: 20 }}>
+        <p>A high-retention script isn't just about the words; it's about the timing:</p>
+        <ul style={{ listStyle: 'decimal', paddingLeft: 20 }}>
+          <li style={{ marginBottom: 10 }}><strong>Every 8-12 seconds:</strong> Change the shot or add a text overlay.</li>
+          <li style={{ marginBottom: 10 }}><strong>Every 30-45 seconds:</strong> Re-state the primary question of the video to remind viewers why they are watching.</li>
+          <li style={{ marginBottom: 10 }}><strong>Transitions:</strong> Use "Bridge Words" like "But that's not even the best part..." to keep them moving from one scene to the next.</li>
+        </ul>
+      </div>
 
       <h3 style={{ fontFamily: 'Syne, sans-serif', fontSize: 18, fontWeight: 700, marginBottom: 16 }}>Pattern Interrupts and Pacing</h3>
       <p style={{ color: 'var(--text-secondary)', lineHeight: 1.8, marginBottom: 20 }}>
@@ -61,6 +80,7 @@ HIGH DROP-OFF RISK: [Where it is and how this script prevents it]`
       title="Retention Killer Script" 
       description="Generate a script engineered specifically to maximize average view duration and viewer retention." 
       badge="youtube"
+      slug="retention-script"
       extraContent={extraContent}
       relatedTools={relatedTools}
     >

@@ -1,6 +1,7 @@
 import { MetadataRoute } from 'next';
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
+  // Ensure we use the canonical non-www domain as per layout.tsx
   const baseUrl = 'https://creatorops.site';
 
   const xTools = [
@@ -44,15 +45,20 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   // Fetch blog posts for dynamic sitemap safely
   let blogPostRoutes: MetadataRoute.Sitemap = [];
   try {
-    if (process.env.NEXT_PUBLIC_SUPABASE_URL && process.env.SUPABASE_SERVICE_ROLE_KEY) {
+    const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
+    const supabaseKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
+    
+    if (supabaseUrl && supabaseKey) {
       const { getPosts } = await import('@/lib/supabase');
       const posts = await getPosts(true);
-      blogPostRoutes = posts.map((post) => ({
-        url: `${baseUrl}/blog/${post.slug}`,
-        lastModified: new Date(post.published_at || post.created_at),
-        changeFrequency: 'monthly' as const,
-        priority: 0.6,
-      }));
+      if (posts) {
+        blogPostRoutes = posts.map((post) => ({
+          url: `${baseUrl}/blog/${post.slug}`,
+          lastModified: new Date(post.published_at || post.created_at),
+          changeFrequency: 'monthly' as const,
+          priority: 0.6,
+        }));
+      }
     }
   } catch (error) {
     console.error('Error fetching posts for sitemap:', error);

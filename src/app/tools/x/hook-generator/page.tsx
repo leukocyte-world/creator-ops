@@ -47,12 +47,31 @@ Output:
         By teasing a specific result or secret without giving it away immediately, you force the reader to stop and engage.
       </p>
 
+      <h3 style={{ fontFamily: 'Syne, sans-serif', fontSize: 18, fontWeight: 700, marginBottom: 16 }}>3 Types of Viral Hooks</h3>
+      <div style={{ color: 'var(--text-secondary)', lineHeight: 1.8, marginBottom: 20 }}>
+        <ul style={{ listStyle: 'disc', paddingLeft: 20 }}>
+          <li style={{ marginBottom: 10 }}><strong>The Authority Hook:</strong> "I spent 100 hours analyzing [X] so you don't have to. Here's what I found." - Leverages effort as high value.</li>
+          <li style={{ marginBottom: 10 }}><strong>The Contrast Hook:</strong> "Everyone tells you to do A, but I did B and made 10x more." - Uses contrarian views to stop the scroll.</li>
+          <li style={{ marginBottom: 10 }}><strong>The Lesson Hook:</strong> "Most people fail at [X] because of this one simple mistake." - Targets specific pain points with a promise of a solution.</li>
+        </ul>
+      </div>
+
       <h3 style={{ fontFamily: 'Syne, sans-serif', fontSize: 18, fontWeight: 700, marginBottom: 16 }}>Stopping the Scroll in {new Date().getFullYear()}</h3>
       <p style={{ color: 'var(--text-secondary)', lineHeight: 1.8, marginBottom: 20 }}>
         Modern readers are hyper-aware of &quot;clickbait.&quot; To win on X today, your hooks must be both provocative and authentic. 
         This tool helps you find the sweet spot between &quot;boring&quot; and &quot;spammy.&quot; 
         It generates variations based on your specific audience, ensuring the tone matches their expectations—whether they are crypto degens, serious founders, or hobbyist developers.
       </p>
+
+      <h3 style={{ fontFamily: 'Syne, sans-serif', fontSize: 18, fontWeight: 700, marginBottom: 16 }}>Common Hook Mistakes</h3>
+      <div style={{ color: 'var(--text-secondary)', lineHeight: 1.8, marginBottom: 20 }}>
+        <p>Avoid these common pitfalls that kill engagement:</p>
+        <ul style={{ listStyle: 'decimal', paddingLeft: 20 }}>
+          <li style={{ marginBottom: 10 }}><strong>Being too vague:</strong> "I learned something today" vs "I learned how to save $500 today."</li>
+          <li style={{ marginBottom: 10 }}><strong>Closing the loop:</strong> Don't give away the main point in the first line.</li>
+          <li style={{ marginBottom: 10 }}><strong>Using jargon:</strong> Unless you're targeting a very niche group, keep the language simple and punchy.</li>
+        </ul>
+      </div>
 
       <h3 style={{ fontFamily: 'Syne, sans-serif', fontSize: 18, fontWeight: 700, marginBottom: 16 }}>SEO and Authority</h3>
       <p style={{ color: 'var(--text-secondary)', lineHeight: 1.8, marginBottom: 20 }}>
@@ -68,6 +87,7 @@ Output:
       title="Hook Generator" 
       description="Generate loop-opening hooks that make readers physically unable to scroll past your post." 
       badge="x"
+      slug="hook-generator"
       extraContent={extraContent}
       relatedTools={relatedTools}
     >

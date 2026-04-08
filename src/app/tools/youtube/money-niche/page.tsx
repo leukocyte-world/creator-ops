@@ -50,6 +50,32 @@ Rank the 5 niches by: easiest to monetize fastest.`
         These are the viewers that major brands are willing to pay a premium to reach.
       </p>
 
+      <h3 style={{ fontFamily: 'Syne, sans-serif', fontSize: 18, fontWeight: 700, marginBottom: 16 }}>Step-by-Step Guide to Using the Calculator</h3>
+      <div style={{ color: 'var(--text-secondary)', lineHeight: 1.8, marginBottom: 20 }}>
+        <ul style={{ listStyle: 'decimal', paddingLeft: 20 }}>
+          <li style={{ marginBottom: 10 }}><strong>Identify Your Core Interests:</strong> Enter topics you are genuinely passionate about or have deep knowledge in.</li>
+          <li style={{ marginBottom: 10 }}><strong>Input Your Demographics:</strong> Advertisers target different age groups with varying intensity; knowing yours helps tailor the output.</li>
+          <li style={{ marginBottom: 10 }}><strong>Analyze the Results:</strong> Our AI will provide a ranked list of 5 niches that match your criteria.</li>
+          <li style={{ marginBottom: 10 }}><strong>Validate with Trends:</strong> Use the competitor gap analysis to see where other channels are falling short.</li>
+        </ul>
+      </div>
+
+      <h3 style={{ fontFamily: 'Syne, sans-serif', fontSize: 18, fontWeight: 700, marginBottom: 16 }}>Frequently Asked Questions</h3>
+      <div style={{ display: 'flex', flexDirection: 'column', gap: 20, marginBottom: 20 }}>
+        <div>
+          <h4 style={{ fontSize: 15, fontWeight: 600, color: 'var(--text-primary)', marginBottom: 5 }}>What is a &quot;Money Niche&quot;?</h4>
+          <p style={{ color: 'var(--text-secondary)', fontSize: 14 }}>A money niche is a category of content where advertisers are willing to pay significantly more to show their ads. These usually involve finance, business, technology, or high-ticket health products.</p>
+        </div>
+        <div>
+          <h4 style={{ fontSize: 15, fontWeight: 600, color: 'var(--text-primary)', marginBottom: 5 }}>Can I change my niche later?</h4>
+          <p style={{ color: 'var(--text-secondary)', fontSize: 14 }}>Yes, but it&apos;s difficult to pivot an existing audience. It is almost always better to restart with a clean channel dedicated to the new high-CPM niche to ensure the YouTube algorithm targets the right viewers from day one.</p>
+        </div>
+        <div>
+          <h4 style={{ fontSize: 15, fontWeight: 600, color: 'var(--text-primary)', marginBottom: 5 }}>Does this tool use current data?</h4>
+          <p style={{ color: 'var(--text-secondary)', fontSize: 14 }}>Absolutely. Our AI is trained on active 2026 advertising benchmarks and trending topics, ensuring you aren&apos;t following outdated 2024 strategies that no longer work.</p>
+        </div>
+      </div>
+
       <h3 style={{ fontFamily: 'Syne, sans-serif', fontSize: 18, fontWeight: 700, marginBottom: 16 }}>Why This Matters for Faceless Channels</h3>
       <p style={{ color: 'var(--text-secondary)', lineHeight: 1.8, marginBottom: 20 }}>
         Faceless channels live and die by their niche selection. Since you aren&apos;t building a personal brand around your face, 
@@ -64,6 +90,7 @@ Rank the 5 niches by: easiest to monetize fastest.`
       title="Find Your Money Niche" 
       description="Get a ranked list of the highest CPM YouTube niches tailored to your age and interests — updated for 2026." 
       badge="youtube"
+      slug="money-niche"
       extraContent={extraContent}
       relatedTools={relatedTools}
     >

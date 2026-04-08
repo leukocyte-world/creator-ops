@@ -61,6 +61,7 @@ Crucially, **arrange them in the EXACT order I should post them** (Video 1 to Vi
       title="First 10 Videos Blueprint" 
       description="Don't guess. Get the exact 10 videos you need to launch a new channel, ordered for maximum algorithmic momentum." 
       badge="youtube"
+      slug="first-10"
       extraContent={extraContent}
       relatedTools={relatedTools}
     >
