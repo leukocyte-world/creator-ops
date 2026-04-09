@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 import { Providers } from './providers';
 import StructuredData from '@/components/StructuredData';
+import SupportWidget from '@/components/SupportWidget';
 
 export const metadata: Metadata = {
   title: "CreatorOps AI — Toolkit for X & YouTube Growth",
@@ -115,19 +116,11 @@ export default function RootLayout({
         <StructuredData data={organizationData} />
         <StructuredData data={websiteData} />
         <StructuredData data={jsonLd} />
-        {/* Crisp Support Chat */}
-        <script
-          dangerouslySetInnerHTML={{
-            __html: `
-              window.$crisp=[];window.CRISP_WEBSITE_ID="6f4a867a-f4ef-4c6e-9273-044171228511";
-              (function(){d=document;s=d.createElement("script");s.src="https://client.crisp.chat/l.js";s.async=1;d.getElementsByTagName("head")[0].appendChild(s);})();
-            `
-          }}
-        />
       </head>
       <body>
         <Providers>
           {children}
+          <SupportWidget />
         </Providers>
       </body>
     </html>

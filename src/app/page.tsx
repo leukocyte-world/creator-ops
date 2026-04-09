@@ -114,13 +114,10 @@ export default function LandingPage() {
           <div className="section-tag" style={{ margin: '0 auto 16px' }}><span>See it in action</span></div>
           <h2 className="section-title" style={{ marginBottom: 40 }}>How to Find Your Money Niche</h2>
           <div className="video-container" style={{ position: 'relative', borderRadius: 24, overflow: 'hidden', border: '1px solid var(--border)', background: '#000', boxShadow: '0 20px 40px rgba(0,0,0,0.4)', aspectRatio: '16/9' }}>
-            <video 
+            <img 
               src="/money-niche-demo.webp" 
-              autoPlay 
-              muted 
-              loop 
-              playsInline
-              style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+              alt="Find Your Money Niche Demo"
+              style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
             />
             <div style={{ position: 'absolute', bottom: 20, left: 20, right: 20, padding: '16px 24px', background: 'rgba(0,0,0,0.6)', backdropFilter: 'blur(10px)', borderRadius: 12, textAlign: 'left', pointerEvents: 'none' }}>
               <div style={{ fontWeight: 600, fontSize: 14 }}>Find Your Money Niche Demo</div>
